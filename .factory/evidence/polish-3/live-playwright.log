@@ -1,0 +1,58 @@
+
+> mcp-result-envelope@0.1.0 test:e2e
+> playwright test
+
+
+Running 32 tests using 2 workers
+
+(node:28450) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28453) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28453) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28450) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [chromium] › tests/e2e/site.spec.ts:4:1 › landing page has a clear first screen and working navigation (1.4s)
+  ✓   3 [chromium] › tests/e2e/site.spec.ts:31:1 › @claim:inspector-parts shows four populated packet parts (945ms)
+  ✓   1 [chromium] › tests/e2e/site.spec.ts:18:1 › @claim:demo-sample opens the query demo with 12 orders and resets it (2.5s)
+  ✓   4 [chromium] › tests/e2e/site.spec.ts:39:1 › @claim:packet-details shows caps, field types, counts, and the next cursor (732ms)
+  ✓   5 [chromium] › tests/e2e/site.spec.ts:50:1 › demo pages with the keyboard (887ms)
+  ✓   6 [chromium] › tests/e2e/site.spec.ts:61:1 › invalid and empty states explain the next step (936ms)
+  ✓   8 [chromium] › tests/e2e/site.spec.ts:83:1 › @claim:browser-no-storage keeps real inspector input only in the current tab (1.6s)
+  ✓   9 [chromium] › tests/e2e/site.spec.ts:94:1 › @claim:site-no-tracking loads no analytics, tracking scripts, or third-party fonts (630ms)
+  ✓   7 [chromium] › tests/e2e/site.spec.ts:71:1 › @claim:local-processing sends no demo input off origin (3.2s)
+  ✓  10 [chromium] › tests/e2e/site.spec.ts:104:1 › @claim:demo-memory discards demo edits without browser storage (2.3s)
+  ✓  12 [chromium] › tests/e2e/site.spec.ts:134:1 › routes set distinct metadata, legal links work, and unknown paths render the designed 404 (4.4s)
+  -  13 [chromium] › tests/e2e/site.spec.ts:167:1 › mobile demo fits the viewport
+  ✓  14 [chromium] › tests/e2e/site.spec.ts:212:1 › landing keeps its action and all three required facts inside the first viewport (1.4s)
+  -  15 [chromium] › tests/e2e/site.spec.ts:232:1 › mobile landing enters the isolated sample in one click
+  ✓  16 [chromium] › tests/e2e/site.spec.ts:242:1 › @claim:offline-reload reopens the demo after its first visit (1.1s)
+(node:28828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  11 [chromium] › tests/e2e/site.spec.ts:117:1 › every public route has no serious accessibility violations (11.5s)
+(node:28907) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  17 [mobile] › tests/e2e/site.spec.ts:4:1 › landing page has a clear first screen and working navigation (1.6s)
+(node:28907) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  18 [mobile] › tests/e2e/site.spec.ts:31:1 › @claim:inspector-parts shows four populated packet parts (1.5s)
+  ✓  20 [mobile] › tests/e2e/site.spec.ts:39:1 › @claim:packet-details shows caps, field types, counts, and the next cursor (1.3s)
+  ✓  19 [mobile] › tests/e2e/site.spec.ts:18:1 › @claim:demo-sample opens the query demo with 12 orders and resets it (3.2s)
+  ✓  21 [mobile] › tests/e2e/site.spec.ts:50:1 › demo pages with the keyboard (2.2s)
+  ✓  22 [mobile] › tests/e2e/site.spec.ts:61:1 › invalid and empty states explain the next step (1.5s)
+  ✓  24 [mobile] › tests/e2e/site.spec.ts:83:1 › @claim:browser-no-storage keeps real inspector input only in the current tab (1.0s)
+  ✓  23 [mobile] › tests/e2e/site.spec.ts:71:1 › @claim:local-processing sends no demo input off origin (1.8s)
+  ✓  25 [mobile] › tests/e2e/site.spec.ts:94:1 › @claim:site-no-tracking loads no analytics, tracking scripts, or third-party fonts (793ms)
+  ✓  26 [mobile] › tests/e2e/site.spec.ts:104:1 › @claim:demo-memory discards demo edits without browser storage (3.7s)
+  ✓  28 [mobile] › tests/e2e/site.spec.ts:134:1 › routes set distinct metadata, legal links work, and unknown paths render the designed 404 (3.6s)
+  ✓  29 [mobile] › tests/e2e/site.spec.ts:167:1 › mobile demo fits the viewport (2.5s)
+  ✓  30 [mobile] › tests/e2e/site.spec.ts:212:1 › landing keeps its action and all three required facts inside the first viewport (1.1s)
+  ✓  27 [mobile] › tests/e2e/site.spec.ts:117:1 › every public route has no serious accessibility violations (11.1s)
+  -  32 [mobile] › tests/e2e/site.spec.ts:242:1 › @claim:offline-reload reopens the demo after its first visit
+  ✓  31 [mobile] › tests/e2e/site.spec.ts:232:1 › mobile landing enters the isolated sample in one click (1.2s)
+
+  3 skipped
+  29 passed (41.2s)

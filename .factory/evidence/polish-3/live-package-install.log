@@ -1,0 +1,8 @@
+local_sha=3a18f10cc189eea22e556260f31d934fd41bdd63d463f1012633a561366619ec
+live_sha=3a18f10cc189eea22e556260f31d934fd41bdd63d463f1012633a561366619ec
+
+added 1 package in 372ms
+2 rows · 1 field · 2 pages
+manifest -> summary -> schema -> page -> page
+Demo output: /tmp/result-envelope-demo-lLCVJX/envelope.json
+consumer=/tmp/mcp-result-envelope-live-final-dZKJ33

@@ -1,0 +1,28 @@
+
+> mcp-result-envelope@0.1.0 pack:check
+> npm pack --dry-run
+
+npm notice
+npm notice 📦  mcp-result-envelope@0.1.0
+npm notice Tarball Contents
+npm notice 740B CHANGELOG.md
+npm notice 1.1kB LICENSE
+npm notice 3.8kB README.md
+npm notice 15.4kB dist/cli.js
+npm notice 10.6kB dist/index.cjs
+npm notice 2.7kB dist/index.d.ts
+npm notice 9.4kB dist/index.js
+npm notice 451B examples/basic.mjs
+npm notice 1.5kB examples/orders.json
+npm notice 1.9kB package.json
+npm notice Tarball Details
+npm notice name: mcp-result-envelope
+npm notice version: 0.1.0
+npm notice filename: mcp-result-envelope-0.1.0.tgz
+npm notice package size: 9.9 kB
+npm notice unpacked size: 47.6 kB
+npm notice shasum: 35c4c8df09d04a67be951c0b36692f3396292787
+npm notice integrity: sha512-2KJNpno8VGIhe[...]6QxXmchTlg75w==
+npm notice total files: 10
+npm notice
+mcp-result-envelope-0.1.0.tgz

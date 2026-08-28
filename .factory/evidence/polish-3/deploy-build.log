@@ -1,0 +1,66 @@
+
+> mcp-result-envelope@0.1.0 build:site
+> npm run build:lib && vite build --config site/vite.config.ts && node scripts/finish-site.mjs
+
+
+> mcp-result-envelope@0.1.0 build:lib
+> tsup
+
+CLI Building entry: {"cli":"src/cli.ts"}
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /work/repo/tsup.config.ts
+CLI Building entry: src/index.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /work/repo/tsup.config.ts
+CLI Target: node18
+ESM Build start
+CLI Target: es2022
+ESM Build start
+CJS Build start
+CJS dist/index.cjs     10.34 KB
+CJS dist/index.cjs.map 18.88 KB
+CJS ⚡️ Build success in 19ms
+ESM dist/index.js     9.23 KB
+ESM dist/index.js.map 18.82 KB
+ESM ⚡️ Build success in 23ms
+ESM dist/cli.js 15.02 KB
+ESM ⚡️ Build success in 39ms
+DTS Build start
+DTS ⚡️ Build success in 1644ms
+DTS dist/index.d.ts  2.67 KB
+DTS dist/index.d.cts 2.67 KB
+vite v6.4.3 building for production...
+transforming...
+✓ 6 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/site/index.html                  2.01 kB │ gzip: 0.70 kB
+../dist/site/assets/index-CfWTL7Hc.css  18.45 kB │ gzip: 4.64 kB
+../dist/site/assets/index--cne-TGi.js   26.27 kB │ gzip: 9.12 kB │ map: 55.38 kB
+✓ built in 214ms
+npm notice
+npm notice 📦  mcp-result-envelope@0.1.0
+npm notice Tarball Contents
+npm notice 740B CHANGELOG.md
+npm notice 1.1kB LICENSE
+npm notice 3.6kB README.md
+npm notice 15.4kB dist/cli.js
+npm notice 10.6kB dist/index.cjs
+npm notice 2.7kB dist/index.d.ts
+npm notice 9.4kB dist/index.js
+npm notice 451B examples/basic.mjs
+npm notice 1.5kB examples/orders.json
+npm notice 1.9kB package.json
+npm notice Tarball Details
+npm notice name: mcp-result-envelope
+npm notice version: 0.1.0
+npm notice filename: mcp-result-envelope-0.1.0.tgz
+npm notice package size: 9.9 kB
+npm notice unpacked size: 47.5 kB
+npm notice shasum: f02d0fade1d5bdb8abf881364200fe561eba1131
+npm notice integrity: sha512-XmnQtanFlYe7d[...]8Wozo19upNIXA==
+npm notice total files: 10
+npm notice
+mcp-result-envelope-0.1.0.tgz

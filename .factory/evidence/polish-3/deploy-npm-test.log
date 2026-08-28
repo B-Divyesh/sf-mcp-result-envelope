@@ -1,0 +1,156 @@
+
+> mcp-result-envelope@0.1.0 test
+> npm run typecheck && npm run build && npm run test:unit && npm run test:e2e
+
+
+> mcp-result-envelope@0.1.0 typecheck
+> tsc --noEmit
+
+
+> mcp-result-envelope@0.1.0 build
+> npm run clean && npm run build:site
+
+
+> mcp-result-envelope@0.1.0 clean
+> node scripts/clean.mjs
+
+
+> mcp-result-envelope@0.1.0 build:site
+> npm run build:lib && vite build --config site/vite.config.ts && node scripts/finish-site.mjs
+
+
+> mcp-result-envelope@0.1.0 build:lib
+> tsup
+
+CLI Building entry: {"cli":"src/cli.ts"}
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /work/repo/tsup.config.ts
+CLI Building entry: src/index.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /work/repo/tsup.config.ts
+CLI Target: node18
+ESM Build start
+CLI Target: es2022
+ESM Build start
+CJS Build start
+ESM dist/index.js     9.23 KB
+ESM dist/index.js.map 18.82 KB
+ESM ⚡️ Build success in 33ms
+CJS dist/index.cjs     10.34 KB
+CJS dist/index.cjs.map 18.88 KB
+CJS ⚡️ Build success in 33ms
+ESM dist/cli.js 15.02 KB
+ESM ⚡️ Build success in 57ms
+DTS Build start
+DTS ⚡️ Build success in 1757ms
+DTS dist/index.d.ts  2.67 KB
+DTS dist/index.d.cts 2.67 KB
+vite v6.4.3 building for production...
+transforming...
+✓ 6 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/site/index.html                  2.01 kB │ gzip: 0.70 kB
+../dist/site/assets/index-CfWTL7Hc.css  18.45 kB │ gzip: 4.64 kB
+../dist/site/assets/index--cne-TGi.js   26.27 kB │ gzip: 9.12 kB │ map: 55.38 kB
+✓ built in 217ms
+npm notice
+npm notice 📦  mcp-result-envelope@0.1.0
+npm notice Tarball Contents
+npm notice 740B CHANGELOG.md
+npm notice 1.1kB LICENSE
+npm notice 3.6kB README.md
+npm notice 15.4kB dist/cli.js
+npm notice 10.6kB dist/index.cjs
+npm notice 2.7kB dist/index.d.ts
+npm notice 9.4kB dist/index.js
+npm notice 451B examples/basic.mjs
+npm notice 1.5kB examples/orders.json
+npm notice 1.9kB package.json
+npm notice Tarball Details
+npm notice name: mcp-result-envelope
+npm notice version: 0.1.0
+npm notice filename: mcp-result-envelope-0.1.0.tgz
+npm notice package size: 9.9 kB
+npm notice unpacked size: 47.5 kB
+npm notice shasum: f02d0fade1d5bdb8abf881364200fe561eba1131
+npm notice integrity: sha512-XmnQtanFlYe7d[...]8Wozo19upNIXA==
+npm notice total files: 10
+npm notice
+mcp-result-envelope-0.1.0.tgz
+
+> mcp-result-envelope@0.1.0 test:unit
+> vitest run
+
+
+ RUN  v3.2.7 /work/repo
+
+ ✓ tests/unit/envelope.test.ts (12 tests) 75ms
+ ✓ tests/unit/package.test.ts (11 tests) 1508ms
+   ✓ package and CLI > @claim:installable-package installs the released artifact in a clean project  1035ms
+
+ Test Files  2 passed (2)
+      Tests  23 passed (23)
+   Start at  16:13:06
+   Duration  2.17s (transform 223ms, setup 0ms, collect 247ms, tests 1.58s, environment 1ms, prepare 375ms)
+
+
+> mcp-result-envelope@0.1.0 test:e2e
+> playwright test
+
+
+Running 32 tests using 2 workers
+
+(node:18057) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18058) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18057) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18058) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › tests/e2e/site.spec.ts:4:1 › landing page has a clear first screen and working navigation (1.4s)
+  ✓   3 [chromium] › tests/e2e/site.spec.ts:31:1 › @claim:inspector-parts shows four populated packet parts (629ms)
+  ✓   2 [chromium] › tests/e2e/site.spec.ts:18:1 › @claim:demo-sample opens the query demo with 12 orders and resets it (2.5s)
+  ✓   4 [chromium] › tests/e2e/site.spec.ts:39:1 › @claim:packet-details shows caps, field types, counts, and the next cursor (994ms)
+  ✓   5 [chromium] › tests/e2e/site.spec.ts:50:1 › demo pages with the keyboard (935ms)
+  ✓   6 [chromium] › tests/e2e/site.spec.ts:61:1 › invalid and empty states explain the next step (1.1s)
+  ✓   8 [chromium] › tests/e2e/site.spec.ts:83:1 › @claim:browser-no-storage keeps real inspector input only in the current tab (810ms)
+  ✓   7 [chromium] › tests/e2e/site.spec.ts:71:1 › @claim:local-processing sends no demo input off origin (1.7s)
+  ✓   9 [chromium] › tests/e2e/site.spec.ts:94:1 › @claim:site-no-tracking loads no analytics, tracking scripts, or third-party fonts (865ms)
+  ✓  10 [chromium] › tests/e2e/site.spec.ts:104:1 › @claim:demo-memory discards demo edits without browser storage (2.3s)
+  ✓  12 [chromium] › tests/e2e/site.spec.ts:134:1 › routes set distinct metadata, legal links work, and unknown paths render the designed 404 (3.3s)
+  -  13 [chromium] › tests/e2e/site.spec.ts:167:1 › mobile demo fits the viewport
+  ✓  14 [chromium] › tests/e2e/site.spec.ts:212:1 › landing keeps its action and all three required facts inside the first viewport (989ms)
+  -  15 [chromium] › tests/e2e/site.spec.ts:232:1 › mobile landing enters the isolated sample in one click
+  ✓  16 [chromium] › tests/e2e/site.spec.ts:242:1 › @claim:offline-reload reopens the demo after its first visit (921ms)
+(node:18410) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18410) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  17 [mobile] › tests/e2e/site.spec.ts:4:1 › landing page has a clear first screen and working navigation (1.5s)
+  ✓  11 [chromium] › tests/e2e/site.spec.ts:117:1 › every public route has no serious accessibility violations (12.9s)
+(node:18545) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18545) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  18 [mobile] › tests/e2e/site.spec.ts:18:1 › @claim:demo-sample opens the query demo with 12 orders and resets it (3.9s)
+  ✓  19 [mobile] › tests/e2e/site.spec.ts:31:1 › @claim:inspector-parts shows four populated packet parts (1.5s)
+  ✓  20 [mobile] › tests/e2e/site.spec.ts:39:1 › @claim:packet-details shows caps, field types, counts, and the next cursor (1.3s)
+  ✓  22 [mobile] › tests/e2e/site.spec.ts:61:1 › invalid and empty states explain the next step (1.5s)
+  ✓  21 [mobile] › tests/e2e/site.spec.ts:50:1 › demo pages with the keyboard (3.2s)
+  ✓  23 [mobile] › tests/e2e/site.spec.ts:71:1 › @claim:local-processing sends no demo input off origin (1.7s)
+  ✓  25 [mobile] › tests/e2e/site.spec.ts:94:1 › @claim:site-no-tracking loads no analytics, tracking scripts, or third-party fonts (829ms)
+  ✓  24 [mobile] › tests/e2e/site.spec.ts:83:1 › @claim:browser-no-storage keeps real inspector input only in the current tab (1.1s)
+  ✓  26 [mobile] › tests/e2e/site.spec.ts:104:1 › @claim:demo-memory discards demo edits without browser storage (3.5s)
+  ✓  28 [mobile] › tests/e2e/site.spec.ts:134:1 › routes set distinct metadata, legal links work, and unknown paths render the designed 404 (4.1s)
+  ✓  29 [mobile] › tests/e2e/site.spec.ts:167:1 › mobile demo fits the viewport (2.2s)
+  ✓  27 [mobile] › tests/e2e/site.spec.ts:117:1 › every public route has no serious accessibility violations (10.9s)
+  ✓  30 [mobile] › tests/e2e/site.spec.ts:212:1 › landing keeps its action and all three required facts inside the first viewport (1.1s)
+  -  32 [mobile] › tests/e2e/site.spec.ts:242:1 › @claim:offline-reload reopens the demo after its first visit
+  ✓  31 [mobile] › tests/e2e/site.spec.ts:232:1 › mobile landing enters the isolated sample in one click (844ms)
+
+  3 skipped
+  29 passed (40.4s)
