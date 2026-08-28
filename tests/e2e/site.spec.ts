@@ -15,6 +15,13 @@ test("landing page has a clear first screen and working navigation", async ({ pa
   await expect(page.locator("#route-status")).toHaveText("Pack large tool results into stable pages");
 });
 
+test("public routes use envelope as the single output name", async ({ page }) => {
+  for (const route of ["/", "/demo", "/inspect", "/privacy", "/terms", "/missing-sheet"]) {
+    await page.goto(route);
+    await expect(page.locator("body")).not.toContainText(/\bpacket\b/i);
+  }
+});
+
 test("@claim:demo-sample opens the query demo with 12 orders and resets it", async ({ page }) => {
   await page.goto("/?demo=1");
   await expect(page.getByText("Demo — sample data, nothing is saved")).toBeVisible();
@@ -28,7 +35,7 @@ test("@claim:demo-sample opens the query demo with 12 orders and resets it", asy
   await expect(page.locator("#metric-rows")).toHaveText("12");
 });
 
-test("@claim:inspector-parts shows four populated packet parts", async ({ page }) => {
+test("@claim:inspector-parts shows four populated envelope parts", async ({ page }) => {
   await page.goto("/?demo=1");
   for (const part of ["Manifest", "Summary", "Schema", "Page"]) {
     await page.getByRole("tab", { name: part }).click();
@@ -36,7 +43,7 @@ test("@claim:inspector-parts shows four populated packet parts", async ({ page }
   }
 });
 
-test("@claim:packet-details shows caps, field types, counts, and the next cursor", async ({ page }) => {
+test("@claim:envelope-details shows caps, field types, counts, and the next cursor", async ({ page }) => {
   await page.goto("/?demo=1");
   await page.getByRole("tab", { name: "Manifest" }).click();
   await expect(page.getByRole("tabpanel", { name: "Manifest" })).toContainText('"maxBytes": 4096');
@@ -60,7 +67,7 @@ test("demo pages with the keyboard", async ({ page }) => {
 
 test("invalid and empty states explain the next step", async ({ page }) => {
   await page.goto("/inspect");
-  await expect(page.getByRole("heading", { name: "No packet yet" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "No envelope yet" })).toBeVisible();
   await page.getByRole("button", { name: "Build the envelope" }).click();
   await expect(page.getByRole("alert")).toContainText("Input is empty");
   await page.locator("#json-input").fill("[not json]");
@@ -69,15 +76,20 @@ test("invalid and empty states explain the next step", async ({ page }) => {
 });
 
 test("@claim:local-processing sends no demo input off origin", async ({ page }) => {
-  const requests: string[] = [];
-  page.on("request", (request) => requests.push(request.url()));
+  const requests: { url: string; method: string; body: string | null }[] = [];
+  page.on("request", (request) => requests.push({
+    url: request.url(),
+    method: request.method(),
+    body: request.postData()
+  }));
   await page.goto("/demo");
   const origin = new URL(page.url()).origin;
   await page.locator("#json-input").fill('[{"private":"sample-secret"}]');
   await page.getByRole("button", { name: "Build the envelope" }).click();
   await expect(page.locator("#metric-rows")).toHaveText("1");
-  expect(requests.every((url) => new URL(url).origin === origin)).toBe(true);
-  expect(requests.some((url) => url.includes("sample-secret"))).toBe(false);
+  expect(requests.every((request) => new URL(request.url).origin === origin)).toBe(true);
+  expect(requests.every((request) => request.method === "GET" && request.body === null)).toBe(true);
+  expect(requests.some((request) => `${request.url}${request.body ?? ""}`.includes("sample-secret"))).toBe(false);
 });
 
 test("@claim:browser-no-storage keeps real inspector input only in the current tab", async ({ page, context }) => {
@@ -154,7 +166,7 @@ test("routes set distinct metadata, legal links work, and unknown paths render t
   const missingResponse = await page.goto("/missing-sheet");
   expect(missingResponse?.status()).toBe(process.env.PLAYWRIGHT_BASE_URL ? 404 : 200);
   await expect(page).toHaveTitle("Page not found — Result Envelope");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("This page is outside the packet");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("This page is not in the envelope");
   await expect(page.getByRole("link", { name: "Return to the main sheet" })).toBeVisible();
   const missingA11y = await new AxeBuilder({ page }).analyze();
   expect(missingA11y.violations.filter((item) => ["serious", "critical"].includes(item.impact ?? ""))).toEqual([]);
@@ -173,9 +185,9 @@ test("mobile demo fits the viewport", async ({ page }, testInfo) => {
   expect(await page.evaluate(() => scrollY)).toBe(0);
   await expect(page.locator("#metric-rows")).toHaveText("12");
   await expect(page.locator("#metric-pages")).toHaveText("3");
-  await expect(page.locator("#demo-packet-preview")).toContainText('"manifest"');
-  await expect(page.locator("#demo-packet-preview")).toContainText("12 rows · 6 fields · 3 pages");
-  for (const result of [page.locator("#metric-rows"), page.locator("#metric-pages"), page.locator("#demo-packet-preview")]) {
+  await expect(page.locator("#demo-envelope-preview")).toContainText('"manifest"');
+  await expect(page.locator("#demo-envelope-preview")).toContainText("12 rows · 6 fields · 3 pages");
+  for (const result of [page.locator("#metric-rows"), page.locator("#metric-pages"), page.locator("#demo-envelope-preview")]) {
     const box = await result.boundingBox();
     expect(box).not.toBeNull();
     expect(box!.y).toBeGreaterThanOrEqual(0);

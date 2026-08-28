@@ -51,15 +51,15 @@ describe("package and CLI", () => {
     expect(cli).toContain("Demo output:");
   });
 
-  it("@claim:cli-demo writes a complete sample packet to a temporary directory", () => {
+  it("@claim:cli-demo writes a complete sample envelope to a temporary directory", () => {
     const output = execFileSync(process.execPath, ["dist/cli.js", "demo"], { encoding: "utf8" });
     const path = output.match(/Demo output: (.+)/)?.[1].trim();
     expect(path).toBeTruthy();
     expect(path).toContain("result-envelope-demo-");
     expect(statSync(path!).isFile()).toBe(true);
-    const packet = JSON.parse(readFileSync(path!, "utf8")) as { manifest: { totalRows: number }; page: { rows: unknown[] } };
-    expect(packet.manifest.totalRows).toBe(12);
-    expect(packet.page.rows).toHaveLength(5);
+    const envelope = JSON.parse(readFileSync(path!, "utf8")) as { manifest: { totalRows: number }; page: { rows: unknown[] } };
+    expect(envelope.manifest.totalRows).toBe(12);
+    expect(envelope.page.rows).toHaveLength(5);
   });
 
   it("@claim:cli-io writes JSON to stdout and actionable errors to stderr", () => {
@@ -129,5 +129,21 @@ describe("package and CLI", () => {
     expect(new Set(tags).size).toBe(tags.length);
     expect(tags.sort()).toEqual(claims.map((claim) => claim.id).sort());
     for (const claim of claims) expect(claim.test).toContain(`@claim:${claim.id}`);
+  });
+
+  it("uses envelope consistently and explains the provenance property in plain words", () => {
+    const readme = readFileSync("README.md", "utf8");
+    const publicCopy = [
+      readme,
+      readFileSync("site/src/main.ts", "utf8"),
+      readFileSync(".factory/claims.json", "utf8"),
+      readFileSync(".factory/demo.md", "utf8"),
+      readFileSync(".factory/copy-audit.md", "utf8"),
+      readFileSync(".factory/catalog-description.txt", "utf8")
+    ].join("\n");
+    expect(publicCopy).not.toMatch(/\bpacket\b/i);
+    expect(readme).toContain("preserves JSON types, row order, and source details");
+    expect(readme).toContain("source details in `provenance`");
+    expect(readme).toContain("preserves JSON types and source metadata");
   });
 });

@@ -15,10 +15,10 @@
   },
   {
     "id": "demo-sample",
-    "claim": "The one-click demo loads 12 realistic orders, builds their packet, and resets to the original sample.",
+    "claim": "The one-click demo loads 12 realistic orders, builds their envelope, and resets to the original sample.",
     "where": "landing first action, demo banner, and demo documentation",
     "test": "npm run build:site && npm run test:e2e -- --grep '@claim:demo-sample'",
-    "sandbox": "fresh browser context at /?demo=1; replace input; reset; assert 12 bundled orders and a built packet"
+    "sandbox": "fresh browser context at /?demo=1; replace input; reset; assert 12 bundled orders and a built envelope"
   },
   {
     "id": "local-processing",
@@ -43,7 +43,7 @@
   },
   {
     "id": "json-types",
-    "claim": "JSON types, provenance, and row order stay intact.",
+    "claim": "JSON types, source details, and row order stay intact.",
     "where": "README introduction and API examples",
     "test": "npm run test:unit -- --testNamePattern '@claim:json-types'",
     "sandbox": "typed fixture containing numbers, booleans, nulls, arrays, nested objects, and provenance"
@@ -57,16 +57,16 @@
   },
   {
     "id": "inspector-parts",
-    "claim": "The browser inspector shows four populated packet parts: manifest, summary, schema, and page.",
+    "claim": "The browser inspector shows four populated envelope parts: manifest, summary, schema, and page.",
     "where": "landing hero caption and inspector",
     "test": "npm run build:site && npm run test:e2e -- --grep '@claim:inspector-parts'",
     "sandbox": "fresh query demo; open each output tab and assert visible populated output"
   },
   {
-    "id": "packet-details",
-    "claim": "The sample packet shows caps, field types, counts, and its next cursor.",
+    "id": "envelope-details",
+    "claim": "The sample envelope shows caps, field types, counts, and its next cursor.",
     "where": "landing preview",
-    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:packet-details'",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:envelope-details'",
     "sandbox": "fresh query demo; inspect manifest, schema, metrics, and first page output"
   },
   {
@@ -148,7 +148,7 @@
   },
   {
     "id": "cli-demo",
-    "claim": "The CLI demo writes a complete sample packet to a new temporary directory.",
+    "claim": "The CLI demo writes a complete sample envelope to a new temporary directory.",
     "where": "README and demo documentation",
     "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:cli-demo'",
     "sandbox": "fresh temporary directory; run the bundled demo and inspect its output file"

@@ -1,1 +1,1 @@
-Pack large MCP and CLI results into summaries, schemas, and stable pages.
+Pack large MCP and CLI results into capped pages with summaries and schemas.

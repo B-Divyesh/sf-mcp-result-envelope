@@ -10,12 +10,12 @@ const source = await readFile(resolve(site, "index.html"), "utf8");
 const routes = {
   demo: {
     title: "Demo — Result Envelope",
-    description: "Inspect 12 sample orders as a bounded result packet in your browser.",
+    description: "Inspect 12 sample orders as a bounded result envelope in your browser.",
     path: "/demo"
   },
   inspect: {
     title: "Inspector — Result Envelope",
-    description: "Build a bounded result packet from JSON in your browser.",
+    description: "Build a bounded result envelope from JSON in your browser.",
     path: "/inspect"
   },
   privacy: {

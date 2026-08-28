@@ -4,7 +4,7 @@ Pack large tool results into summaries, schemas, and stable pages.
 
 Result Envelope is for MCP and CLI tool authors. It turns JSON into a manifest, compact summary, schema, and stable pages.
 
-The package preserves JSON types, row order, and provenance. It has no runtime dependencies and makes no network, model, or telemetry calls.
+The package preserves JSON types, row order, and source details. It has no runtime dependencies and makes no network, model, or telemetry calls.
 
 ## Try the demo
 
@@ -50,7 +50,7 @@ const nextPage = getEnvelopePage(rows, envelope.page.nextCursor ?? undefined, op
 
 `createEnvelope` returns four parts:
 
-- `manifest`: result identity, caps, counts, page count, and provenance.
+- `manifest`: result identity, caps, counts, page count, and source details in `provenance`.
 - `summary`: field count, page count, and numeric ranges. It contains no sample rows.
 - `schema`: dotted field paths, observed JSON types, nullability, and presence counts.
 - `page`: bounded rows and a stable cursor for the next page.
@@ -87,7 +87,7 @@ Run `result-envelope --help` for all flags. JSON goes to stdout. Errors go to st
 - A single row over `maxBytes` raises `ROW_TOO_LARGE`. Increase the cap or remove large fields.
 - Inputs must be JSON values with finite numbers and no circular references.
 
-Result Envelope preserves JSON types and provenance metadata. It does not claim that one format is best for every model.
+Result Envelope preserves JSON types and source metadata. It does not claim that one format is best for every model.
 
 ## Develop and verify
 

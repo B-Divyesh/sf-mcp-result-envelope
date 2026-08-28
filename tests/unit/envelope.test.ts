@@ -12,7 +12,7 @@ const rows: JsonValue = Array.from({ length: 12 }, (_, index) => ({
 }));
 
 describe("createEnvelope", () => {
-  it("@claim:api-shape returns the documented packet parts and properties", () => {
+  it("@claim:api-shape returns the documented envelope parts and properties", () => {
     const envelope = createEnvelope(rows, { pageSize: 5, maxRows: 20, maxBytes: 2048, provenance: "orders" });
     expect(Object.keys(envelope)).toEqual(["manifest", "summary", "schema", "page"]);
     expect(envelope.manifest).toMatchObject({
@@ -52,7 +52,7 @@ describe("createEnvelope", () => {
     expect(envelope.page).toMatchObject({ number: 0, rows: [], nextCursor: null });
   });
 
-  it("@claim:json-types preserves JSON value types and provenance", () => {
+  it("@claim:json-types preserves JSON value types and source details", () => {
     const input: JsonValue = [{ id: 7, enabled: true, note: null, tags: ["a"], nested: { score: 2.5 } }];
     const envelope = createEnvelope(input, { provenance: { source: "claim fixture", query: "q1" } });
     expect(envelope.page.rows).toEqual(input);

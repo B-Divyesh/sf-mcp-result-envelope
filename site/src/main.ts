@@ -48,7 +48,7 @@ function landing(): string {
         <p class="sheet-label">Specification RE–01 / npm + CLI</p>
         <h1 id="hero-title">Pack large tool results into stable pages</h1>
         <p class="hero-deck">For MCP and CLI authors who need size-limited output that keeps types, order, and source details.</p>
-        <div class="hero-actions"><a class="button primary" href="/?demo=1" data-link>Try it with sample data</a><span>Loads 12 orders and builds their packet.</span></div>
+        <div class="hero-actions"><a class="button primary" href="/?demo=1" data-link>Try it with sample data</a><span>Loads 12 orders and builds their envelope.</span></div>
         <ul class="fact-list" aria-label="Product facts">
           <li><span aria-hidden="true">01</span> Free and MIT licensed.</li>
           <li><span aria-hidden="true">02</span> Runs in this tab. No uploads.</li>
@@ -63,9 +63,9 @@ function landing(): string {
     </section>
     <section class="preview-band" aria-labelledby="preview-title">
       <div class="shell preview-grid">
-        <div><p class="sheet-no">Sheet 02</p><h2 id="preview-title">Inspect the result packet before you install</h2><p>The sample packet shows caps, field types, counts, and its next cursor.</p></div>
-        <div class="packet-preview" aria-label="Example result envelope">
-          <div class="packet-rail"><span>Manifest</span><strong>12 rows</strong><strong>3 pages</strong><strong>4 KB cap</strong></div>
+        <div><p class="sheet-no">Sheet 02</p><h2 id="preview-title">Inspect the result envelope before you install</h2><p>The sample envelope shows caps, field types, counts, and its next cursor.</p></div>
+        <div class="envelope-preview" aria-label="Example result envelope">
+          <div class="envelope-rail"><span>Manifest</span><strong>12 rows</strong><strong>3 pages</strong><strong>4 KB cap</strong></div>
           <pre tabindex="0"><code>{
   "summary": "12 rows · 6 fields · 3 pages",
   "page": {
@@ -78,17 +78,17 @@ function landing(): string {
       </div>
     </section>
     <section class="steps shell" id="how" aria-labelledby="how-title">
-      <p class="sheet-no">Sheet 03</p><h2 id="how-title">Build a result packet in three steps</h2>
+      <p class="sheet-no">Sheet 03</p><h2 id="how-title">Build a result envelope in three steps</h2>
       <ol>
         <li><span>01</span><div><h3>Pass the rows</h3><p>Give the library JSON from your tool or query.</p></div></li>
         <li><span>02</span><div><h3>Set hard caps</h3><p>Choose the row count, page size, and page bytes.</p></div></li>
-        <li><span>03</span><div><h3>Return one packet</h3><p>Send its metadata and first page. Use the cursor to fetch the next page.</p></div></li>
+        <li><span>03</span><div><h3>Return one envelope</h3><p>Send its metadata and first page. Use the cursor to fetch the next page.</p></div></li>
       </ol>
       <div class="code-sheet"><div class="code-title"><span>Node.js / ESM</span><button type="button" data-copy-install>Copy install command</button></div><pre tabindex="0"><code>npm install ${packageUrl}
 
 import { createEnvelope } from "mcp-result-envelope";
 
-const packet = createEnvelope(rows, {
+const envelope = createEnvelope(rows, {
   pageSize: 25,
   maxRows: 10_000,
   maxBytes: 16_384,
@@ -96,14 +96,14 @@ const packet = createEnvelope(rows, {
 });</code></pre><p class="package-download"><a href="${packagePath}" download>Download the npm package</a></p></div>
     </section>
     <section class="boundaries" aria-labelledby="limits-title"><div class="shell boundaries-grid">
-      <div><p class="sheet-no">Revision note</p><h2 id="limits-title">Know the packet boundaries</h2></div>
+      <div><p class="sheet-no">Revision note</p><h2 id="limits-title">Know the envelope boundaries</h2></div>
       <ul>
         <li>The package makes no network or model calls.</li>
         <li>The summary contains counts and numeric ranges, not rows.</li>
         <li>The same input and caps produce the same cursor.</li>
         <li>It rejects a row that cannot fit the byte cap.</li>
       </ul>
-      <a class="button inverse" href="/demo" data-link>Inspect the sample packet</a>
+      <a class="button inverse" href="/demo" data-link>Inspect the sample envelope</a>
     </div></section>
   </main>`);
 }
@@ -113,11 +113,11 @@ function inspector(demo: boolean): string {
     ? ["detail-metric-rows", "detail-metric-pages", "detail-metric-bytes", "detail-metric-fields"]
     : ["metric-rows", "metric-pages", "metric-bytes", "metric-fields"];
   return pageShell(`<main id="main" tabindex="-1" class="inspector-main${demo ? " demo-inspector" : ""}">
-    <section class="inspector-head shell"><p class="sheet-label">Local inspector / revision 01</p><h1>${demo ? "Inspect a sample result envelope" : "Build a result envelope"}</h1><p>${demo ? "Edit the bundled orders and rebuild the packet. Demo edits stay in this tab." : "Paste a JSON array or object. The inspector keeps it in this tab."}</p></section>
+    <section class="inspector-head shell"><p class="sheet-label">Local inspector / revision 01</p><h1>${demo ? "Inspect a sample result envelope" : "Build a result envelope"}</h1><p>${demo ? "Edit the bundled orders and rebuild the envelope. Demo edits stay in this tab." : "Paste a JSON array or object. The inspector keeps it in this tab."}</p></section>
     ${demo ? `<section class="demo-result-strip shell" aria-labelledby="demo-result-title" aria-live="polite">
-      <div class="demo-result-heading"><p class="sheet-label">Built sample / packet output</p><h2 id="demo-result-title">Sample packet ready</h2><p>The 12 bundled orders are already packed.</p></div>
+      <div class="demo-result-heading"><p class="sheet-label">Built sample / envelope output</p><h2 id="demo-result-title">Sample envelope ready</h2><p>The envelope already contains the 12 bundled orders.</p></div>
       <dl class="demo-meters"><div><dt>Rows</dt><dd id="metric-rows" data-metric="rows">—</dd></div><div><dt>Pages</dt><dd id="metric-pages" data-metric="pages">—</dd></div></dl>
-      <pre id="demo-packet-preview" tabindex="0" aria-label="Populated sample manifest"><code>Building the sample packet…</code></pre>
+      <pre id="demo-envelope-preview" tabindex="0" aria-label="Populated sample manifest"><code>Building the sample envelope…</code></pre>
     </section>` : ""}
     <section class="workbench shell" aria-label="Result envelope inspector">
       <form class="input-sheet" id="envelope-form" novalidate>
@@ -126,18 +126,18 @@ function inspector(demo: boolean): string {
         <textarea id="json-input" name="json" spellcheck="false" aria-describedby="input-help input-error"></textarea>
         <p id="input-help" class="help">Use valid JSON. Numbers must be finite.</p>
         <p id="input-error" class="error-note" role="alert"></p>
-        <fieldset><legend>Packet caps</legend>
+        <fieldset><legend>Envelope caps</legend>
           <label for="page-size">Rows per page<input id="page-size" name="pageSize" type="number" min="1" step="1" value="5"></label>
           <label for="max-rows">Maximum rows<input id="max-rows" name="maxRows" type="number" min="1" step="1" value="50"></label>
           <label for="max-bytes">Bytes per page<input id="max-bytes" name="maxBytes" type="number" min="256" step="1" value="4096"></label>
         </fieldset>
-        <label for="provenance">Provenance source<input id="provenance" name="provenance" type="text" value="${demo ? "bundled order export" : "local input"}"></label>
+        <label for="provenance">Source details (<code>provenance</code>)<input id="provenance" name="provenance" type="text" value="${demo ? "bundled order export" : "local input"}"></label>
         <button class="button primary full" type="submit">Build the envelope</button>
       </form>
       <section class="output-sheet" aria-labelledby="output-title">
-        <div class="sheet-heading"><h2 id="output-title">Packet output</h2><span id="packet-status">Waiting for input</span></div>
-        <div id="empty-output" class="empty-state"><span class="empty-glyph" aria-hidden="true">⌞</span><h3>No packet yet</h3><p>Build the envelope to see its manifest, summary, schema, and first page.</p></div>
-        <div id="packet-output" hidden>
+        <div class="sheet-heading"><h2 id="output-title">Envelope output</h2><span id="envelope-status">Waiting for input</span></div>
+        <div id="empty-output" class="empty-state"><span class="empty-glyph" aria-hidden="true">⌞</span><h3>No envelope yet</h3><p>Build the envelope to see its manifest, summary, schema, and first page.</p></div>
+        <div id="envelope-output" hidden>
           <dl class="meter-strip"><div><dt>Rows</dt><dd id="${metricIds[0]}" data-metric="rows">—</dd></div><div><dt>Pages</dt><dd id="${metricIds[1]}" data-metric="pages">—</dd></div><div><dt>Page bytes</dt><dd id="${metricIds[2]}" data-metric="bytes">—</dd></div><div><dt>Fields</dt><dd id="${metricIds[3]}" data-metric="fields">—</dd></div></dl>
           <div class="tabs" role="tablist" aria-label="Envelope parts">
             <button role="tab" aria-selected="true" aria-controls="panel-manifest" id="tab-manifest" type="button">Manifest</button>
@@ -164,11 +164,11 @@ function privacy(): string {
 }
 
 function terms(): string {
-  return pageShell(`<main id="main" tabindex="-1"><article class="legal shell"><p class="sheet-label">Terms sheet / 2026-08-28</p><h1>Terms for using Result Envelope</h1><p>Result Envelope is free software under the MIT License.</p><h2>Use</h2><p>You may use, copy, modify, and distribute the software under that license.</p><h2>No warranty</h2><p>The software is provided “as is” without warranty. Check envelope settings before using results in production.</p><h2>Your data</h2><p>You are responsible for the data you process and the provenance labels you attach.</p><h2>Changes</h2><p>New versions may change these terms. The date at the top identifies this version.</p></article></main>`);
+  return pageShell(`<main id="main" tabindex="-1"><article class="legal shell"><p class="sheet-label">Terms sheet / 2026-08-28</p><h1>Terms for using Result Envelope</h1><p>Result Envelope is free software under the MIT License.</p><h2>Use</h2><p>You may use, copy, modify, and distribute the software under that license.</p><h2>No warranty</h2><p>The software is provided “as is” without warranty. Check envelope settings before using results in production.</p><h2>Your data</h2><p>You are responsible for the data you process and the source labels you attach.</p><h2>Changes</h2><p>New versions may change these terms. The date at the top identifies this version.</p></article></main>`);
 }
 
 function notFound(): string {
-  return pageShell(`<main id="main" tabindex="-1"><section class="not-found shell"><div class="lost-sheet" aria-hidden="true">404<span>sheet not filed</span></div><div><p class="sheet-label">Drawing not found</p><h1>This page is outside the packet</h1><p>The address does not match a published sheet.</p><a class="button primary" href="/" data-link>Return to the main sheet</a></div></section></main>`);
+  return pageShell(`<main id="main" tabindex="-1"><section class="not-found shell"><div class="lost-sheet" aria-hidden="true">404<span>sheet not filed</span></div><div><p class="sheet-label">Drawing not found</p><h1>This page is not in the envelope</h1><p>The address does not match a published sheet.</p><a class="button primary" href="/" data-link>Return to the main sheet</a></div></section></main>`);
 }
 
 function setMeta(path: string): void {
@@ -219,11 +219,11 @@ function setupInspector(demo: boolean): void {
   const input = document.querySelector<HTMLTextAreaElement>("#json-input")!;
   const error = document.querySelector<HTMLParagraphElement>("#input-error")!;
   const status = document.querySelector<HTMLParagraphElement>("#output-status")!;
-  const output = document.querySelector<HTMLDivElement>("#packet-output")!;
+  const output = document.querySelector<HTMLDivElement>("#envelope-output")!;
   const empty = document.querySelector<HTMLDivElement>("#empty-output")!;
   const nextButton = document.querySelector<HTMLButtonElement>("#next-page")!;
   const copyButton = document.querySelector<HTMLButtonElement>("#copy-cursor")!;
-  let packet: ResultEnvelope | null = null;
+  let envelope: ResultEnvelope | null = null;
   let parsed: JsonValue | null = null;
   let options: EnvelopeOptions = {};
   let cursor: string | null = null;
@@ -232,7 +232,7 @@ function setupInspector(demo: boolean): void {
     document.querySelector("#input-count")!.textContent = `${new TextEncoder().encode(input.value).byteLength.toLocaleString()} bytes`;
   };
   const show = (value: ResultEnvelope): void => {
-    packet = value;
+    envelope = value;
     cursor = value.page.nextCursor;
     empty.hidden = true;
     output.hidden = false;
@@ -240,12 +240,12 @@ function setupInspector(demo: boolean): void {
     document.querySelectorAll<HTMLElement>('[data-metric="pages"]').forEach((item) => { item.textContent = String(value.manifest.pageCount); });
     document.querySelectorAll<HTMLElement>('[data-metric="bytes"]').forEach((item) => { item.textContent = value.page.bytes.toLocaleString(); });
     document.querySelectorAll<HTMLElement>('[data-metric="fields"]').forEach((item) => { item.textContent = String(value.summary.fields); });
-    const demoPreview = document.querySelector<HTMLElement>("#demo-packet-preview code");
+    const demoPreview = document.querySelector<HTMLElement>("#demo-envelope-preview code");
     if (demoPreview) demoPreview.textContent = JSON.stringify({
       manifest: { includedRows: value.manifest.includedRows, pageCount: value.manifest.pageCount, id: value.manifest.id },
       summary: value.summary.text
     }, null, 2);
-    document.querySelector("#packet-status")!.textContent = "Packet ready";
+    document.querySelector("#envelope-status")!.textContent = "Envelope ready";
     const values = [value.manifest, value.summary, value.schema, value.page];
     ["manifest", "summary", "schema", "page"].forEach((name, index) => {
       document.querySelector(`#panel-${name} code`)!.textContent = JSON.stringify(values[index], null, 2);
@@ -274,7 +274,7 @@ function setupInspector(demo: boolean): void {
         : cause instanceof Error ? cause.message : "The envelope could not be built. Check the input and caps.";
       error.textContent = message;
       input.setAttribute("aria-invalid", "true");
-      document.querySelector("#packet-status")!.textContent = "Input needs a fix";
+      document.querySelector("#envelope-status")!.textContent = "Input needs a fix";
       status.textContent = message;
       input.focus();
     }
@@ -284,10 +284,10 @@ function setupInspector(demo: boolean): void {
   input.addEventListener("input", updateCount);
   form.addEventListener("submit", (event) => { event.preventDefault(); build(); });
   nextButton.addEventListener("click", () => {
-    if (!parsed || !cursor || !packet) return;
+    if (!parsed || !cursor || !envelope) return;
     try {
       const page = getEnvelopePage(parsed, cursor, options);
-      packet.page = page;
+      envelope.page = page;
       cursor = page.nextCursor;
       document.querySelectorAll<HTMLElement>('[data-metric="bytes"]').forEach((item) => { item.textContent = page.bytes.toLocaleString(); });
       document.querySelector("#panel-page code")!.textContent = JSON.stringify(page, null, 2);
