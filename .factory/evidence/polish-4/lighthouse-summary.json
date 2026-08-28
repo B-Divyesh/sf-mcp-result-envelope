@@ -1,0 +1,22 @@
+{
+  "local": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcpMs": 1703,
+    "cls": 0,
+    "totalBlockingTimeMs": 0,
+    "transferBytes": 114617
+  },
+  "live": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcpMs": 1455,
+    "cls": 0,
+    "totalBlockingTimeMs": 0,
+    "transferBytes": 114221
+  }
+}

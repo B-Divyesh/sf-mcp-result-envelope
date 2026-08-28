@@ -19,6 +19,7 @@ Audited 2026-08-28. Counts treat hyphenated terms and contractions as one word. 
 | Runs in this tab. | 4 | None |
 | No uploads. | 2 | None |
 | Works offline after your first visit. | 6 | None |
+| 16,384 byte cap | 3 | None |
 | A drafting table separates one large result into a manifest, schema, summary, and bounded pages. | 15 | None |
 | One result. | 2 | None |
 | Four inspectable parts. | 3 | None |
