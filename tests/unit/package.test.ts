@@ -26,4 +26,10 @@ describe("package and CLI", () => {
     expect(execFileSync(process.execPath, ["dist/cli.js", "--help"], { encoding: "utf8" })).toContain("--max-bytes");
     expect(() => execFileSync(process.execPath, ["dist/cli.js", "pack", "-"], { input: "nope", encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] })).toThrow(expect.objectContaining({ status: 2 }));
   });
+
+  it("runs the documented ESM example against the package exports", () => {
+    const output = execFileSync(process.execPath, ["examples/basic.mjs"], { encoding: "utf8" });
+    expect(output).toContain("2 rows · 3 fields · 2 pages");
+    expect(output).toContain("rowStart: 1");
+  });
 });

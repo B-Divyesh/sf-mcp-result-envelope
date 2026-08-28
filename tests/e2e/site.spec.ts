@@ -48,7 +48,23 @@ test("@claim:local-processing sends no demo input off origin", async ({ page }) 
   expect(requests.some((url) => url.includes("sample-secret"))).toBe(false);
 });
 
+test("@claim:demo-memory discards demo edits without browser storage", async ({ page, context }) => {
+  await page.goto("/demo");
+  await page.locator("#json-input").fill('[{"private":"discard-me"}]');
+  await page.getByRole("button", { name: "Build the envelope" }).click();
+  await page.getByRole("link", { name: "Start for real" }).click();
+  await expect(page.locator("#json-input")).toHaveValue("");
+  expect(await context.cookies()).toEqual([]);
+  expect(await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length }))).toEqual({ local: 0, session: 0 });
+  await page.goto("/demo");
+  await expect(page.locator("#json-input")).not.toHaveValue(/discard-me/);
+  await expect(page.locator("#metric-rows")).toHaveText("12");
+});
+
 test("every public route has no serious accessibility violations", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
   for (const route of ["/", "/demo", "/inspect", "/privacy", "/terms", "/missing-sheet"]) {
     await page.goto(route);
     await expect(page.locator("main")).toHaveCount(1);
@@ -56,6 +72,7 @@ test("every public route has no serious accessibility violations", async ({ page
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations.filter((item) => ["serious", "critical"].includes(item.impact ?? "")), route).toEqual([]);
   }
+  expect(errors).toEqual([]);
 });
 
 test("mobile demo fits the viewport", async ({ page }, testInfo) => {

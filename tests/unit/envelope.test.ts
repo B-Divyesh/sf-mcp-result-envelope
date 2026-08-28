@@ -11,7 +11,7 @@ const rows: JsonValue = Array.from({ length: 12 }, (_, index) => ({
 }));
 
 describe("createEnvelope", () => {
-  it("builds metadata without copying sample rows into the summary", () => {
+  it("@claim:summary-no-rows builds metadata without copying sample rows into the summary", () => {
     const envelope = createEnvelope(rows, { pageSize: 5, provenance: "test query" });
     expect(envelope.manifest).toMatchObject({ totalRows: 12, includedRows: 12, pageCount: 3, capped: false });
     expect(envelope.manifest.provenance).toEqual({ source: "test query" });

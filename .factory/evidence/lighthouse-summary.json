@@ -1,0 +1,16 @@
+{
+  "url": "http://127.0.0.1:4173/",
+  "mode": "mobile",
+  "measured_at": "2026-08-28",
+  "scores": {
+    "performance": 100,
+    "accessibility": 100,
+    "best_practices": 100,
+    "seo": 100
+  },
+  "metrics": {
+    "largest_contentful_paint": "1.7 s",
+    "cumulative_layout_shift": 0,
+    "total_blocking_time": "30 ms"
+  }
+}

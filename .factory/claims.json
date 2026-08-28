@@ -15,10 +15,17 @@
   },
   {
     "id": "json-types",
-    "claim": "JSON types and provenance stay intact.",
+    "claim": "JSON types, provenance, and row order stay intact.",
     "where": "landing facts and README",
     "test": "npm run test:unit -- --testNamePattern '@claim:json-types'",
     "sandbox": "typed fixture containing numbers, booleans, nulls, arrays, nested objects, and provenance"
+  },
+  {
+    "id": "summary-no-rows",
+    "claim": "The summary contains no sample rows.",
+    "where": "README",
+    "test": "npm run test:unit -- --testNamePattern '@claim:summary-no-rows'",
+    "sandbox": "fixture with a unique row value; assert that serialized summary output omits it"
   },
   {
     "id": "page-caps",
@@ -61,5 +68,12 @@
     "where": "demo documentation",
     "test": "npm run build:site && npm run test:e2e -- --grep '@claim:offline-reload'",
     "sandbox": "fresh browser context; open demo online, wait for its service worker, then reload offline"
+  },
+  {
+    "id": "demo-memory",
+    "claim": "Demo edits stay in the tab and are discarded when demo mode ends.",
+    "where": "demo banner, inspector, privacy, README, and demo documentation",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:demo-memory'",
+    "sandbox": "fresh browser context; edit sample, leave demo, inspect cookies and browser storage, then reopen demo"
   }
 ]
