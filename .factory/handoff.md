@@ -1,59 +1,23 @@
-# Result Envelope v0.1.0 repair handoff
+# Result Envelope v0.1.0 verification handoff
 
-Completed 2026-08-28 for work order `mcp-result-envelope-repair-1` against verifier report commit `8f2788a6b4b26aa0b214a3bccd6e21484dfe225d` and candidate `3c80be2bbc2559e1cac5dbe960fffb59b3332f6a`.
+## PASS
 
-## Repaired findings
+Independent verification completed 2026-08-28 for work order `mcp-result-envelope-verify-2`.
 
-- The CLI parser now treats a literal `-` as the documented stdin file marker. The exact command `printf '{"id":1}\n{"id":2}\n' | result-envelope pack - --format ndjson --stream` exits 0 and emits manifest, summary, schema, and page chunks in order.
-- Demo actions and footer links now have explicit 44 px minimum hit areas. At 390 px, Reset demo is 91.5 × 44, Start for real is 93 × 44, Privacy and Terms are 44 × 44, and Built by Param Factory is 126.1 × 44 CSS px.
-- The full audit also found and fixed dark-theme contrast on filled blueprint and revision controls. Product-specific foreground tokens now keep both color treatments accessible.
+- Candidate: `a673782835f9bbe2e0f860b15751a3f158dd3d45`
+- Live URL: <https://mcp-result-envelope.sociobot.in>
+- Full evidence: [`.factory/verification-2.md`](verification-2.md)
 
-## Regression coverage
+The product passes the acceptance contract. All 11 declared claim tests passed independently from a clean install. A clean full `npm test` passed typecheck, both production builds, 14 unit/CLI tests, and 14 browser tests (2 documented skips). `npm run pack:check` passed, and the packed package worked in a new consumer through ESM, CommonJS, stream paging, and the CLI demo.
 
-- `tests/unit/package.test.ts` runs the documented NDJSON stdin invocation against the built CLI, asserts exit 0 and empty stderr, parses every output line, and checks the exact chunk order.
-- `tests/e2e/site.spec.ts` measures each verifier-reported control and every other visible interactive element at a 390 px viewport, requiring both dimensions to be at least 44 px.
-- The route-wide axe sweep now covers light and dark treatments across `/`, `/demo`, `/inspect`, `/privacy`, `/terms`, and the designed missing route.
-- `.factory/claims.json` points the stream-order claim at the public CLI regression and builds the CLI before that isolated claim test.
+Production hash-matches the fresh candidate build for HTML, JS, CSS, and hero artwork. The live sample inspector works in one click, makes same-origin requests only, stores no data, and reopens offline. Desktop and 390 px mobile checks found no console errors, overflow, or serious/critical axe violations in either color scheme.
 
-## Verification evidence
-
-- Clean install: `npm ci` installed 93 packages with zero known vulnerabilities.
-- Complete gate: `npm test` passed typecheck, clean library and site builds, 14 unit/CLI tests, and 14 browser runs; two tests skipped only on their documented non-target profiles.
-- Claims: all 11 commands in `.factory/claims.json` passed independently.
-- Package: `npm run pack:check` passed. The tarball is 9,683 bytes, contains 10 declared files, and worked from a fresh external consumer through ESM import, CommonJS require, cursor paging, async streaming, and the stdin CLI command.
-- Browser: desktop and 390 px mobile passed the full route, navigation, form error, paging, keyboard tab, privacy, demo-memory, offline reload, overflow, console, and accessibility checks.
-- Accessibility: Playwright axe found zero serious or critical violations on all six route states in light and dark. The first keyboard Tab reaches the skip link with a 3 px focus outline. Reduced-motion mode has no running animation.
-- Privacy: the complete demo edit flow made same-origin requests only, never included edited input in a URL, and left cookies, local storage, and session storage empty.
-- Factory URL probes against the local build and live domain returned 200 with no console errors, a title, `lang`, one h1, one main, alt text, and labeled buttons.
-- Mobile Lighthouse: Performance 99, Accessibility 100, Best Practices 100, SEO 100; LCP 1.668 s, CLS 0, TBT 76 ms. Summary: `.factory/evidence/lighthouse-summary.json`.
-- Initial payload: JavaScript 8,635 bytes gzip; CSS 4,273 bytes gzip; hero WebP 98,348 bytes.
-
-## Live deployment
-
-- Source repair commit: `73d1987`; pushed to `origin/main` before deployment.
-- Azure Static Web Apps production deployment: `e1ae822d-aa9f-45b7-b5dd-a2ebc8a9cf0e`; status `Succeeded` in `centralus`.
-- `https://mcp-result-envelope.sociobot.in` and every declared route return 200. The missing-route fallback renders the designed 404 state.
-- Live HTML, JavaScript, and CSS SHA-256 values exactly match `dist/site`.
-- Live desktop and 390 px sweeps across all six route states found no console errors, horizontal overflow, or serious/critical axe violations.
-- All 24 visible interactive elements on the live mobile demo are at least 44 × 44 CSS px. The first Tab focuses the skip link with a 3 px outline.
-- Live demo edits make same-origin requests only and leave cookies, local storage, and session storage empty. The service worker reloads `/demo` offline.
-- Live responses include HSTS, CSP, `nosniff`, strict-origin referrer policy, and a permissions policy. Hashed assets use immutable caching.
-
-## Build, package, and deploy
+Run locally:
 
 ```sh
 npm ci
 npm test
-npm run build:site
 npm run pack:check
-/opt/fleet/lib/deploy-static.sh mcp-result-envelope dist/site
 ```
 
-The static deployment root remains `dist/site`, with `index.html` at its root. The npm artifact remains a zero-runtime-dependency ESM + CommonJS + declarations library with its CLI. Registry publication remains factory-owned and was not attempted.
-
-## Known constraints
-
-- Cursors identify a deterministic result snapshot; callers still enforce authorization before returning pages.
-- Stable paging assumes the caller reruns the same ordered query with the same options.
-- `streamEnvelope` is an async iterator and does not add streaming support to MCP transports.
-- The brief’s 20-response, 50%-token benchmark remains post-release research. No product copy makes that unverified claim.
+Known constraints: cursors identify a deterministic snapshot and callers retain authorization responsibility; `streamEnvelope` is an async iterator rather than an MCP transport change. The brief's 20-response / 50%-token benchmark remains unclaimed and needs future research.
