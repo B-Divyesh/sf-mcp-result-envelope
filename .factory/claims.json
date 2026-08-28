@@ -1,0 +1,65 @@
+[
+  {
+    "id": "free-license",
+    "claim": "Free and MIT licensed.",
+    "where": "landing facts and README",
+    "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:free-license'",
+    "sandbox": "fresh clone; inspect package metadata, runtime dependencies, and LICENSE"
+  },
+  {
+    "id": "local-processing",
+    "claim": "Runs in this tab. No uploads.",
+    "where": "landing facts, inspector, privacy, and README",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:local-processing'",
+    "sandbox": "fresh browser context; edit demo data; capture the complete request log"
+  },
+  {
+    "id": "json-types",
+    "claim": "JSON types and provenance stay intact.",
+    "where": "landing facts and README",
+    "test": "npm run test:unit -- --testNamePattern '@claim:json-types'",
+    "sandbox": "typed fixture containing numbers, booleans, nulls, arrays, nested objects, and provenance"
+  },
+  {
+    "id": "page-caps",
+    "claim": "Each page respects the row and byte caps you set.",
+    "where": "README and inspector labels",
+    "test": "npm run test:unit -- --testNamePattern '@claim:page-caps'",
+    "sandbox": "12-row fixture; assert every serialized page against both configured caps"
+  },
+  {
+    "id": "stable-cursors",
+    "claim": "The same input and options produce the same cursor.",
+    "where": "README",
+    "test": "npm run test:unit -- --testNamePattern '@claim:stable-cursors'",
+    "sandbox": "clone the same fixture; compare cursors; reject the cursor after changing the rows"
+  },
+  {
+    "id": "stream-order",
+    "claim": "Chunks arrive as manifest, summary, schema, then bounded pages.",
+    "where": "README",
+    "test": "npm run test:unit -- --testNamePattern '@claim:stream-order'",
+    "sandbox": "12-row fixture with five rows per page; collect the async iterator"
+  },
+  {
+    "id": "package-no-network",
+    "claim": "The package makes no network requests.",
+    "where": "README and privacy",
+    "test": "npm run test:unit -- --testNamePattern '@claim:package-no-network'",
+    "sandbox": "spy on global fetch while packing and resolving a page"
+  },
+  {
+    "id": "cli-demo",
+    "claim": "The CLI demo writes a complete sample packet to a new temporary directory.",
+    "where": "README and demo documentation",
+    "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:cli-demo'",
+    "sandbox": "fresh temporary directory; run the bundled demo and inspect its output file"
+  },
+  {
+    "id": "offline-reload",
+    "claim": "The demo reopens offline after its first visit.",
+    "where": "demo documentation",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:offline-reload'",
+    "sandbox": "fresh browser context; open demo online, wait for its service worker, then reload offline"
+  }
+]

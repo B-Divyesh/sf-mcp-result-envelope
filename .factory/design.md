@@ -55,7 +55,9 @@ The signature motion is a one-time **drafting reveal**: rules scale from their m
 - Social card: a 1200×630 crop composed from the same original illustration with live HTML-independent layout.
 - Wordmark, favicon, cursor, rulers, and small diagrams: hand-authored SVG/CSS geometry in this repository. No stock icons or external assets.
 
-Final generation prompt, deployment, file sizes, and license are recorded here after generation.
+Generation used the factory-owned `factory-image` deployment at 1536×1024, high quality. The final prompt described a top-down technical-gouache packet, four connected paper components, cream fibers, cyan construction lines, and one vermilion mark. It prohibited readable text, logos, gradients, watermarks, screenshots, and generic technology imagery. The full prompt is stored in `.factory/hero-generation.json`.
+
+The optimized hero is 97 KB WebP. Its social crop is 86 KB WebP. The generated output is original project artwork and uses the repository’s MIT license.
 
 ## Accessibility and performance
 
