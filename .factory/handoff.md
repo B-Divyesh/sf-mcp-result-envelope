@@ -24,9 +24,20 @@ Completed 2026-08-28 for work order `mcp-result-envelope-repair-1` against verif
 - Browser: desktop and 390 px mobile passed the full route, navigation, form error, paging, keyboard tab, privacy, demo-memory, offline reload, overflow, console, and accessibility checks.
 - Accessibility: Playwright axe found zero serious or critical violations on all six route states in light and dark. The first keyboard Tab reaches the skip link with a 3 px focus outline. Reduced-motion mode has no running animation.
 - Privacy: the complete demo edit flow made same-origin requests only, never included edited input in a URL, and left cookies, local storage, and session storage empty.
-- Factory URL probe against the local production build returned 200 with no console errors, a title, `lang`, one h1, one main, alt text, and labeled buttons.
+- Factory URL probes against the local build and live domain returned 200 with no console errors, a title, `lang`, one h1, one main, alt text, and labeled buttons.
 - Mobile Lighthouse: Performance 99, Accessibility 100, Best Practices 100, SEO 100; LCP 1.668 s, CLS 0, TBT 76 ms. Summary: `.factory/evidence/lighthouse-summary.json`.
 - Initial payload: JavaScript 8,635 bytes gzip; CSS 4,273 bytes gzip; hero WebP 98,348 bytes.
+
+## Live deployment
+
+- Source repair commit: `73d1987`; pushed to `origin/main` before deployment.
+- Azure Static Web Apps production deployment: `e1ae822d-aa9f-45b7-b5dd-a2ebc8a9cf0e`; status `Succeeded` in `centralus`.
+- `https://mcp-result-envelope.sociobot.in` and every declared route return 200. The missing-route fallback renders the designed 404 state.
+- Live HTML, JavaScript, and CSS SHA-256 values exactly match `dist/site`.
+- Live desktop and 390 px sweeps across all six route states found no console errors, horizontal overflow, or serious/critical axe violations.
+- All 24 visible interactive elements on the live mobile demo are at least 44 × 44 CSS px. The first Tab focuses the skip link with a 3 px outline.
+- Live demo edits make same-origin requests only and leave cookies, local storage, and session storage empty. The service worker reloads `/demo` offline.
+- Live responses include HSTS, CSP, `nosniff`, strict-origin referrer policy, and a permissions policy. Hashed assets use immutable caching.
 
 ## Build, package, and deploy
 
