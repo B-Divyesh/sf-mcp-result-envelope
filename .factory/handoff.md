@@ -1,52 +1,28 @@
-# Polish 1 handoff — complete
+# Review 2 handoff — FAIL
 
-Work order `mcp-result-envelope-polish-1` repaired candidate `a673782835f9bbe2e0f860b15751a3f158dd3d45` against every finding in `.factory/review-1.md`. No earlier review or polish report exists; both earlier verification findings were also retested.
+Work order `mcp-result-envelope-review-2` reviewed commit `1a1dbc7305fcc44431a14944d0f1c285715666fb` and the matching production deployment. Product code was not changed.
 
-## What changed
+## What was done
 
-- Replaced broken public-registry commands with a versioned npm tarball shipped by the static site. The production download installs into a clean npm project and exposes ESM, CommonJS, declarations, and the CLI.
-- Rewrote the first-screen audience/outcome copy and standardized the product noun as “packet.”
-- Made `/?demo=1` the primary one-click path. It loads and builds 12 sample orders with a persistent demo/reset/exit banner and memory-only isolation.
-- Expanded the claims contract to 25 claims with exactly one tagged behavioural test per claim and added `npm run test:claims`.
-- Added generated entry documents for every real route, complete dynamic metadata updates, a real styled HTTP 404, legal-link coverage, focus announcements, and live-suite support.
-- Kept the blueprint drafting-sheet identity and refined the 390 px tabs so all four parts remain visible.
-- Updated the copy audit, demo documentation, changelog, catalog description, verification evidence, and finding map in `.factory/polish-1.md`.
+- Wrote `.factory/review-2.md` with the cold mobile/desktop read, complete landing and README copy audit, demo and storage checks, all claims results, prior-finding retest, route/accessibility checks, missed-leverage assessment, and verdict.
+- Re-ran all 25 declared claim commands from clean clone `/tmp/mcp-result-envelope-review-2-9x7zll/repo`.
+- Ran the full clean-clone test gate and the complete suite against the live deployment.
+- Installed the production tarball into a fresh temporary npm project and ran the imported API and installed CLI demo.
+- Confirmed live JavaScript and CSS hashes match the clean build.
 
-## Verification
+## Verification results
 
-From a clean clone:
+- `npm run test:claims`: 25/25 declared claims passed.
+- `npm test`: typecheck/build passed; 22 unit/consumer tests passed; 27 browser tests passed with three intentional project-only skips.
+- Live Playwright suite: 27 passed, three intentional project-only skips across desktop and 390 px mobile.
+- Live package install/API/CLI demo: passed.
+- Live route/link/metadata/focus/accessibility/privacy/offline checks: passed except for the findings below.
 
-```sh
-npm ci
-npm run test:claims
-npm test
-npm run pack:check
-```
+## Findings left
 
-Results:
+- **F-2-1 — BLOCKING:** the 390 px demo's initial viewport shows seeded input but not the generated packet outcome.
+- **F-2-2 / F-1-2 reopened — BLOCKING:** two README claims are unlisted, and schema nullability is not asserted by its tagged claim test.
+- **F-2-3 — MINOR:** “Every page has a measured edge” is an unclear metaphor.
+- **F-2-4 — MINOR:** “Resolve the cursor when asked” does not name the action plainly.
 
-- Claims: 25/25 passed independently.
-- Full gate: typecheck passed; production build passed; 22/22 unit and consumer tests passed; 27 browser tests passed with 3 intentional project-only skips.
-- Package dry run: 9.8 KB tarball, 10 declared files, zero runtime dependencies.
-- Build output: `dist/index.js`, `dist/index.cjs`, `dist/index.d.ts`, `dist/cli.js`, and routed `dist/site/` including the package tarball and `404.html`.
-- Initial site payload: 8.81 KB gzip JavaScript and 4.31 KB gzip CSS. Hero image: 98.3 KB.
-
-Production deployment and cold checks:
-
-- URL: `https://mcp-result-envelope.sociobot.in/`
-- Direct demo: `https://mcp-result-envelope.sociobot.in/?demo=1`
-- Package: `https://mcp-result-envelope.sociobot.in/downloads/mcp-result-envelope-0.1.0.tgz`
-- Live browser suite: 27 passed, 3 project-conditional skips across desktop and 390 px mobile.
-- Live route statuses: five product/legal routes, package, robots, and sitemap returned 200; an unknown route returned 404 with the designed page.
-- Live package consumer: install passed; ESM import returned the expected two-page summary; installed CLI demo created a fresh temporary packet.
-- Package parity: deployed and local tarballs share SHA-256 `b3e3617272754d87bc2f3c3291bc053ee358dcf21e438acc686b88168648da99`.
-- Live verifier: no console errors; valid title and `lang`; one `h1`; one `main`; no missing alt text or unlabeled buttons.
-- Live axe coverage: zero serious or critical findings across every route, both themes, and the 404.
-- Live mobile Lighthouse: performance 100, accessibility 100, best practices 100, SEO 100; LCP 1.4 s, CLS 0, TBT 0 ms.
-- Security headers: HSTS, self-only CSP, nosniff, strict-origin referrer policy, and restrictive permissions policy present.
-
-Evidence is in `.factory/evidence/` and the finding-by-finding record is `.factory/polish-1.md`.
-
-## Known gaps and next steps
-
-None for this work order. The npm registry name remains unpublished, so the product truthfully uses its tested, versioned release tarball. Registry publication remains a factory release operation and is not advertised as complete.
+The exact evidence and required fixes are in `.factory/review-2.md`.
