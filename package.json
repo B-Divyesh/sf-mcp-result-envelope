@@ -1,0 +1,71 @@
+{
+  "name": "mcp-result-envelope",
+  "version": "0.1.0",
+  "description": "Pack large structured tool results into summaries, schemas, and stable pages.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Param Factory",
+  "homepage": "https://mcp-result-envelope.sociobot.in",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/B-Divyesh/sf-mcp-result-envelope.git"
+  },
+  "keywords": [
+    "mcp",
+    "tool-results",
+    "pagination",
+    "json",
+    "cli"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "result-envelope": "./dist/cli.js"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.cjs",
+    "dist/index.d.ts",
+    "dist/cli.js",
+    "examples",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "dev": "vite --config site/vite.config.ts",
+    "build:lib": "tsup",
+    "build:site": "vite build --config site/vite.config.ts",
+    "build": "npm run clean && npm run build:lib && npm run build:site",
+    "clean": "node scripts/clean.mjs",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test": "npm run build && npm run test:unit && npm run test:e2e",
+    "pack:check": "npm pack --dry-run"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "1.58.2",
+    "@types/node": "22.15.3",
+    "tsup": "^8.5.1",
+    "typescript": "5.8.3",
+    "vite": "^6.4.3",
+    "vitest": "^3.2.7"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "overrides": {
+    "tsup": {
+      "esbuild": "0.28.2"
+    }
+  }
+}
