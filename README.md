@@ -2,16 +2,16 @@
 
 Pack large tool results into summaries, schemas, and stable pages.
 
-Result Envelope is for MCP and CLI tool authors. It keeps result boundaries explicit before data reaches a model.
+Result Envelope is for MCP and CLI tool authors. It turns JSON into a manifest, compact summary, schema, and stable pages.
 
-It does not call models, store results, or choose “important” rows. The library has no runtime dependencies and sends no telemetry.
+The package preserves JSON types, row order, and provenance. It has no runtime dependencies and makes no network, model, or telemetry calls.
 
 ## Try the demo
 
-Open [the browser demo](https://mcp-result-envelope.sociobot.in/demo), or run the bundled CLI sample:
+Open [the browser demo](https://mcp-result-envelope.sociobot.in/?demo=1), or run the same bundled sample from the released package:
 
 ```sh
-npx mcp-result-envelope demo
+npx --yes https://mcp-result-envelope.sociobot.in/downloads/mcp-result-envelope-0.1.0.tgz demo
 ```
 
 The CLI writes its sample envelope to a new temporary directory and prints the path. The browser demo keeps edits in memory and discards them when demo mode ends.
@@ -20,11 +20,13 @@ The browser demo reopens offline after its first visit.
 
 ## Install
 
+Install the versioned npm package served by this release:
+
 ```sh
-npm install mcp-result-envelope
+npm install https://mcp-result-envelope.sociobot.in/downloads/mcp-result-envelope-0.1.0.tgz
 ```
 
-Node.js 18 or newer is required.
+The package metadata requires Node.js 18 or newer.
 
 ## Use the library
 
@@ -65,7 +67,7 @@ for await (const chunk of streamEnvelope(rows, options)) {
 }
 ```
 
-Chunks arrive as manifest, summary, schema, then bounded pages. This is an async iterator contract. It does not change MCP transport behavior.
+Chunks arrive as manifest, summary, schema, then bounded pages. `streamEnvelope` returns an async iterator.
 
 ## Use the CLI
 
@@ -97,11 +99,11 @@ npm run build
 npm run pack:check
 ```
 
-`npm run build` creates the library in `dist/` and the static site in `dist/site/`. The exact site build command is `npm run build:site`.
+`npm run build` creates the library and static site in `dist/`. The site build also creates its versioned npm tarball.
 
 ## Privacy
 
-The package makes no network requests. The browser inspector processes input in the current tab and stores nothing. See the site’s [privacy page](https://mcp-result-envelope.sociobot.in/privacy).
+The package makes no network requests. The browser inspector keeps input in the current tab and saves nothing. See the site’s [privacy page](https://mcp-result-envelope.sociobot.in/privacy).
 
 ## License
 

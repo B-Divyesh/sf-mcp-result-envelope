@@ -43,8 +43,8 @@
   "scripts": {
     "dev": "vite --config site/vite.config.ts",
     "build:lib": "tsup",
-    "build:site": "vite build --config site/vite.config.ts",
-    "build": "npm run clean && npm run build:lib && npm run build:site",
+    "build:site": "npm run build:lib && vite build --config site/vite.config.ts && node scripts/finish-site.mjs",
+    "build": "npm run clean && npm run build:site",
     "clean": "node scripts/clean.mjs",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",

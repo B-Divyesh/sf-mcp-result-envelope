@@ -1,59 +1,143 @@
 [
   {
     "id": "free-license",
-    "claim": "Free and MIT licensed.",
-    "where": "landing facts and README",
-    "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:free-license'",
-    "sandbox": "fresh clone; inspect package metadata, runtime dependencies, and LICENSE"
+    "claim": "Result Envelope is free and MIT licensed.",
+    "where": "landing facts, terms, package metadata, and README",
+    "test": "npm run test:unit -- --testNamePattern '@claim:free-license'",
+    "sandbox": "fresh clone; inspect package metadata and LICENSE"
+  },
+  {
+    "id": "installable-package",
+    "claim": "The versioned npm tarball installs in a clean project and exposes the library and CLI.",
+    "where": "landing install sheet and README",
+    "test": "npm run build:site && npm run test:unit -- --testNamePattern '@claim:installable-package'",
+    "sandbox": "fresh temporary npm project; install the generated release tarball; import the API and run the installed CLI"
+  },
+  {
+    "id": "demo-sample",
+    "claim": "The one-click demo loads 12 realistic orders, builds their packet, and resets to the original sample.",
+    "where": "landing first action, demo banner, and demo documentation",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:demo-sample'",
+    "sandbox": "fresh browser context at /?demo=1; replace input; reset; assert 12 bundled orders and a built packet"
   },
   {
     "id": "local-processing",
-    "claim": "Runs in this tab. No uploads.",
+    "claim": "The browser inspector processes JSON in the current tab and uploads none of the input.",
     "where": "landing facts, inspector, privacy, and README",
     "test": "npm run build:site && npm run test:e2e -- --grep '@claim:local-processing'",
     "sandbox": "fresh browser context; edit demo data; capture the complete request log"
   },
   {
+    "id": "browser-no-storage",
+    "claim": "The real inspector saves no input in cookies, local storage, session storage, or a server.",
+    "where": "inspector, privacy, and README",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:browser-no-storage'",
+    "sandbox": "fresh browser context at /inspect; build private input; inspect browser storage; reload"
+  },
+  {
+    "id": "site-no-tracking",
+    "claim": "The site loads no analytics, advertising, tracking scripts, or third-party fonts.",
+    "where": "privacy",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:site-no-tracking'",
+    "sandbox": "fresh browser context; capture requests across landing and privacy; inspect script and font elements"
+  },
+  {
     "id": "json-types",
     "claim": "JSON types, provenance, and row order stay intact.",
-    "where": "landing facts and README",
+    "where": "landing first screen and README",
     "test": "npm run test:unit -- --testNamePattern '@claim:json-types'",
     "sandbox": "typed fixture containing numbers, booleans, nulls, arrays, nested objects, and provenance"
   },
   {
+    "id": "api-shape",
+    "claim": "createEnvelope returns a manifest, compact summary, schema, and first stable page with documented metadata.",
+    "where": "landing guide and README API description",
+    "test": "npm run test:unit -- --testNamePattern '@claim:api-shape'",
+    "sandbox": "12-row typed fixture; assert all four top-level parts and their documented properties"
+  },
+  {
+    "id": "inspector-parts",
+    "claim": "The browser inspector shows four populated packet parts: manifest, summary, schema, and page.",
+    "where": "landing hero caption and inspector",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:inspector-parts'",
+    "sandbox": "fresh query demo; open each output tab and assert visible populated output"
+  },
+  {
+    "id": "packet-details",
+    "claim": "The sample packet shows caps, field types, counts, and its next cursor.",
+    "where": "landing preview",
+    "test": "npm run build:site && npm run test:e2e -- --grep '@claim:packet-details'",
+    "sandbox": "fresh query demo; inspect manifest, schema, metrics, and first page output"
+  },
+  {
     "id": "summary-no-rows",
-    "claim": "The summary contains no sample rows.",
-    "where": "README",
+    "claim": "The compact summary contains counts and numeric ranges, not sample rows.",
+    "where": "landing boundaries and README",
     "test": "npm run test:unit -- --testNamePattern '@claim:summary-no-rows'",
     "sandbox": "fixture with a unique row value; assert that serialized summary output omits it"
   },
   {
     "id": "page-caps",
-    "claim": "Each page respects the row and byte caps you set.",
-    "where": "README and inspector labels",
+    "claim": "Each page respects the configured row and byte caps.",
+    "where": "landing guide and README",
     "test": "npm run test:unit -- --testNamePattern '@claim:page-caps'",
     "sandbox": "12-row fixture; assert every serialized page against both configured caps"
   },
   {
+    "id": "row-cap",
+    "claim": "maxRows stops the included row count and marks the manifest as capped.",
+    "where": "README caps",
+    "test": "npm run test:unit -- --testNamePattern '@claim:row-cap'",
+    "sandbox": "12-row fixture with maxRows four; assert total, included, and capped fields"
+  },
+  {
+    "id": "row-too-large",
+    "claim": "A row that cannot fit the byte cap fails with ROW_TOO_LARGE guidance.",
+    "where": "landing boundaries and README caps",
+    "test": "npm run test:unit -- --testNamePattern '@claim:row-too-large'",
+    "sandbox": "one oversized row with the minimum byte cap; assert the typed error and row guidance"
+  },
+  {
+    "id": "input-validation",
+    "claim": "Inputs must be JSON values with finite numbers and no circular references.",
+    "where": "README caps and inspector help",
+    "test": "npm run test:unit -- --testNamePattern '@claim:input-validation'",
+    "sandbox": "fixtures containing NaN and a circular reference; assert INVALID_INPUT errors"
+  },
+  {
     "id": "stable-cursors",
-    "claim": "The same input and options produce the same cursor.",
-    "where": "README",
+    "claim": "The same input and caps produce the same cursor; changed data rejects it with INVALID_CURSOR.",
+    "where": "landing boundaries and README",
     "test": "npm run test:unit -- --testNamePattern '@claim:stable-cursors'",
-    "sandbox": "clone the same fixture; compare cursors; reject the cursor after changing the rows"
+    "sandbox": "clone the same fixture; compare cursors; assert INVALID_CURSOR after changing rows"
   },
   {
     "id": "stream-order",
-    "claim": "Chunks arrive as manifest, summary, schema, then bounded pages.",
-    "where": "README",
+    "claim": "Stream chunks arrive as manifest, summary, schema, then bounded pages.",
+    "where": "README stream and CLI sections",
     "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:stream-order'",
-    "sandbox": "pipe a two-row NDJSON fixture into the documented pack - --format ndjson --stream command; assert a successful exit and ordered chunks"
+    "sandbox": "pipe a two-row NDJSON fixture into the documented pack - --format ndjson --stream command; assert ordered chunks"
   },
   {
     "id": "package-no-network",
-    "claim": "The package makes no network requests.",
-    "where": "README and privacy",
-    "test": "npm run test:unit -- --testNamePattern '@claim:package-no-network'",
-    "sandbox": "spy on global fetch while packing and resolving a page"
+    "claim": "The package makes no network, model, or telemetry calls.",
+    "where": "landing boundaries, privacy, and README",
+    "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:package-no-network'",
+    "sandbox": "spy on global fetch while packing and paging; inspect built artifacts for network clients or model endpoints"
+  },
+  {
+    "id": "zero-runtime-dependencies",
+    "claim": "The library has no runtime dependencies.",
+    "where": "README",
+    "test": "npm run test:unit -- --testNamePattern '@claim:zero-runtime-dependencies'",
+    "sandbox": "fresh clone; inspect package metadata dependencies"
+  },
+  {
+    "id": "node-support",
+    "claim": "The package metadata requires Node.js 18 or newer.",
+    "where": "README install",
+    "test": "npm run test:unit -- --testNamePattern '@claim:node-support'",
+    "sandbox": "fresh clone; assert the exact package engines range"
   },
   {
     "id": "cli-demo",
@@ -63,17 +147,31 @@
     "sandbox": "fresh temporary directory; run the bundled demo and inspect its output file"
   },
   {
+    "id": "cli-io",
+    "claim": "The CLI writes JSON to stdout and actionable errors to stderr with a non-zero exit code.",
+    "where": "README CLI section",
+    "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:cli-io'",
+    "sandbox": "pipe valid and invalid JSON into the documented CLI; assert output streams and exit codes"
+  },
+  {
     "id": "offline-reload",
     "claim": "The demo reopens offline after its first visit.",
-    "where": "demo documentation",
+    "where": "README and demo documentation",
     "test": "npm run build:site && npm run test:e2e -- --grep '@claim:offline-reload'",
-    "sandbox": "fresh browser context; open demo online, wait for its service worker, then reload offline"
+    "sandbox": "fresh browser context at /?demo=1; wait for the service worker; reload offline"
   },
   {
     "id": "demo-memory",
     "claim": "Demo edits stay in the tab and are discarded when demo mode ends.",
-    "where": "demo banner, inspector, privacy, README, and demo documentation",
+    "where": "demo banner, inspector, README, and demo documentation",
     "test": "npm run build:site && npm run test:e2e -- --grep '@claim:demo-memory'",
-    "sandbox": "fresh browser context; edit sample, leave demo, inspect cookies and browser storage, then reopen demo"
+    "sandbox": "fresh browser context; edit sample; leave demo; inspect storage; reopen demo"
+  },
+  {
+    "id": "build-output",
+    "claim": "npm run build creates the library, routed static site, and versioned npm tarball in dist.",
+    "where": "README develop section",
+    "test": "npm run build && npm run test:unit -- --testNamePattern '@claim:build-output'",
+    "sandbox": "fresh clone; run the production build; assert library, route HTML, 404, and tarball files"
   }
 ]

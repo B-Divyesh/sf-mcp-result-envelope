@@ -1,14 +1,54 @@
 import { execFileSync, spawnSync } from "node:child_process";
-import { readFileSync, statSync } from "node:fs";
+import { mkdtempSync, readFileSync, statSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 describe("package and CLI", () => {
-  it("@claim:free-license ships under MIT with no runtime dependencies", () => {
+  it("@claim:free-license ships free under the MIT license", () => {
     const pkg = JSON.parse(readFileSync("package.json", "utf8")) as { license: string; dependencies?: unknown };
     expect(pkg.license).toBe("MIT");
-    expect(pkg.dependencies).toBeUndefined();
     expect(readFileSync("LICENSE", "utf8")).toContain("Permission is hereby granted");
+  });
+
+  it("@claim:zero-runtime-dependencies declares no runtime dependencies", () => {
+    const pkg = JSON.parse(readFileSync("package.json", "utf8")) as { dependencies?: unknown };
+    expect(pkg.dependencies).toBeUndefined();
+  });
+
+  it("@claim:node-support declares Node.js 18 or newer", () => {
+    const pkg = JSON.parse(readFileSync("package.json", "utf8")) as { engines?: { node?: string } };
+    expect(pkg.engines?.node).toBe(">=18");
+  });
+
+  it("@claim:build-output creates the library, routed site, and npm tarball", () => {
+    for (const path of [
+      "dist/index.js",
+      "dist/index.cjs",
+      "dist/index.d.ts",
+      "dist/cli.js",
+      "dist/site/index.html",
+      "dist/site/demo/index.html",
+      "dist/site/privacy/index.html",
+      "dist/site/terms/index.html",
+      "dist/site/404.html",
+      "dist/site/downloads/mcp-result-envelope-0.1.0.tgz"
+    ]) expect(statSync(path).isFile(), path).toBe(true);
+  });
+
+  it("@claim:installable-package installs the released artifact in a clean project", () => {
+    const readme = readFileSync("README.md", "utf8");
+    const siteSource = readFileSync("site/src/main.ts", "utf8");
+    expect(readme).toContain("npm install https://mcp-result-envelope.sociobot.in/downloads/mcp-result-envelope-0.1.0.tgz");
+    expect(readme).not.toMatch(/npm install mcp-result-envelope(?:\s|$)/);
+    expect(siteSource).not.toMatch(/npm install mcp-result-envelope(?:\\n|\s|<)/);
+    const project = mkdtempSync(join(tmpdir(), "result-envelope-consumer-"));
+    execFileSync("npm", ["init", "--yes"], { cwd: project, stdio: "ignore" });
+    execFileSync("npm", ["install", "--ignore-scripts", "--no-audit", "--no-fund", join(process.cwd(), "dist/site/downloads/mcp-result-envelope-0.1.0.tgz")], { cwd: project, stdio: "ignore" });
+    const api = execFileSync(process.execPath, ["--input-type=module", "--eval", "import { createEnvelope } from 'mcp-result-envelope'; console.log(createEnvelope([{id: 1}]).summary.text)"], { cwd: project, encoding: "utf8" });
+    expect(api.trim()).toBe("1 row · 1 field · 1 page");
+    const cli = execFileSync(join(project, "node_modules/.bin/result-envelope"), ["demo"], { cwd: project, encoding: "utf8" });
+    expect(cli).toContain("Demo output:");
   });
 
   it("@claim:cli-demo writes a complete sample packet to a temporary directory", () => {
@@ -22,9 +62,16 @@ describe("package and CLI", () => {
     expect(packet.page.rows).toHaveLength(5);
   });
 
-  it("prints help and reports invalid JSON with exit code 2", () => {
+  it("@claim:cli-io writes JSON to stdout and actionable errors to stderr", () => {
     expect(execFileSync(process.execPath, ["dist/cli.js", "--help"], { encoding: "utf8" })).toContain("--max-bytes");
-    expect(() => execFileSync(process.execPath, ["dist/cli.js", "pack", "-"], { input: "nope", encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] })).toThrow(expect.objectContaining({ status: 2 }));
+    const success = spawnSync(process.execPath, ["dist/cli.js", "pack", "-", "--compact"], { input: '[{"id":1}]', encoding: "utf8" });
+    expect(success.status).toBe(0);
+    expect(success.stderr).toBe("");
+    expect(JSON.parse(success.stdout)).toHaveProperty("manifest.totalRows", 1);
+    const failure = spawnSync(process.execPath, ["dist/cli.js", "pack", "-"], { input: "nope", encoding: "utf8" });
+    expect(failure.status).toBe(2);
+    expect(failure.stdout).toBe("");
+    expect(failure.stderr).toContain("Input is not valid JSON. Fix the input and run the command again.");
   });
 
   it("@claim:stream-order accepts the documented stdin marker and streams ordered NDJSON chunks", () => {
@@ -44,5 +91,16 @@ describe("package and CLI", () => {
     const output = execFileSync(process.execPath, ["examples/basic.mjs"], { encoding: "utf8" });
     expect(output).toContain("2 rows · 3 fields · 2 pages");
     expect(output).toContain("rowStart: 1");
+  });
+
+  it("keeps the claim manifest in one-to-one sync with tagged tests", () => {
+    const claims = JSON.parse(readFileSync(".factory/claims.json", "utf8")) as { id: string; test: string }[];
+    const tests = ["tests/unit/envelope.test.ts", "tests/unit/package.test.ts", "tests/e2e/site.spec.ts"]
+      .map((path) => readFileSync(path, "utf8"))
+      .join("\n");
+    const tags = [...tests.matchAll(/@claim:([a-z0-9-]+)/g)].map((match) => match[1]);
+    expect(new Set(tags).size).toBe(tags.length);
+    expect(tags.sort()).toEqual(claims.map((claim) => claim.id).sort());
+    for (const claim of claims) expect(claim.test).toContain(`@claim:${claim.id}`);
   });
 });

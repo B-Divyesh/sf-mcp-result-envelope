@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { readFileSync } from "node:fs";
 import { createEnvelope, EnvelopeError, getEnvelopePage, streamEnvelope } from "../../src/index.js";
 import type { JsonValue } from "../../src/index.js";
 
@@ -11,11 +12,30 @@ const rows: JsonValue = Array.from({ length: 12 }, (_, index) => ({
 }));
 
 describe("createEnvelope", () => {
+  it("@claim:api-shape returns the documented packet parts and properties", () => {
+    const envelope = createEnvelope(rows, { pageSize: 5, maxBytes: 2048, provenance: "orders" });
+    expect(Object.keys(envelope)).toEqual(["manifest", "summary", "schema", "page"]);
+    expect(envelope.manifest).toMatchObject({
+      totalRows: 12,
+      includedRows: 12,
+      pageCount: 3,
+      pageSize: 5,
+      maxBytes: 2048,
+      provenance: { source: "orders" }
+    });
+    expect(envelope.summary).toMatchObject({ fields: 6 });
+    expect(envelope.summary.numeric.find((item) => item.path === "amount")).toMatchObject({ count: 12, min: 0, max: 115.5 });
+    expect(envelope.schema.fields.find((field) => field.path === "nested.region")).toMatchObject({ types: ["string"], present: 12 });
+    expect(envelope.page).toMatchObject({ number: 1, rowStart: 0, rowEnd: 5 });
+    expect(envelope.page.nextCursor).toEqual(expect.any(String));
+  });
+
   it("@claim:summary-no-rows builds metadata without copying sample rows into the summary", () => {
     const envelope = createEnvelope(rows, { pageSize: 5, provenance: "test query" });
     expect(envelope.manifest).toMatchObject({ totalRows: 12, includedRows: 12, pageCount: 3, capped: false });
     expect(envelope.manifest.provenance).toEqual({ source: "test query" });
     expect(JSON.stringify(envelope.summary)).not.toContain("row-2");
+    expect(envelope.summary.numeric.find((item) => item.path === "amount")).toEqual({ path: "amount", count: 12, min: 0, max: 115.5 });
     expect(envelope.schema.fields.find((field) => field.path === "nested.region")?.types).toEqual(["string"]);
   });
 
@@ -59,16 +79,38 @@ describe("createEnvelope", () => {
     const second = createEnvelope(structuredClone(rows), options);
     expect(first.page.nextCursor).toBe(second.page.nextCursor);
     expect(getEnvelopePage(rows, first.page.nextCursor!, options).rowStart).toBe(2);
-    expect(() => getEnvelopePage([...rows as JsonValue[], { id: 99 }], first.page.nextCursor!, options)).toThrowError(EnvelopeError);
+    try {
+      getEnvelopePage([...rows as JsonValue[], { id: 99 }], first.page.nextCursor!, options);
+      throw new Error("Expected a changed result to reject the cursor");
+    } catch (error) {
+      expect(error).toBeInstanceOf(EnvelopeError);
+      expect((error as EnvelopeError).code).toBe("INVALID_CURSOR");
+    }
   });
 
-  it("surfaces row caps and rejects oversized rows", () => {
+  it("@claim:row-cap stops included rows and marks the manifest as capped", () => {
     expect(createEnvelope(rows, { maxRows: 4 }).manifest).toMatchObject({ totalRows: 12, includedRows: 4, capped: true });
-    expect(() => createEnvelope([{ value: "x".repeat(400) }], { maxBytes: 256 })).toThrowError(/Row 0/);
   });
 
-  it("rejects invalid values and options", () => {
-    expect(() => createEnvelope({ value: Number.NaN } as unknown as JsonValue)).toThrowError(/finite numbers/);
+  it("@claim:row-too-large rejects a row that cannot fit the byte cap", () => {
+    try {
+      createEnvelope([{ value: "x".repeat(400) }], { maxBytes: 256 });
+      throw new Error("Expected the oversized row to fail");
+    } catch (error) {
+      expect(error).toBeInstanceOf(EnvelopeError);
+      expect((error as EnvelopeError).code).toBe("ROW_TOO_LARGE");
+      expect((error as Error).message).toMatch(/Row 0.*Increase maxBytes or remove large fields/);
+    }
+  });
+
+  it("@claim:input-validation rejects non-finite and circular JSON values", () => {
+    expect(() => createEnvelope({ value: Number.NaN } as unknown as JsonValue)).toThrowError(expect.objectContaining({ code: "INVALID_INPUT" }));
+    const circular: { self?: unknown } = {};
+    circular.self = circular;
+    expect(() => createEnvelope(circular as JsonValue)).toThrowError(/finite numbers and no circular references/);
+  });
+
+  it("rejects invalid options and cursors", () => {
     expect(() => createEnvelope(rows, { pageSize: 0 })).toThrowError(/pageSize/);
     expect(() => getEnvelopePage(rows, "bad", { pageSize: 2 })).toThrowError(/cursor/);
   });
@@ -79,11 +121,13 @@ describe("createEnvelope", () => {
     expect(chunks.map((chunk) => chunk.type)).toEqual(["manifest", "summary", "schema", "page", "page", "page"]);
   });
 
-  it("@claim:package-no-network does not call fetch while packing and paging", () => {
+  it("@claim:package-no-network makes no network or model calls while packing and paging", () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     const envelope = createEnvelope(rows, { pageSize: 2 });
     getEnvelopePage(rows, envelope.page.nextCursor!, { pageSize: 2 });
     expect(fetchSpy).not.toHaveBeenCalled();
+    const built = ["dist/index.js", "dist/index.cjs"].map((path) => readFileSync(path, "utf8")).join("\n");
+    expect(built).not.toMatch(/node:https|node:http|openai|sociobot|XMLHttpRequest|WebSocket/);
     fetchSpy.mockRestore();
   });
 });

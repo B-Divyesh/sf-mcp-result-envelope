@@ -1,8 +1,4 @@
 {
-  "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": ["/assets/*", "/*.{css,js,map,svg,png,webp,txt,xml,json}"]
-  },
   "globalHeaders": {
     "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
     "X-Content-Type-Options": "nosniff",
@@ -14,6 +10,6 @@
     { "route": "/sw.js", "headers": { "Cache-Control": "no-cache" } }
   ],
   "responseOverrides": {
-    "404": { "rewrite": "/index.html", "statusCode": 200 }
+    "404": { "rewrite": "/404.html" }
   }
 }

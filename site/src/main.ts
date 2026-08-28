@@ -5,7 +5,9 @@ import { sampleRows } from "./sample.js";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 const routeStatus = document.querySelector<HTMLDivElement>("#route-status")!;
-const baseTitle = "Result Envelope";
+const packageUrl = "https://mcp-result-envelope.sociobot.in/downloads/mcp-result-envelope-0.1.0.tgz";
+const packagePath = "/downloads/mcp-result-envelope-0.1.0.tgz";
+const installCommand = `npm install ${packageUrl}`;
 
 function iconMark(): string {
   return `<svg class="wordmark-mark" aria-hidden="true" viewBox="0 0 42 42"><path d="M4 5h24l10 10v22H4z"/><path d="M11 16h18M11 23h18M11 30h12"/></svg>`;
@@ -30,7 +32,7 @@ function footer(): string {
     <div class="shell footer-grid">
       <p>Bounded pages for large tool results.</p>
       <nav aria-label="Footer navigation"><a href="/privacy" data-link>Privacy</a><a href="/terms" data-link>Terms</a></nav>
-      <p><a href="https://sociobot.in" rel="noreferrer">Built by Param Factory</a> · v0.1.0 · build 2026.08</p>
+      <p><a href="https://sociobot.in" rel="noreferrer" aria-label="Built by Param Factory (external site)">Built by Param Factory ↗</a> · v0.1.0 · build 2026.08</p>
     </div>
   </footer>`;
 }
@@ -45,8 +47,8 @@ function landing(): string {
       <div class="hero-copy">
         <p class="sheet-label">Specification RE–01 / npm + CLI</p>
         <h1 id="hero-title">Pack large tool results into stable pages</h1>
-        <p class="hero-deck">For MCP and CLI authors who need every row reachable without flooding a model’s context.</p>
-        <div class="hero-actions"><a class="button primary" href="/demo" data-link>Try it with sample data</a><span>Loads 12 orders in the inspector below.</span></div>
+        <p class="hero-deck">For MCP and CLI authors who need bounded output without losing types, order, or provenance.</p>
+        <div class="hero-actions"><a class="button primary" href="/?demo=1" data-link>Try it with sample data</a><span>Loads 12 orders and builds their packet.</span></div>
         <ul class="fact-list" aria-label="Product facts">
           <li><span aria-hidden="true">01</span> Free and MIT licensed.</li>
           <li><span aria-hidden="true">02</span> Runs in this tab. No uploads.</li>
@@ -61,7 +63,7 @@ function landing(): string {
     </section>
     <section class="preview-band" aria-labelledby="preview-title">
       <div class="shell preview-grid">
-        <div><p class="sheet-no">Sheet 02</p><h2 id="preview-title">See the contract before you install</h2><p>The packet shows its caps, field types, counts, and next cursor.</p></div>
+        <div><p class="sheet-no">Sheet 02</p><h2 id="preview-title">Inspect the result packet before you install</h2><p>The sample packet shows caps, field types, counts, and its next cursor.</p></div>
         <div class="packet-preview" aria-label="Example result envelope">
           <div class="packet-rail"><span>Manifest</span><strong>12 rows</strong><strong>3 pages</strong><strong>4 KB cap</strong></div>
           <pre tabindex="0"><code>{
@@ -76,13 +78,13 @@ function landing(): string {
       </div>
     </section>
     <section class="steps shell" id="how" aria-labelledby="how-title">
-      <p class="sheet-no">Sheet 03</p><h2 id="how-title">Build the result contract in three steps</h2>
+      <p class="sheet-no">Sheet 03</p><h2 id="how-title">Build a result packet in three steps</h2>
       <ol>
         <li><span>01</span><div><h3>Pass the rows</h3><p>Give the library JSON from your tool or query.</p></div></li>
         <li><span>02</span><div><h3>Set hard caps</h3><p>Choose the row count, page size, and page bytes.</p></div></li>
         <li><span>03</span><div><h3>Return one packet</h3><p>Send its metadata and first page. Resolve the cursor when asked.</p></div></li>
       </ol>
-      <div class="code-sheet"><div class="code-title"><span>Node.js / ESM</span><button type="button" data-copy-install>Copy install command</button></div><pre tabindex="0"><code>npm install mcp-result-envelope
+      <div class="code-sheet"><div class="code-title"><span>Node.js / ESM</span><button type="button" data-copy-install>Copy install command</button></div><pre tabindex="0"><code>npm install ${packageUrl}
 
 import { createEnvelope } from "mcp-result-envelope";
 
@@ -91,14 +93,14 @@ const packet = createEnvelope(rows, {
   maxRows: 10_000,
   maxBytes: 16_384,
   provenance: "orders query"
-});</code></pre></div>
+});</code></pre><p class="package-download"><a href="${packagePath}" download>Download the npm package</a></p></div>
     </section>
     <section class="boundaries" aria-labelledby="limits-title"><div class="shell boundaries-grid">
-      <div><p class="sheet-no">Revision note</p><h2 id="limits-title">Know what it does not do</h2></div>
+      <div><p class="sheet-no">Revision note</p><h2 id="limits-title">Know the packet boundaries</h2></div>
       <ul>
-        <li>It does not call a model or rank rows.</li>
-        <li>It does not host data or change MCP transport.</li>
-        <li>It does not hide rows inside a generated summary.</li>
+        <li>The package makes no network or model calls.</li>
+        <li>The summary contains counts and numeric ranges, not rows.</li>
+        <li>The same input and caps produce the same cursor.</li>
         <li>It rejects a row that cannot fit the byte cap.</li>
       </ul>
       <a class="button inverse" href="/demo" data-link>Inspect the sample packet</a>
@@ -150,7 +152,7 @@ function inspector(demo: boolean): string {
 }
 
 function privacy(): string {
-  return pageShell(`<main id="main" tabindex="-1"><article class="legal shell"><p class="sheet-label">Policy sheet / 2026-08-28</p><h1>Privacy without hidden collection</h1><p>Result Envelope does not collect or send personal data.</p><h2>Browser inspector</h2><p>The inspector processes JSON in the current tab. It does not save input in cookies, local storage, or a server.</p><h2>npm package and CLI</h2><p>The package makes no network requests. The CLI reads the file or standard input that you provide.</p><h2>Website hosting</h2><p>Our host may keep standard security logs. We do not add analytics, advertising, or tracking scripts.</p><h2>Contact</h2><p>Questions can go to <a href="mailto:hello@sociobot.in">hello@sociobot.in</a>.</p></article></main>`);
+  return pageShell(`<main id="main" tabindex="-1"><article class="legal shell"><p class="sheet-label">Policy sheet / 2026-08-28</p><h1>Privacy without hidden collection</h1><p>Result Envelope keeps the JSON you enter in the current browser tab.</p><h2>Browser inspector</h2><p>The inspector sends no input over the network. It saves no input in cookies, local storage, session storage, or a server.</p><h2>npm package and CLI</h2><p>The package makes no network requests. The CLI reads only the file or standard input you provide.</p><h2>Website hosting</h2><p>Our host may keep standard security logs. This site loads no analytics, advertising, tracking scripts, or third-party fonts.</p><h2>Contact</h2><p>Questions can go to <a href="mailto:hello@sociobot.in">hello@sociobot.in</a>.</p></article></main>`);
 }
 
 function terms(): string {
@@ -173,7 +175,13 @@ function setMeta(path: string): void {
   const [title, description] = data[path] ?? data["/404"];
   document.title = title;
   document.querySelector<HTMLMetaElement>('meta[name="description"]')!.content = description;
-  document.querySelector<HTMLLinkElement>('link[rel="canonical"]')!.href = `https://mcp-result-envelope.sociobot.in${path === "/404" ? location.pathname : path}`;
+  const canonical = `https://mcp-result-envelope.sociobot.in${path === "/404" ? location.pathname : path}`;
+  document.querySelector<HTMLLinkElement>('link[rel="canonical"]')!.href = canonical;
+  document.querySelector<HTMLMetaElement>('meta[property="og:title"]')!.content = title;
+  document.querySelector<HTMLMetaElement>('meta[property="og:description"]')!.content = description;
+  document.querySelector<HTMLMetaElement>('meta[property="og:url"]')!.content = canonical;
+  document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')!.content = title;
+  document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')!.content = description;
 }
 
 function activateTabs(): void {
@@ -308,7 +316,7 @@ function setupCommon(): void {
     document.documentElement.dataset.theme = dark ? "light" : "dark";
   });
   document.querySelector<HTMLButtonElement>("[data-copy-install]")?.addEventListener("click", async (event) => {
-    await navigator.clipboard.writeText("npm install mcp-result-envelope");
+    await navigator.clipboard.writeText(installCommand);
     (event.currentTarget as HTMLButtonElement).textContent = "Copied install command";
   });
   for (const link of document.querySelectorAll<HTMLAnchorElement>("a[data-link]")) {
@@ -331,7 +339,7 @@ function render(focus = false): void {
   else if (path === "/privacy") app.innerHTML = privacy();
   else if (path === "/terms") app.innerHTML = terms();
   else app.innerHTML = notFound();
-  const metaPath = ["/", "/demo", "/inspect", "/privacy", "/terms"].includes(path) ? path : "/404";
+  const metaPath = demo ? "/demo" : ["/", "/inspect", "/privacy", "/terms"].includes(path) ? path : "/404";
   setMeta(metaPath);
   setupCommon();
   if (demo || path === "/inspect") setupInspector(demo);
@@ -340,7 +348,8 @@ function render(focus = false): void {
     const heading = document.querySelector<HTMLHeadingElement>("h1")!;
     heading.tabIndex = -1;
     heading.focus();
-    routeStatus.textContent = heading.textContent;
+    routeStatus.textContent = "";
+    requestAnimationFrame(() => { routeStatus.textContent = heading.textContent; });
   }
 }
 

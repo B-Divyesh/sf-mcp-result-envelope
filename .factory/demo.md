@@ -2,13 +2,13 @@
 
 ## Browser
 
-- URL: `https://mcp-result-envelope.sociobot.in/demo`
-- Local URL: `http://127.0.0.1:5173/demo` after `npm run dev`
-- Direct query form: `/?demo=1`
+- URL: `https://mcp-result-envelope.sociobot.in/?demo=1`
+- Alternate route: `https://mcp-result-envelope.sociobot.in/demo`
+- Local URL: `http://127.0.0.1:5173/?demo=1` after `npm run dev`
 - Sample: 12 realistic order rows with regions, states, totals, item counts, and timestamps.
 - Reset: choose **Reset demo** in the persistent demo banner.
 - Exit: choose **Start for real**. This opens an empty inspector and drops the sample edits.
-- Storage namespace: none. Demo input exists only in page memory. It never reads or writes real input.
+- Isolation: demo input exists only in its route's page memory. It never reads or writes real input or browser storage.
 - Offline check: visit the production demo once, wait for the service worker, then reload with the network disabled.
 
 ## CLI
