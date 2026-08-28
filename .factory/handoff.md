@@ -1,32 +1,51 @@
-# Review 3 handoff — FAIL
+# Perfection-loop round 3 handoff — PASS
 
-Work order `mcp-result-envelope-review-3` reviewed commit `c5f715067a5b6d0ece71578fea0a82883e645e6a` and the matching production deployment. Product code was not changed.
+Work order `mcp-result-envelope-polish-3` repaired review commit `969938422dad61964acfb851c25ce01177dee2c4`. Product commits `5576841ba1362bf7654be0641bbd91a5c7e13b47` and `2449350` are pushed to `origin/main` and deployed at <https://mcp-result-envelope.sociobot.in>.
 
-## What was done
+## What changed
 
-- Wrote `.factory/review-3.md` with cold phone/desktop observations, complete landing and README copy counts, demo/storage/network checks, every declared claim result, prior-finding retests, route/accessibility checks, and the missed-leverage assessment.
-- Ran all 25 declared claim commands from clean clone `/tmp/mcp-result-envelope-review3-CbFx9U/repo`.
-- Ran the full clean-clone `npm test` gate and the complete browser suite against production.
-- Installed the live versioned tarball in a fresh temporary npm project, imported the API, and ran the installed CLI demo.
-- Crawled public routes and links, exercised offline reload, inspected storage and requests, and confirmed live JavaScript/CSS hashes match the clean build.
+- Put a dynamically built sample result above the phone editor. At 390×844 and `scrollY=0`, visitors see 12 rows, 3 pages, and populated manifest/summary content.
+- Rewrote the audience sentence, row/byte-cap caption, cursor instruction, and third first-screen fact. Price, privacy, and offline use now fit both tested first viewports.
+- Added `stream-api` and `cli-help` claim contracts and removed the hidden `--json` CLI alias.
+- Made `api-shape` prove every documented manifest, summary, schema/nullability, and page property.
+- Retained isolated in-memory demo/reset/exit behavior, versioned package distribution, real routes, route titles/canonicals, focus announcements, legal links, designed 404, blueprint identity, and service-worker offline support.
+- Updated the design record, demo documentation, complete copy audit, catalog sentence, changelog, and deployment instructions.
 
-## Verification results
+Every review finding is mapped in `.factory/polish-3.md`.
 
-- `npm run test:claims`: 25/25 declared commands passed.
-- Clean `npm test`: typecheck/build passed; 22 unit/consumer tests passed; 27 browser tests passed with three intentional project-only skips.
-- Live Playwright suite: 27 passed with three intentional project-only skips.
-- Live route/link/metadata/focus/axe/privacy/offline checks: passed outside the documented findings.
-- Live package install, API import, and CLI demo: passed.
+## Verification
 
-## Findings left
+Run locally:
 
-- **F-3-1 / F-2-1 — BLOCKING:** the 390 px demo’s initial viewport still shows seeded input but no generated packet outcome.
-- **F-3-2 / F-2-2 / F-1-2 — BLOCKING:** “`streamEnvelope` returns an async iterator” is still absent from the claim manifest.
-- **F-3-3 / F-2-2 / F-1-2 — BLOCKING:** “`result-envelope --help` for all flags” is still absent from the claim manifest and not established by `cli-io`.
-- **F-3-4 / F-2-2 / F-1-2 — BLOCKING:** `@claim:api-shape` still omits documented identity/cap, summary page-count, and schema-nullability assertions.
-- **F-3-5 / F-2-3 — MINOR:** “Every page has a measured edge” remains unclear.
-- **F-3-6 / F-2-4 — MINOR:** “Resolve the cursor when asked” remains ambiguous.
-- **F-3-7 — MINOR:** the cold hero sentence uses avoidable “bounded output” and “provenance” jargon.
-- **F-3-8 — MINOR:** the first-screen facts omit offline use, and the third fact is clipped at 1440 × 900.
+```sh
+npm ci
+npm run test:claims
+npm test
+npm run pack:check
+```
 
-The exact evidence and concrete fixes are in `.factory/review-3.md`.
+Clean clone `/tmp/mcp-result-envelope-polish3-final-KMLYYW/repo`:
+
+- `npm ci`: 93 packages, 0 vulnerabilities.
+- `npm run test:claims`: 27/27 passed.
+- `npm test`: typecheck and production build passed; 23/23 unit/consumer tests passed; Playwright 29 passed with 3 intentional project-only skips.
+- Browser suite covers demo reset/isolation, same-origin privacy, zero storage, offline reload, keyboard tabs/paging, error/empty states, route metadata/focus/legal/404 behavior, 44 px targets, viewport boundaries, both color schemes, and axe serious/critical checks.
+- `npm run pack:check`: 9.9 kB tarball, 47.6 kB unpacked, 10 declared files.
+
+Production:
+
+- Work-order build `npm ci && npm test && npm run build:site`: passed.
+- Azure Static Web Apps deployment ID: `257bcfae-25a9-49b9-b554-bfa3891a6680`.
+- `/`, `/demo`, `/inspect`, `/privacy`, `/terms`, robots, sitemap, icons, social card, and tarball return 200; `/missing-sheet` returns 404.
+- Live Playwright: 29 passed, 3 intentional project-only skips; zero serious/critical axe violations and no console/page errors.
+- Cold demo: result preview bottom 599 px inside the 844 px viewport; document width 390 px; zero cookies/local/session storage; requests only to the product origin.
+- Live Lighthouse mobile: performance 100, accessibility 100, best practices 100, SEO 100; LCP 1.44 s, CLS 0, TBT 24 ms, transfer 114,226 bytes.
+- Initial assets: JavaScript 9.12 kB gzip, CSS 4.64 kB gzip, hero 98.3 kB.
+- Live JS/CSS SHA-256 hashes match the deployed `dist/site`; live and local tarball SHA-256 is `3a18f10cc189eea22e556260f31d934fd41bdd63d463f1012633a561366619ec`.
+- A new live consumer installed the tarball, imported the API, iterated `manifest → summary → schema → page → page`, and ran the CLI demo.
+
+Evidence is in `.factory/evidence/polish-3/`, including clean logs, deployment logs, live screenshots, route and header checks, asset parity, consumer install, browser results, and Lighthouse reports.
+
+## Known gaps and next steps
+
+None. Registry publication remains factory-owned and is not advertised; the tested versioned release tarball is the supported install artifact.

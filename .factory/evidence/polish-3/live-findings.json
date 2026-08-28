@@ -1,0 +1,141 @@
+{
+  "checkedAt": "2026-08-28T16:16:32.682Z",
+  "landing": {
+    "title": "Result Envelope — Pack large tool results",
+    "headline": "Pack large tool results into stable pages",
+    "audience": "For MCP and CLI authors who need size-limited output that keeps types, order, and source details.",
+    "facts": [
+      {
+        "text": "Free and MIT licensed.",
+        "top": 673.234375,
+        "bottom": 718.859375
+      },
+      {
+        "text": "Runs in this tab. No uploads.",
+        "top": 673.234375,
+        "bottom": 718.859375
+      },
+      {
+        "text": "Works offline after your first visit.",
+        "top": 673.234375,
+        "bottom": 718.859375
+      }
+    ],
+    "action": "Try it with sample data",
+    "oldCopyPresent": false
+  },
+  "demo": {
+    "url": "https://mcp-result-envelope.sociobot.in/?demo=1",
+    "title": "Demo — Result Envelope",
+    "scrollY": 0,
+    "banner": "Demo — sample data, nothing is saved OnlineReset demoStart for real",
+    "rows": "12",
+    "pages": "3",
+    "preview": "{ \"manifest\": { \"includedRows\": 12, \"pageCount\": 3, \"id\": \"re_9989164a3bee94d7\" }, \"summary\": \"12 rows · 6 fields · 3 pages\" }",
+    "rowsRect": {
+      "top": 414.65625,
+      "bottom": 439.453125,
+      "height": 24.796875
+    },
+    "pagesRect": {
+      "top": 414.65625,
+      "bottom": 439.453125,
+      "height": 24.796875
+    },
+    "previewRect": {
+      "top": 478.578125,
+      "bottom": 598.578125,
+      "height": 120
+    },
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "documentWidth": 390,
+    "storage": {
+      "local": 0,
+      "session": 0
+    }
+  },
+  "cookies": 0,
+  "requestsOnlySameOrigin": true,
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "expectedTitle": "Result Envelope — Pack large tool results",
+      "title": "Result Envelope — Pack large tool results",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://mcp-result-envelope.sociobot.in/"
+    },
+    {
+      "path": "/demo",
+      "status": 200,
+      "expectedTitle": "Demo — Result Envelope",
+      "title": "Demo — Result Envelope",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://mcp-result-envelope.sociobot.in/demo"
+    },
+    {
+      "path": "/inspect",
+      "status": 200,
+      "expectedTitle": "Inspector — Result Envelope",
+      "title": "Inspector — Result Envelope",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://mcp-result-envelope.sociobot.in/inspect"
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "expectedTitle": "Privacy — Result Envelope",
+      "title": "Privacy — Result Envelope",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://mcp-result-envelope.sociobot.in/privacy"
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "expectedTitle": "Terms — Result Envelope",
+      "title": "Terms — Result Envelope",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://mcp-result-envelope.sociobot.in/terms"
+    }
+  ],
+  "missing": {
+    "status": 404,
+    "title": "Page not found — Result Envelope",
+    "h1": "This page is outside the packet",
+    "returnLink": "/"
+  },
+  "linkStatuses": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/demo",
+      "status": 200
+    },
+    {
+      "path": "/downloads/mcp-result-envelope-0.1.0.tgz",
+      "status": 200
+    },
+    {
+      "path": "/inspect",
+      "status": 200
+    },
+    {
+      "path": "/privacy",
+      "status": 200
+    },
+    {
+      "path": "/terms",
+      "status": 200
+    }
+  ]
+}
