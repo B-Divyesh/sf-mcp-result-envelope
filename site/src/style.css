@@ -258,7 +258,7 @@ fieldset label { margin: 0; font-size: 0.76rem; }
   .meter-strip { grid-template-columns: repeat(2, 1fr); }
   .meter-strip div:nth-child(2) { border-right: 0; }
   .meter-strip div:nth-child(-n + 2) { border-bottom: 1px solid var(--rule); }
-  .tabs button { min-width: 90px; }
+  .tabs button { min-width: 0; padding-inline: 6px; font-size: 0.7rem; }
   .page-tools { align-items: stretch; flex-direction: column; }
   .lost-sheet { max-width: 330px; }
 }
