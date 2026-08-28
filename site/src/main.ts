@@ -131,7 +131,7 @@ function inspector(demo: boolean): string {
           <label for="max-rows">Maximum rows<input id="max-rows" name="maxRows" type="number" min="1" step="1" value="50"></label>
           <label for="max-bytes">Bytes per page<input id="max-bytes" name="maxBytes" type="number" min="256" step="1" value="4096"></label>
         </fieldset>
-        <label for="provenance">Source details (<code>provenance</code>)<input id="provenance" name="provenance" type="text" value="${demo ? "bundled order export" : "local input"}"></label>
+        <label for="provenance"><span>Source details (<code>provenance</code>)</span><input id="provenance" name="provenance" type="text" value="${demo ? "bundled order export" : "local input"}"></label>
         <button class="button primary full" type="submit">Build the envelope</button>
       </form>
       <section class="output-sheet" aria-labelledby="output-title">
