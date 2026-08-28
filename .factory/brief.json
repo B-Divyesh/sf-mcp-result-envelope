@@ -1,0 +1,12 @@
+{
+  "slug": "mcp-result-envelope",
+  "title": "Result Envelope",
+  "summary": "Pack large tool results into summaries, schemas, and stable pages.",
+  "territory": "devtools-data",
+  "user": "MCP and CLI tool authors who need to return large structured results to models without silently truncating, over-tokenizing, or hiding the useful rows.",
+  "smallest_useful_product": "An npm library and CLI that turns rows or JSON into a manifest, compact summary, schema, stable page cursors, and optional streamed chunks; it includes a local inspector.",
+  "artifact_class": "library-npm",
+  "monetization": "free",
+  "constraints": "Preserve types and provenance; enforce configurable row and byte caps; avoid embedding sensitive sample rows in telemetry.",
+  "state": "RESEARCHED"
+}
