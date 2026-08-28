@@ -9,3 +9,5 @@
 - Add the local browser inspector and documentation site.
 - Ship a versioned npm tarball with the site until registry publication is available.
 - Add query-based demo isolation, routed metadata documents, and claim-by-claim verification.
+- Put a populated sample packet in the phone demo's first viewport and expose offline use in the landing facts.
+- Verify the async iterator, complete CLI help surface, and every documented packet metadata field.

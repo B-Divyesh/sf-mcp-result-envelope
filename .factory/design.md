@@ -37,7 +37,7 @@ The base unit is 8 px. Main gaps use 16, 24, 32, 48, 72, and 96 px. Content stop
 
 ## Layout rhythm
 
-The header acts as a drawing title block. The first screen uses an offset two-column drafting plate rather than a centered hero. A vertical sheet number anchors each major section. Sections alternate between open paper and blueprint-blue bands. On phones, the sheet rail becomes a horizontal revision strip and secondary annotations drop below the task.
+The header acts as a drawing title block. The first screen uses an offset two-column drafting plate rather than a centered hero. A vertical sheet number anchors each major section. Sections alternate between open paper and blueprint-blue bands. On phones, the sheet rail becomes a horizontal revision strip, and the built sample packet appears as a compact result sheet before its editor.
 
 ## Interaction grammar
 

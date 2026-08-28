@@ -44,7 +44,7 @@
   {
     "id": "json-types",
     "claim": "JSON types, provenance, and row order stay intact.",
-    "where": "landing first screen and README",
+    "where": "README introduction and API examples",
     "test": "npm run test:unit -- --testNamePattern '@claim:json-types'",
     "sandbox": "typed fixture containing numbers, booleans, nulls, arrays, nested objects, and provenance"
   },
@@ -53,7 +53,7 @@
     "claim": "createEnvelope returns a manifest, compact summary, schema, and first stable page with documented metadata.",
     "where": "landing guide and README API description",
     "test": "npm run test:unit -- --testNamePattern '@claim:api-shape'",
-    "sandbox": "12-row typed fixture; assert all four top-level parts and their documented properties"
+    "sandbox": "12-row typed fixture; assert identity, every cap/count, page-count text, provenance, numeric range, nullable and non-nullable fields, and first page"
   },
   {
     "id": "inspector-parts",
@@ -112,6 +112,13 @@
     "sandbox": "clone the same fixture; compare cursors; assert INVALID_CURSOR after changing rows"
   },
   {
+    "id": "stream-api",
+    "claim": "streamEnvelope returns an async iterator that yields the documented library chunks.",
+    "where": "README stream section",
+    "test": "npm run test:unit -- --testNamePattern '@claim:stream-api'",
+    "sandbox": "12-row typed fixture; assert Symbol.asyncIterator identity and observable manifest-to-pages iteration"
+  },
+  {
     "id": "stream-order",
     "claim": "Stream chunks arrive as manifest, summary, schema, then bounded pages.",
     "where": "README stream and CLI sections",
@@ -147,6 +154,13 @@
     "sandbox": "fresh temporary directory; run the bundled demo and inspect its output file"
   },
   {
+    "id": "cli-help",
+    "claim": "result-envelope --help lists every supported command and flag.",
+    "where": "README CLI section",
+    "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:cli-help'",
+    "sandbox": "fresh built CLI; compare help commands and flags with the parser surface; exercise help, version, and unknown-command paths"
+  },
+  {
     "id": "cli-io",
     "claim": "The CLI writes JSON to stdout and actionable errors to stderr with a non-zero exit code.",
     "where": "README CLI section",
@@ -156,7 +170,7 @@
   {
     "id": "offline-reload",
     "claim": "The demo reopens offline after its first visit.",
-    "where": "README and demo documentation",
+    "where": "landing first-screen facts, README, and demo documentation",
     "test": "npm run build:site && npm run test:e2e -- --grep '@claim:offline-reload'",
     "sandbox": "fresh browser context at /?demo=1; wait for the service worker; reload offline"
   },

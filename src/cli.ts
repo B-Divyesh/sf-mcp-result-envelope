@@ -63,7 +63,7 @@ function parseArgs(args: string[]): { command: string; file: string; options: Cl
     else if (flag === "--provenance") options.provenance = args[index++] || "unknown";
     else if (flag === "--cursor") options.cursor = args[index++];
     else if (flag === "--stream") options.stream = true;
-    else if (flag === "--compact" || flag === "--json") options.compact = true;
+    else if (flag === "--compact") options.compact = true;
     else throw new EnvelopeError("INVALID_OPTION", `Unknown option: ${flag}. Run with --help.`);
   }
   return { command, file, options };

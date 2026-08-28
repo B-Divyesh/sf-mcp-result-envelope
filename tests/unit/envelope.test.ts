@@ -13,20 +13,27 @@ const rows: JsonValue = Array.from({ length: 12 }, (_, index) => ({
 
 describe("createEnvelope", () => {
   it("@claim:api-shape returns the documented packet parts and properties", () => {
-    const envelope = createEnvelope(rows, { pageSize: 5, maxBytes: 2048, provenance: "orders" });
+    const envelope = createEnvelope(rows, { pageSize: 5, maxRows: 20, maxBytes: 2048, provenance: "orders" });
     expect(Object.keys(envelope)).toEqual(["manifest", "summary", "schema", "page"]);
     expect(envelope.manifest).toMatchObject({
+      id: expect.stringMatching(/^re_[a-f0-9]{16}$/),
+      version: "1",
       totalRows: 12,
       includedRows: 12,
       pageCount: 3,
       pageSize: 5,
+      maxRows: 20,
       maxBytes: 2048,
+      inputBytes: expect.any(Number),
+      capped: false,
       provenance: { source: "orders" }
     });
-    expect(envelope.summary).toMatchObject({ fields: 6 });
+    expect(envelope.summary).toMatchObject({ text: "12 rows · 6 fields · 3 pages", fields: 6 });
     expect(envelope.summary.numeric.find((item) => item.path === "amount")).toMatchObject({ count: 12, min: 0, max: 115.5 });
-    expect(envelope.schema.fields.find((field) => field.path === "nested.region")).toMatchObject({ types: ["string"], present: 12 });
-    expect(envelope.page).toMatchObject({ number: 1, rowStart: 0, rowEnd: 5 });
+    expect(envelope.schema).toMatchObject({ kind: "rows" });
+    expect(envelope.schema.fields.find((field) => field.path === "nested.region")).toMatchObject({ types: ["string"], nullable: false, present: 12 });
+    expect(envelope.schema.fields.find((field) => field.path === "optional")).toMatchObject({ types: ["null", "string"], nullable: true, present: 12 });
+    expect(envelope.page).toMatchObject({ number: 1, rows: (rows as JsonValue[]).slice(0, 5), rowStart: 0, rowEnd: 5, bytes: expect.any(Number) });
     expect(envelope.page.nextCursor).toEqual(expect.any(String));
   });
 
@@ -115,10 +122,14 @@ describe("createEnvelope", () => {
     expect(() => getEnvelopePage(rows, "bad", { pageSize: 2 })).toThrowError(/cursor/);
   });
 
-  it("yields metadata before bounded pages", async () => {
+  it("@claim:stream-api returns an async iterator with documented library chunks", async () => {
+    const iterator = streamEnvelope(rows, { pageSize: 5 });
+    expect(iterator[Symbol.asyncIterator]()).toBe(iterator);
     const chunks = [];
-    for await (const chunk of streamEnvelope(rows, { pageSize: 5 })) chunks.push(chunk);
+    for await (const chunk of iterator) chunks.push(chunk);
     expect(chunks.map((chunk) => chunk.type)).toEqual(["manifest", "summary", "schema", "page", "page", "page"]);
+    expect(chunks[0]).toMatchObject({ type: "manifest", data: { totalRows: 12, pageCount: 3 } });
+    expect(chunks.at(-1)).toMatchObject({ type: "page", data: { number: 3, rowStart: 10, rowEnd: 12 } });
   });
 
   it("@claim:package-no-network makes no network or model calls while packing and paging", () => {

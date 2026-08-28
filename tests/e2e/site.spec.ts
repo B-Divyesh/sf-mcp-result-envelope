@@ -11,6 +11,8 @@ test("landing page has a clear first screen and working navigation", async ({ pa
   await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   await page.goBack();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pack large tool results into stable pages");
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
+  await expect(page.locator("#route-status")).toHaveText("Pack large tool results into stable pages");
 });
 
 test("@claim:demo-sample opens the query demo with 12 orders and resets it", async ({ page }) => {
@@ -168,6 +170,17 @@ test("mobile demo fits the viewport", async ({ page }, testInfo) => {
   const width = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(width).toBeLessThanOrEqual(390);
   await expect(page.getByRole("button", { name: "Build the envelope" })).toBeVisible();
+  expect(await page.evaluate(() => scrollY)).toBe(0);
+  await expect(page.locator("#metric-rows")).toHaveText("12");
+  await expect(page.locator("#metric-pages")).toHaveText("3");
+  await expect(page.locator("#demo-packet-preview")).toContainText('"manifest"');
+  await expect(page.locator("#demo-packet-preview")).toContainText("12 rows · 6 fields · 3 pages");
+  for (const result of [page.locator("#metric-rows"), page.locator("#metric-pages"), page.locator("#demo-packet-preview")]) {
+    const box = await result.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.y).toBeGreaterThanOrEqual(0);
+    expect(box!.y + box!.height).toBeLessThanOrEqual(844);
+  }
 
   const controls = [
     page.getByRole("button", { name: "Reset demo", exact: true }),
@@ -196,14 +209,34 @@ test("mobile demo fits the viewport", async ({ page }, testInfo) => {
   }
 });
 
-test("mobile landing keeps the first action and packet preview inside the viewport", async ({ page }, testInfo) => {
+test("landing keeps its action and all three required facts inside the first viewport", async ({ page }) => {
+  await page.goto("/");
+  const firstScreenItems = [
+    page.getByRole("link", { name: "Try it with sample data" }),
+    page.getByText("Free and MIT licensed."),
+    page.getByText("Runs in this tab. No uploads."),
+    page.getByText("Works offline after your first visit.")
+  ];
+  const viewportHeight = await page.evaluate(() => innerHeight);
+  expect(await page.evaluate(() => scrollY)).toBe(0);
+  for (const item of firstScreenItems) {
+    const label = (await item.textContent()) ?? "first-screen item";
+    const box = await item.boundingBox();
+    expect(box, label).not.toBeNull();
+    expect(box!.y, label).toBeGreaterThanOrEqual(0);
+    expect(box!.y + box!.height, label).toBeLessThanOrEqual(viewportHeight);
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
+});
+
+test("mobile landing enters the isolated sample in one click", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile", "mobile project only");
   await page.goto("/");
-  await expect(page.getByRole("link", { name: "Try it with sample data" })).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   await page.getByRole("link", { name: "Try it with sample data" }).click();
   await expect(page).toHaveURL(/\?demo=1$/);
   await expect(page.getByText("Demo — sample data, nothing is saved")).toBeVisible();
+  await expect(page.locator("#metric-rows")).toHaveText("12");
+  expect(await page.evaluate(() => scrollY)).toBe(0);
 });
 
 test("@claim:offline-reload reopens the demo after its first visit", async ({ page, context }, testInfo) => {

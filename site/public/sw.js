@@ -1,4 +1,4 @@
-const CACHE = "result-envelope-v1";
+const CACHE = "result-envelope-v2";
 const SHELL = ["/", "/demo", "/inspect", "/privacy", "/terms", "/favicon.svg", "/assets/result-envelope-blueprint.webp"];
 
 self.addEventListener("install", (event) => {

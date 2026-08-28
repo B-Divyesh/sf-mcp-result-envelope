@@ -74,6 +74,33 @@ describe("package and CLI", () => {
     expect(failure.stderr).toContain("Input is not valid JSON. Fix the input and run the command again.");
   });
 
+  it("@claim:cli-help lists every supported command and flag", () => {
+    const help = execFileSync(process.execPath, ["dist/cli.js", "--help"], { encoding: "utf8" });
+    const commands = [...help.matchAll(/^  result-envelope ([a-z]+)(?:\s|$)/gm)].map((match) => match[1]);
+    const flags = [...help.matchAll(/^  (--[a-z-]+)/gm)].map((match) => match[1]);
+    expect([...new Set(commands)]).toEqual(["pack", "page", "demo"]);
+    expect(flags).toEqual([
+      "--format",
+      "--page-size",
+      "--max-rows",
+      "--max-bytes",
+      "--provenance",
+      "--stream",
+      "--cursor",
+      "--compact",
+      "--help",
+      "--version"
+    ]);
+
+    const source = readFileSync("src/cli.ts", "utf8");
+    const parsedFlags = [...source.matchAll(/(?:flag ===|args\.includes\()\s*["'](--[a-z-]+)["']/g)].map((match) => match[1]);
+    expect([...new Set(parsedFlags)].sort()).toEqual([...flags].sort());
+    expect(source).not.toContain('"--json"');
+
+    expect(execFileSync(process.execPath, ["dist/cli.js", "--version"], { encoding: "utf8" }).trim()).toBe("0.1.0");
+    expect(spawnSync(process.execPath, ["dist/cli.js", "unknown"], { encoding: "utf8" })).toMatchObject({ status: 2 });
+  });
+
   it("@claim:stream-order accepts the documented stdin marker and streams ordered NDJSON chunks", () => {
     const result = spawnSync(
       process.execPath,

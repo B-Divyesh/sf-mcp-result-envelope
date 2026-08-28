@@ -1,1 +1,1 @@
-Pack large tool results into summaries, schemas, and stable pages.
+Pack large MCP and CLI results into summaries, schemas, and stable pages.

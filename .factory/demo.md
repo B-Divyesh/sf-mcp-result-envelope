@@ -6,9 +6,10 @@
 - Alternate route: `https://mcp-result-envelope.sociobot.in/demo`
 - Local URL: `http://127.0.0.1:5173/?demo=1` after `npm run dev`
 - Sample: 12 realistic order rows with regions, states, totals, item counts, and timestamps.
+- First view: the phone layout shows the built packet's 12 rows, 3 pages, manifest identity, and summary before the editor.
 - Reset: choose **Reset demo** in the persistent demo banner.
 - Exit: choose **Start for real**. This opens an empty inspector and drops the sample edits.
-- Isolation: demo input exists only in its route's page memory. It never reads or writes real input or browser storage.
+- Isolation: `?demo=1` and `/demo` use route-local memory only. They never read or write real input, cookies, local storage, session storage, or a server.
 - Offline check: visit the production demo once, wait for the service worker, then reload with the network disabled.
 
 ## CLI

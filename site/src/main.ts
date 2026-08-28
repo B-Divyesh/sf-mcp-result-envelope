@@ -47,18 +47,18 @@ function landing(): string {
       <div class="hero-copy">
         <p class="sheet-label">Specification RE–01 / npm + CLI</p>
         <h1 id="hero-title">Pack large tool results into stable pages</h1>
-        <p class="hero-deck">For MCP and CLI authors who need bounded output without losing types, order, or provenance.</p>
+        <p class="hero-deck">For MCP and CLI authors who need size-limited output that keeps types, order, and source details.</p>
         <div class="hero-actions"><a class="button primary" href="/?demo=1" data-link>Try it with sample data</a><span>Loads 12 orders and builds their packet.</span></div>
         <ul class="fact-list" aria-label="Product facts">
           <li><span aria-hidden="true">01</span> Free and MIT licensed.</li>
           <li><span aria-hidden="true">02</span> Runs in this tab. No uploads.</li>
-          <li><span aria-hidden="true">03</span> JSON types stay intact.</li>
+          <li><span aria-hidden="true">03</span> Works offline after your first visit.</li>
         </ul>
       </div>
       <figure class="hero-plate">
         <div class="measure measure-top" aria-hidden="true">← 16,384 byte cap →</div>
         <img src="/assets/result-envelope-blueprint.webp" width="1200" height="800" fetchpriority="high" alt="A drafting table separates one large result into a manifest, schema, summary, and bounded pages.">
-        <figcaption>One result. Four inspectable parts. Every page has a measured edge.</figcaption>
+        <figcaption>One result. Four inspectable parts. Every page stays within its row and byte caps.</figcaption>
       </figure>
     </section>
     <section class="preview-band" aria-labelledby="preview-title">
@@ -82,7 +82,7 @@ function landing(): string {
       <ol>
         <li><span>01</span><div><h3>Pass the rows</h3><p>Give the library JSON from your tool or query.</p></div></li>
         <li><span>02</span><div><h3>Set hard caps</h3><p>Choose the row count, page size, and page bytes.</p></div></li>
-        <li><span>03</span><div><h3>Return one packet</h3><p>Send its metadata and first page. Resolve the cursor when asked.</p></div></li>
+        <li><span>03</span><div><h3>Return one packet</h3><p>Send its metadata and first page. Use the cursor to fetch the next page.</p></div></li>
       </ol>
       <div class="code-sheet"><div class="code-title"><span>Node.js / ESM</span><button type="button" data-copy-install>Copy install command</button></div><pre tabindex="0"><code>npm install ${packageUrl}
 
@@ -109,8 +109,16 @@ const packet = createEnvelope(rows, {
 }
 
 function inspector(demo: boolean): string {
-  return pageShell(`<main id="main" tabindex="-1" class="inspector-main">
+  const metricIds = demo
+    ? ["detail-metric-rows", "detail-metric-pages", "detail-metric-bytes", "detail-metric-fields"]
+    : ["metric-rows", "metric-pages", "metric-bytes", "metric-fields"];
+  return pageShell(`<main id="main" tabindex="-1" class="inspector-main${demo ? " demo-inspector" : ""}">
     <section class="inspector-head shell"><p class="sheet-label">Local inspector / revision 01</p><h1>${demo ? "Inspect a sample result envelope" : "Build a result envelope"}</h1><p>${demo ? "Edit the bundled orders and rebuild the packet. Demo edits stay in this tab." : "Paste a JSON array or object. The inspector keeps it in this tab."}</p></section>
+    ${demo ? `<section class="demo-result-strip shell" aria-labelledby="demo-result-title" aria-live="polite">
+      <div class="demo-result-heading"><p class="sheet-label">Built sample / packet output</p><h2 id="demo-result-title">Sample packet ready</h2><p>The 12 bundled orders are already packed.</p></div>
+      <dl class="demo-meters"><div><dt>Rows</dt><dd id="metric-rows" data-metric="rows">—</dd></div><div><dt>Pages</dt><dd id="metric-pages" data-metric="pages">—</dd></div></dl>
+      <pre id="demo-packet-preview" tabindex="0" aria-label="Populated sample manifest"><code>Building the sample packet…</code></pre>
+    </section>` : ""}
     <section class="workbench shell" aria-label="Result envelope inspector">
       <form class="input-sheet" id="envelope-form" novalidate>
         <div class="sheet-heading"><h2>Input JSON</h2><span id="input-count">0 bytes</span></div>
@@ -130,7 +138,7 @@ function inspector(demo: boolean): string {
         <div class="sheet-heading"><h2 id="output-title">Packet output</h2><span id="packet-status">Waiting for input</span></div>
         <div id="empty-output" class="empty-state"><span class="empty-glyph" aria-hidden="true">⌞</span><h3>No packet yet</h3><p>Build the envelope to see its manifest, summary, schema, and first page.</p></div>
         <div id="packet-output" hidden>
-          <dl class="meter-strip"><div><dt>Rows</dt><dd id="metric-rows">—</dd></div><div><dt>Pages</dt><dd id="metric-pages">—</dd></div><div><dt>Page bytes</dt><dd id="metric-bytes">—</dd></div><div><dt>Fields</dt><dd id="metric-fields">—</dd></div></dl>
+          <dl class="meter-strip"><div><dt>Rows</dt><dd id="${metricIds[0]}" data-metric="rows">—</dd></div><div><dt>Pages</dt><dd id="${metricIds[1]}" data-metric="pages">—</dd></div><div><dt>Page bytes</dt><dd id="${metricIds[2]}" data-metric="bytes">—</dd></div><div><dt>Fields</dt><dd id="${metricIds[3]}" data-metric="fields">—</dd></div></dl>
           <div class="tabs" role="tablist" aria-label="Envelope parts">
             <button role="tab" aria-selected="true" aria-controls="panel-manifest" id="tab-manifest" type="button">Manifest</button>
             <button role="tab" aria-selected="false" aria-controls="panel-summary" id="tab-summary" type="button" tabindex="-1">Summary</button>
@@ -228,10 +236,15 @@ function setupInspector(demo: boolean): void {
     cursor = value.page.nextCursor;
     empty.hidden = true;
     output.hidden = false;
-    document.querySelector("#metric-rows")!.textContent = `${value.manifest.includedRows}${value.manifest.capped ? " capped" : ""}`;
-    document.querySelector("#metric-pages")!.textContent = String(value.manifest.pageCount);
-    document.querySelector("#metric-bytes")!.textContent = value.page.bytes.toLocaleString();
-    document.querySelector("#metric-fields")!.textContent = String(value.summary.fields);
+    document.querySelectorAll<HTMLElement>('[data-metric="rows"]').forEach((item) => { item.textContent = `${value.manifest.includedRows}${value.manifest.capped ? " capped" : ""}`; });
+    document.querySelectorAll<HTMLElement>('[data-metric="pages"]').forEach((item) => { item.textContent = String(value.manifest.pageCount); });
+    document.querySelectorAll<HTMLElement>('[data-metric="bytes"]').forEach((item) => { item.textContent = value.page.bytes.toLocaleString(); });
+    document.querySelectorAll<HTMLElement>('[data-metric="fields"]').forEach((item) => { item.textContent = String(value.summary.fields); });
+    const demoPreview = document.querySelector<HTMLElement>("#demo-packet-preview code");
+    if (demoPreview) demoPreview.textContent = JSON.stringify({
+      manifest: { includedRows: value.manifest.includedRows, pageCount: value.manifest.pageCount, id: value.manifest.id },
+      summary: value.summary.text
+    }, null, 2);
     document.querySelector("#packet-status")!.textContent = "Packet ready";
     const values = [value.manifest, value.summary, value.schema, value.page];
     ["manifest", "summary", "schema", "page"].forEach((name, index) => {
@@ -276,7 +289,7 @@ function setupInspector(demo: boolean): void {
       const page = getEnvelopePage(parsed, cursor, options);
       packet.page = page;
       cursor = page.nextCursor;
-      document.querySelector("#metric-bytes")!.textContent = page.bytes.toLocaleString();
+      document.querySelectorAll<HTMLElement>('[data-metric="bytes"]').forEach((item) => { item.textContent = page.bytes.toLocaleString(); });
       document.querySelector("#panel-page code")!.textContent = JSON.stringify(page, null, 2);
       nextButton.disabled = !cursor;
       copyButton.disabled = !cursor;
