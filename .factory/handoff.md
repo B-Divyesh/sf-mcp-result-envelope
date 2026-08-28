@@ -53,3 +53,9 @@ Evidence is in `.factory/evidence/`. Claim commands and sandbox details are in `
 - Stable paging assumes the caller reruns the same ordered query with the same options.
 - `streamEnvelope` is an async iterator. It does not add streaming support to MCP transports.
 - The brief’s 20-response, 50%-token benchmark remains post-release validation. The site makes no unverified token-savings claim.
+
+## Independent verifier outcome — 2026-08-28
+
+**FAIL — do not release candidate `3c80be2bbc2559e1cac5dbe960fffb59b3332f6a`.**
+
+All 11 claims, `npm test`, build, package dry-run, live first-read, deployment parity, browser/a11y checks, and privacy checks passed. However, the README’s documented core CLI stdin command (`cat results.ndjson | result-envelope pack - --format ndjson --stream`) exits 2 with `Unknown option: -` instead of producing an envelope. At 390 px, Reset demo, Start for real, and footer links are also smaller than the required 44 px touch target. Full independent evidence and retest criteria: `.factory/verification-1.md`.
