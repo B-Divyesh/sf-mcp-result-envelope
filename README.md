@@ -101,6 +101,8 @@ npm run pack:check
 
 `npm run build` creates the library and static site in `dist/`. The site build also creates its versioned npm tarball.
 
+To deploy the documentation site, serve `dist/site` as the static site root. Do not deploy the top-level `dist` directory.
+
 ## Privacy
 
 The package makes no network requests. The browser inspector keeps input in the current tab and saves nothing. See the site’s [privacy page](https://mcp-result-envelope.sociobot.in/privacy).
