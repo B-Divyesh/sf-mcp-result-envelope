@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const deployedBaseUrl = process.env.PLAYWRIGHT_BASE_URL;
+
 export default defineConfig({
   testDir: "tests/e2e",
   fullyParallel: true,
@@ -7,7 +9,7 @@ export default defineConfig({
   expect: { timeout: 5_000 },
   reporter: [["list"]],
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: deployedBaseUrl ?? "http://127.0.0.1:4173",
     trace: "retain-on-failure",
     screenshot: "only-on-failure"
   },
@@ -15,7 +17,7 @@ export default defineConfig({
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["iPhone 13"], browserName: "chromium", viewport: { width: 390, height: 844 } } }
   ],
-  webServer: {
+  webServer: deployedBaseUrl ? undefined : {
     command: "npx vite preview --config site/vite.config.ts --host 127.0.0.1",
     url: "http://127.0.0.1:4173",
     reuseExistingServer: true

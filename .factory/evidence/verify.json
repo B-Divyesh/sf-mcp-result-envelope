@@ -1,6 +1,6 @@
 {
-  "url": "https://mcp-result-envelope.sociobot.in",
-  "loadMs": 743,
+  "url": "https://mcp-result-envelope.sociobot.in/",
+  "loadMs": 561,
   "errors": [],
   "a11y": {
     "title": "Result Envelope — Pack large tool results",
@@ -9,6 +9,6 @@
     "main": true,
     "imgsMissingAlt": 0,
     "buttonsUnlabeled": 0,
-    "textLength": 1617
+    "textLength": 1739
   }
 }

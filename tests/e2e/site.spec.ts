@@ -70,10 +70,11 @@ test("@claim:local-processing sends no demo input off origin", async ({ page }) 
   const requests: string[] = [];
   page.on("request", (request) => requests.push(request.url()));
   await page.goto("/demo");
+  const origin = new URL(page.url()).origin;
   await page.locator("#json-input").fill('[{"private":"sample-secret"}]');
   await page.getByRole("button", { name: "Build the envelope" }).click();
   await expect(page.locator("#metric-rows")).toHaveText("1");
-  expect(requests.every((url) => new URL(url).origin === "http://127.0.0.1:4173")).toBe(true);
+  expect(requests.every((url) => new URL(url).origin === origin)).toBe(true);
   expect(requests.some((url) => url.includes("sample-secret"))).toBe(false);
 });
 
@@ -92,8 +93,9 @@ test("@claim:site-no-tracking loads no analytics, tracking scripts, or third-par
   const requests: string[] = [];
   page.on("request", (request) => requests.push(request.url()));
   await page.goto("/");
+  const origin = new URL(page.url()).origin;
   await page.goto("/privacy");
-  expect(requests.every((url) => new URL(url).origin === "http://127.0.0.1:4173")).toBe(true);
+  expect(requests.every((url) => new URL(url).origin === origin)).toBe(true);
   expect(await page.locator('script[src*="analytics"], script[src*="track"], link[href^="https://fonts."]').count()).toBe(0);
 });
 
@@ -116,7 +118,7 @@ test("every public route has no serious accessibility violations", async ({ page
   page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
   for (const colorScheme of ["light", "dark"] as const) {
     await page.emulateMedia({ colorScheme });
-    for (const route of ["/", "/demo", "/inspect", "/privacy", "/terms", "/missing-sheet"]) {
+    for (const route of ["/", "/demo", "/inspect", "/privacy", "/terms"]) {
       await page.goto(route);
       await expect(page.locator("main")).toHaveCount(1);
       await expect(page.locator("h1")).toHaveCount(1);
@@ -147,10 +149,13 @@ test("routes set distinct metadata, legal links work, and unknown paths render t
   await page.goto("/?demo=1");
   await expect(page).toHaveTitle("Demo — Result Envelope");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://mcp-result-envelope.sociobot.in/demo");
-  await page.goto("/missing-sheet");
+  const missingResponse = await page.goto("/missing-sheet");
+  expect(missingResponse?.status()).toBe(process.env.PLAYWRIGHT_BASE_URL ? 404 : 200);
   await expect(page).toHaveTitle("Page not found — Result Envelope");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("This page is outside the packet");
   await expect(page.getByRole("link", { name: "Return to the main sheet" })).toBeVisible();
+  const missingA11y = await new AxeBuilder({ page }).analyze();
+  expect(missingA11y.violations.filter((item) => ["serious", "critical"].includes(item.impact ?? ""))).toEqual([]);
   await page.getByRole("link", { name: "Privacy", exact: true }).last().click();
   await expect(page).toHaveURL(/\/privacy$/);
   await page.getByRole("link", { name: "Terms", exact: true }).click();

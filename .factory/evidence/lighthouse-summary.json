@@ -1,16 +1,17 @@
 {
-  "url": "http://127.0.0.1:4173/",
+  "url": "https://mcp-result-envelope.sociobot.in/",
   "mode": "mobile",
   "measured_at": "2026-08-28",
   "scores": {
-    "performance": 99,
+    "performance": 100,
     "accessibility": 100,
     "best_practices": 100,
     "seo": 100
   },
   "metrics": {
-    "largest_contentful_paint": "1.668 s",
+    "largest_contentful_paint": "1.4 s",
     "cumulative_layout_shift": 0,
-    "total_blocking_time": "76 ms"
+    "total_blocking_time": "0 ms",
+    "speed_index": "0.9 s"
   }
 }
