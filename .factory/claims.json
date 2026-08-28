@@ -45,8 +45,8 @@
     "id": "stream-order",
     "claim": "Chunks arrive as manifest, summary, schema, then bounded pages.",
     "where": "README",
-    "test": "npm run test:unit -- --testNamePattern '@claim:stream-order'",
-    "sandbox": "12-row fixture with five rows per page; collect the async iterator"
+    "test": "npm run build:lib && npm run test:unit -- --testNamePattern '@claim:stream-order'",
+    "sandbox": "pipe a two-row NDJSON fixture into the documented pack - --format ndjson --stream command; assert a successful exit and ordered chunks"
   },
   {
     "id": "package-no-network",

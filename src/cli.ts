@@ -49,7 +49,7 @@ function parseArgs(args: string[]): { command: string; file: string; options: Cl
   const command = args[0] && !args[0].startsWith("-") ? args[0] : "pack";
   let index = command === "pack" && args[0] !== "pack" ? 0 : 1;
   let file = "-";
-  if (args[index] && !args[index].startsWith("-")) file = args[index++];
+  if (args[index] && (args[index] === "-" || !args[index].startsWith("-"))) file = args[index++];
   const options: CliOptions = { format: "json", stream: false, compact: false };
   while (index < args.length) {
     const flag = args[index++];

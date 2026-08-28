@@ -1,61 +1,48 @@
-# Result Envelope v0.1.0 handoff
+# Result Envelope v0.1.0 repair handoff
 
-Completed 2026-08-28 for work order `mcp-result-envelope-build-1`.
+Completed 2026-08-28 for work order `mcp-result-envelope-repair-1` against verifier report commit `8f2788a6b4b26aa0b214a3bccd6e21484dfe225d` and candidate `3c80be2bbc2559e1cac5dbe960fffb59b3332f6a`.
 
-## What shipped
+## Repaired findings
 
-- A zero-runtime-dependency TypeScript library with ESM, CommonJS, and declaration outputs.
-- `createEnvelope`, `getEnvelopePage`, and `streamEnvelope` as the complete public API.
-- Typed manifests, compact summaries, inferred JSON schemas, provenance, deterministic cursors, and bounded pages.
-- Enforced row, page-size, and serialized byte caps with clear typed errors.
-- A JSON and NDJSON CLI with `pack`, `page`, `--stream`, `--help`, and `demo` paths.
-- A bundled 12-order sample. The CLI demo writes into a fresh operating-system temporary directory.
-- A local browser inspector with sample and empty modes, editable JSON, cap controls, output tabs, paging, reset, and offline reload.
-- Static routes for `/`, `/demo`, `/inspect`, `/privacy`, `/terms`, and a designed 404 state.
-- The original blueprint drafting-sheet identity, generated hero, social card, favicon, light and dark treatments, and reduced-motion fallback.
-- Claim inventory, copy audit, demo contract, README, changelog, MIT license, sitemap, robots file, CSP, and service worker.
+- The CLI parser now treats a literal `-` as the documented stdin file marker. The exact command `printf '{"id":1}\n{"id":2}\n' | result-envelope pack - --format ndjson --stream` exits 0 and emits manifest, summary, schema, and page chunks in order.
+- Demo actions and footer links now have explicit 44 px minimum hit areas. At 390 px, Reset demo is 91.5 × 44, Start for real is 93 × 44, Privacy and Terms are 44 × 44, and Built by Param Factory is 126.1 × 44 CSS px.
+- The full audit also found and fixed dark-theme contrast on filled blueprint and revision controls. Product-specific foreground tokens now keep both color treatments accessible.
 
-## Build and run
+## Regression coverage
+
+- `tests/unit/package.test.ts` runs the documented NDJSON stdin invocation against the built CLI, asserts exit 0 and empty stderr, parses every output line, and checks the exact chunk order.
+- `tests/e2e/site.spec.ts` measures each verifier-reported control and every other visible interactive element at a 390 px viewport, requiring both dimensions to be at least 44 px.
+- The route-wide axe sweep now covers light and dark treatments across `/`, `/demo`, `/inspect`, `/privacy`, `/terms`, and the designed missing route.
+- `.factory/claims.json` points the stream-order claim at the public CLI regression and builds the CLI before that isolated claim test.
+
+## Verification evidence
+
+- Clean install: `npm ci` installed 93 packages with zero known vulnerabilities.
+- Complete gate: `npm test` passed typecheck, clean library and site builds, 14 unit/CLI tests, and 14 browser runs; two tests skipped only on their documented non-target profiles.
+- Claims: all 11 commands in `.factory/claims.json` passed independently.
+- Package: `npm run pack:check` passed. The tarball is 9,683 bytes, contains 10 declared files, and worked from a fresh external consumer through ESM import, CommonJS require, cursor paging, async streaming, and the stdin CLI command.
+- Browser: desktop and 390 px mobile passed the full route, navigation, form error, paging, keyboard tab, privacy, demo-memory, offline reload, overflow, console, and accessibility checks.
+- Accessibility: Playwright axe found zero serious or critical violations on all six route states in light and dark. The first keyboard Tab reaches the skip link with a 3 px focus outline. Reduced-motion mode has no running animation.
+- Privacy: the complete demo edit flow made same-origin requests only, never included edited input in a URL, and left cookies, local storage, and session storage empty.
+- Factory URL probe against the local production build returned 200 with no console errors, a title, `lang`, one h1, one main, alt text, and labeled buttons.
+- Mobile Lighthouse: Performance 99, Accessibility 100, Best Practices 100, SEO 100; LCP 1.668 s, CLS 0, TBT 76 ms. Summary: `.factory/evidence/lighthouse-summary.json`.
+- Initial payload: JavaScript 8,635 bytes gzip; CSS 4,273 bytes gzip; hero WebP 98,348 bytes.
+
+## Build, package, and deploy
 
 ```sh
-npm install
+npm ci
 npm test
-npm run build
-npm run dev
+npm run build:site
+npm run pack:check
+/opt/fleet/lib/deploy-static.sh mcp-result-envelope dist/site
 ```
 
-- Required static-site command: `npm run build:site`
-- Deploy directory: `dist/site`
-- Deploy entry: `dist/site/index.html`
-- Package readiness: `npm run pack:check`
-- CLI sandbox: `node dist/cli.js demo`
-- Browser sandbox: `/demo` or `/?demo=1`
+The static deployment root remains `dist/site`, with `index.html` at its root. The npm artifact remains a zero-runtime-dependency ESM + CommonJS + declarations library with its CLI. Registry publication remains factory-owned and was not attempted.
 
-## Verification
+## Known constraints
 
-- `npm test`: passed. This includes type checking, a clean build, 13 unit and CLI tests, and 14 browser checks. Two project-specific checks skip on their non-target profile.
-- Desktop and 390 px Chromium: passed navigation, keyboard tabs, empty state, invalid input, paging, reset, privacy, offline reload, and no-upload checks.
-- Axe Playwright sweep: zero serious or critical violations across all six route states in both browser profiles.
-- `npx @axe-core/cli / /demo`: zero violations on both pages.
-- Factory `verify-url.sh`: 200 response, no console errors, title and language present, one h1, one main, no missing alt text, and no unlabeled buttons.
-- Lighthouse mobile: Performance 100, Accessibility 100, Best Practices 100, SEO 100. LCP 1.7 s, CLS 0, TBT 30 ms.
-- Initial site payload: 8.64 KB JavaScript gzip, 4.23 KB CSS gzip, 97 KB hero WebP.
-- `npm pack --dry-run`: passed; 9.6 KB tarball with ESM, CommonJS, declarations, CLI, examples, and legal files.
-- ESM import, CommonJS require, CLI JSON output, and executable mode: checked directly.
-- `npm audit`: zero known vulnerabilities.
-
-Evidence is in `.factory/evidence/`. Claim commands and sandbox details are in `.factory/claims.json`.
-
-## Known gaps and next steps
-
-- The factory still needs to publish the npm package and deploy `dist/site`; no registry or infrastructure action was taken here.
-- Cursors identify a deterministic result snapshot but are not authorization tokens. Callers must apply access control before returning pages.
+- Cursors identify a deterministic result snapshot; callers still enforce authorization before returning pages.
 - Stable paging assumes the caller reruns the same ordered query with the same options.
-- `streamEnvelope` is an async iterator. It does not add streaming support to MCP transports.
-- The brief’s 20-response, 50%-token benchmark remains post-release validation. The site makes no unverified token-savings claim.
-
-## Independent verifier outcome — 2026-08-28
-
-**FAIL — do not release candidate `3c80be2bbc2559e1cac5dbe960fffb59b3332f6a`.**
-
-All 11 claims, `npm test`, build, package dry-run, live first-read, deployment parity, browser/a11y checks, and privacy checks passed. However, the README’s documented core CLI stdin command (`cat results.ndjson | result-envelope pack - --format ndjson --stream`) exits 2 with `Unknown option: -` instead of producing an envelope. At 390 px, Reset demo, Start for real, and footer links are also smaller than the required 44 px touch target. Full independent evidence and retest criteria: `.factory/verification-1.md`.
+- `streamEnvelope` is an async iterator and does not add streaming support to MCP transports.
+- The brief’s 20-response, 50%-token benchmark remains post-release research. No product copy makes that unverified claim.

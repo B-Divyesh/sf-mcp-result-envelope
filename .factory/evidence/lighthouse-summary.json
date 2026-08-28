@@ -3,14 +3,14 @@
   "mode": "mobile",
   "measured_at": "2026-08-28",
   "scores": {
-    "performance": 100,
+    "performance": 99,
     "accessibility": 100,
     "best_practices": 100,
     "seo": 100
   },
   "metrics": {
-    "largest_contentful_paint": "1.7 s",
+    "largest_contentful_paint": "1.668 s",
     "cumulative_layout_shift": 0,
-    "total_blocking_time": "30 ms"
+    "total_blocking_time": "76 ms"
   }
 }

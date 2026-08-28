@@ -1,4 +1,4 @@
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -25,6 +25,19 @@ describe("package and CLI", () => {
   it("prints help and reports invalid JSON with exit code 2", () => {
     expect(execFileSync(process.execPath, ["dist/cli.js", "--help"], { encoding: "utf8" })).toContain("--max-bytes");
     expect(() => execFileSync(process.execPath, ["dist/cli.js", "pack", "-"], { input: "nope", encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] })).toThrow(expect.objectContaining({ status: 2 }));
+  });
+
+  it("@claim:stream-order accepts the documented stdin marker and streams ordered NDJSON chunks", () => {
+    const result = spawnSync(
+      process.execPath,
+      ["dist/cli.js", "pack", "-", "--format", "ndjson", "--stream"],
+      { input: '{"id":1}\n{"id":2}\n', encoding: "utf8" }
+    );
+
+    expect(result.status).toBe(0);
+    expect(result.stderr).toBe("");
+    const chunks = result.stdout.trim().split("\n").map((line) => JSON.parse(line) as { type: string });
+    expect(chunks.map((chunk) => chunk.type)).toEqual(["manifest", "summary", "schema", "page"]);
   });
 
   it("runs the documented ESM example against the package exports", () => {

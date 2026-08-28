@@ -73,7 +73,7 @@ describe("createEnvelope", () => {
     expect(() => getEnvelopePage(rows, "bad", { pageSize: 2 })).toThrowError(/cursor/);
   });
 
-  it("@claim:stream-order yields metadata before bounded pages", async () => {
+  it("yields metadata before bounded pages", async () => {
     const chunks = [];
     for await (const chunk of streamEnvelope(rows, { pageSize: 5 })) chunks.push(chunk);
     expect(chunks.map((chunk) => chunk.type)).toEqual(["manifest", "summary", "schema", "page", "page", "page"]);

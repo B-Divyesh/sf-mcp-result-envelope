@@ -15,8 +15,10 @@ This fits the product because the library makes large, vague results bounded and
 | `--ink` | `#10283B` | `#F5EFDC` | body text |
 | `--muted` | `#526675` | `#B8C8D2` | secondary copy |
 | `--blueprint` | `#075E89` | `#5AC8F5` | rules, links, focus |
+| `--blueprint-contrast` | `#FFFDF5` | `#071A2A` | text on blueprint fills |
 | `--blue-deep` | `#063C59` | `#BEEBFF` | headings and strong marks |
 | `--signal` | `#B93424` | `#FF8A79` | revision marks and warnings |
+| `--signal-contrast` | `#FFFDF5` | `#071A2A` | text on revision fills |
 | `--success` | `#176B4C` | `#7EE0B2` | valid packet state |
 | `--danger` | `#A62D25` | `#FF958B` | input errors |
 
