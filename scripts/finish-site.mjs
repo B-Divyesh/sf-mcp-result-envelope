@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
@@ -54,6 +54,17 @@ await writeFile(resolve(site, "404.html"), routeHtml({
   description: "Return to the Result Envelope home page.",
   path: "/404"
 }));
+
+const precacheAssets = (await readdir(resolve(site, "assets")))
+  .filter((file) => /\.(?:css|js)$/.test(file) || file === "result-envelope-blueprint.webp")
+  .map((file) => `/assets/${file}`);
+const serviceWorkerPath = resolve(site, "sw.js");
+const serviceWorker = await readFile(serviceWorkerPath, "utf8");
+const shell = ["/", "/demo", "/inspect", "/privacy", "/terms", "/favicon.svg", ...precacheAssets];
+await writeFile(serviceWorkerPath, serviceWorker.replace(
+  /const SHELL = \[[^\n]*\];/,
+  `const SHELL = ${JSON.stringify(shell)};`
+));
 
 await mkdir(downloads, { recursive: true });
 execFileSync("npm", ["pack", "--pack-destination", downloads], { cwd: root, stdio: "inherit" });

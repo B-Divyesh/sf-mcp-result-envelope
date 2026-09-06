@@ -221,6 +221,41 @@ test("mobile demo fits the viewport", async ({ page }, testInfo) => {
   }
 });
 
+test("mobile demo banner stays visible while using the editor", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "mobile project only");
+  await page.goto("/demo");
+
+  const demoBanner = page.getByRole("complementary", { name: "Demo mode" });
+  const demoActions = [
+    page.getByRole("button", { name: "Reset demo", exact: true }),
+    page.getByRole("link", { name: "Start for real", exact: true })
+  ];
+  const expectDemoControlsInViewport = async (): Promise<void> => {
+    const viewport = page.viewportSize();
+    expect(viewport).not.toBeNull();
+    await expect(demoBanner).toBeVisible();
+    for (const control of demoActions) {
+      await expect(control).toBeVisible();
+      const box = await control.boundingBox();
+      const label = (await control.textContent()) ?? "demo control";
+      expect(box, label).not.toBeNull();
+      expect(box!.y, label).toBeGreaterThanOrEqual(0);
+      expect(box!.y + box!.height, label).toBeLessThanOrEqual(viewport!.height);
+    }
+  };
+
+  await page.locator("#json-input").scrollIntoViewIfNeeded();
+  expect(await page.evaluate(() => scrollY)).toBeGreaterThan(0);
+  await expectDemoControlsInViewport();
+
+  await page.locator("#next-page").scrollIntoViewIfNeeded();
+  expect(await page.evaluate(() => scrollY)).toBeGreaterThan(0);
+  await expectDemoControlsInViewport();
+
+  await demoActions[0].click();
+  await expect(page.locator("#metric-rows")).toHaveText("12");
+});
+
 test("landing keeps its action and all three required facts inside the first viewport", async ({ page }) => {
   await page.goto("/");
   const firstScreenItems = [
@@ -251,14 +286,19 @@ test("mobile landing enters the isolated sample in one click", async ({ page }, 
   expect(await page.evaluate(() => scrollY)).toBe(0);
 });
 
-test("@claim:offline-reload reopens the demo after its first visit", async ({ page, context }, testInfo) => {
+test("@claim:offline-reload reopens the demo after its first visit", async ({ browser }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "desktop service worker check");
-  await page.goto("/?demo=1");
-  await page.waitForFunction(() => navigator.serviceWorker?.controller !== null, null, { timeout: 10_000 });
-  await page.reload();
-  await context.setOffline(true);
-  await page.reload();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Inspect a sample result envelope");
-  await expect(page.locator("#metric-rows")).toHaveText("12");
-  await context.setOffline(false);
+  const offlineContext = await browser.newContext();
+  const offlinePage = await offlineContext.newPage();
+  try {
+    await offlinePage.goto("/?demo=1");
+    await offlinePage.waitForFunction(() => navigator.serviceWorker?.controller !== null, null, { timeout: 10_000 });
+    await offlineContext.setOffline(true);
+    await offlinePage.reload();
+    await expect(offlinePage.getByRole("heading", { level: 1 })).toHaveText("Inspect a sample result envelope");
+    await expect(offlinePage.locator("#metric-rows")).toHaveText("12");
+  } finally {
+    await offlineContext.setOffline(false);
+    await offlineContext.close();
+  }
 });

@@ -7,8 +7,8 @@
 - Local URL: `http://127.0.0.1:5173/?demo=1` after `npm run dev`
 - Sample: 12 realistic order rows with regions, states, totals, item counts, and timestamps.
 - First view: the phone layout shows the built envelope's 12 rows, 3 pages, manifest identity, and summary before the editor.
-- Reset: choose **Reset demo** in the persistent demo banner.
-- Exit: choose **Start for real**. This opens an empty inspector and drops the sample edits.
+- Reset: choose **Reset demo** in the persistent demo banner. On phones, the compact banner stays at the top while you scroll.
+- Exit: choose **Start for real** in that banner. This opens an empty inspector and drops the sample edits.
 - Isolation: `?demo=1` and `/demo` use route-local memory only. They never read or write real input, cookies, local storage, session storage, or a server.
 - Offline check: visit the production demo once, wait for the service worker, then reload with the network disabled.
 

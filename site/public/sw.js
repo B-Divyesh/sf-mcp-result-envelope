@@ -1,8 +1,16 @@
-const CACHE = "result-envelope-v2";
+const CACHE = "result-envelope-v3";
 const SHELL = ["/", "/demo", "/inspect", "/privacy", "/terms", "/favicon.svg", "/assets/result-envelope-blueprint.webp"];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    await Promise.all(SHELL.map(async (url) => {
+      const response = await fetch(new Request(url, { cache: "reload" }));
+      if (!response.ok) throw new Error(`Could not cache ${url}`);
+      await cache.put(url, response);
+    }));
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener("activate", (event) => {
@@ -18,6 +26,6 @@ self.addEventListener("fetch", (event) => {
         caches.open(CACHE).then((cache) => cache.put(event.request, copy));
         return response;
       })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match("/")))
+      .catch(() => caches.match(event.request, { ignoreVary: true }).then((cached) => cached || caches.match("/", { ignoreVary: true })))
   );
 });
