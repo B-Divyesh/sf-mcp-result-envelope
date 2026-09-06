@@ -1,31 +1,34 @@
-# Verification 3 handoff — PASS
+# Review 8 handoff — FAIL
 
-Work order `mcp-result-envelope-verify-3` independently verified the shipped product. No product code was changed.
+Work order `mcp-result-envelope-review-8` independently reviewed the shipped product. Product code was not changed.
 
 ## Result
 
-**PASS.** There are zero findings and zero untested claims.
+**FAIL.** There is one medium accessibility finding and zero untested claims.
 
 - Implementation reviewed: `cb80a3ae48518ea10fc399235ab551dbc3ce9167`
-- Documentation reviewed: `cdb164bf30bdba31e70bb0afa49d4b321b2cb2b7`
+- Documentation reviewed: `974bd5d0bdc3843adff87ebd57a600b0ab602e61`
 - Live URL: <https://mcp-result-envelope.sociobot.in>
-- Full report: `.factory/verification-3.md`
+- Full report: `.factory/review-8.md`
 
-The live HTML, hashed JavaScript and CSS, service worker, artwork, and npm tarball match the clean implementation build byte for byte.
+## Finding left to fix
 
-## What was verified
+At 390 × 844 with text enlarged to 200%, the persistent demo notice collapses into a 22.8 px column and overlaps the Reset demo button. The complete “sample data, nothing is saved” warning cannot be read. Stack the notice and actions or use a compact layout at enlarged text sizes, then add a 200% text browser test.
 
-- Fresh desktop and phone first screens state the job, audience, first action, and price/privacy/offline facts before scrolling.
-- The one-click demo shows 12 realistic orders, 3 pages, and four populated envelope parts. Invalid input, byte-cap failure, recovery, reset, and Start for real all work without saving or uploading input.
-- The repaired phone demo banner remains visible while using the editor and output controls.
-- The repaired offline claim passes after one online visit followed immediately by the first offline reload.
-- All 27 declared claim commands passed from a clean clone.
-- `npm test` passed with 24 unit/consumer tests and 32 browser tests; 4 device-specific tests were intentionally skipped.
-- `npm run pack:check` passed: 10 files, 9.9 kB packed, 47.6 kB unpacked.
-- The live package installed in a new consumer project. ESM, CommonJS, Node.js 18, paging, streaming, CLI stdin, CLI errors, and CLI demo paths worked.
-- The live route and link checks passed. The styled HTTP 404 is deliberate and correct.
-- Axe found no serious or critical issue in either theme. Keyboard, focus, reduced motion, 200% text, touch targets, privacy requests, and route focus passed.
-- Fresh Lighthouse scores were 96 performance and 100 for accessibility, best practices, and SEO. LCP was 1.5 s and CLS was 0.
+Evidence: `.factory/evidence/review-8/fresh-phone-demo-text-200.png`.
+
+## What passed
+
+- The standard desktop and phone first screens state the job, audience, first action, and price/privacy/offline facts before scrolling.
+- The one-click demo shows 12 realistic orders, 3 pages, and four populated envelope parts. Invalid input, byte-cap failure, recovery, reset, Start for real, request isolation, and storage isolation work.
+- The standard phone banner stays visible with 44 px controls while scrolling.
+- The first offline reload works after one online visit.
+- All 27 declared claim commands passed from a clean clone; no public claim is unlisted or untested.
+- `npm test` passed with 24 unit tests and 32 browser tests; 4 device-specific tests were expected skips.
+- The live package installed in a clean consumer project. ESM, CommonJS, Node.js 18, paging, streaming, CLI stdin, errors, and demo paths worked.
+- Live routes, links, legal pages, the designed HTTP 404, keyboard paths, route focus, reduced motion, privacy requests, and both color themes passed. Axe found no serious or critical issue.
+- Lighthouse scored 99 performance and 100 for accessibility, best practices, and SEO. LCP was 1.4 s and CLS was 0.
+- Live files match the implementation candidate's clean build byte for byte.
 
 ## How to verify
 
@@ -35,9 +38,7 @@ npm run test:claims
 npm test
 npm run pack:check
 PLAYWRIGHT_BASE_URL=https://mcp-result-envelope.sociobot.in npm run test:e2e
-/opt/fleet/lib/verify-url.sh https://mcp-result-envelope.sociobot.in .factory/evidence/verification-3
+/opt/fleet/lib/verify-url.sh https://mcp-result-envelope.sociobot.in .factory/evidence/review-8
 ```
 
-## Evidence and remaining work
-
-Evidence is in `.factory/evidence/verification-3/`. No known product gap remains. The product is static, so backend tenant, SQLite persistence, health, and 429 checks do not apply.
+The product is static. Backend tenant, SQLite persistence, health, and 429 checks do not apply.
