@@ -256,6 +256,67 @@ test("mobile demo banner stays visible while using the editor", async ({ page },
   await expect(page.locator("#metric-rows")).toHaveText("12");
 });
 
+test("mobile demo reflows at 200% text without overlap", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "mobile project only");
+  await page.goto("/demo");
+  await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+
+  const banner = page.getByRole("complementary", { name: "Demo mode" });
+  const reset = page.getByRole("button", { name: "Reset demo", exact: true });
+  const start = page.getByRole("link", { name: "Start for real", exact: true });
+  await expect(banner).toBeVisible();
+  await expect(reset).toBeVisible();
+  await expect(start).toBeVisible();
+
+  const layout = await page.evaluate(() => {
+    const notice = document.querySelector<HTMLElement>(".demo-banner > span:first-child")!;
+    const actions = [
+      document.querySelector<HTMLElement>("[data-reset-demo]")!,
+      document.querySelector<HTMLElement>(".demo-banner a")!
+    ];
+    const noticeBox = notice.getBoundingClientRect();
+    const actionBoxes = actions.map((action) => action.getBoundingClientRect());
+    const overlapsNotice = actionBoxes.some((box) => (
+      Math.max(0, Math.min(noticeBox.right, box.right) - Math.max(noticeBox.left, box.left))
+      * Math.max(0, Math.min(noticeBox.bottom, box.bottom) - Math.max(noticeBox.top, box.top))
+    ) > 0);
+
+    return {
+      documentWidth: document.documentElement.scrollWidth,
+      viewportWidth: innerWidth,
+      viewportHeight: innerHeight,
+      noticeFits: notice.scrollWidth <= notice.clientWidth && notice.scrollHeight <= notice.clientHeight,
+      overlapsNotice,
+      actions: actionBoxes.map((box) => ({
+        left: box.left,
+        right: box.right,
+        top: box.top,
+        bottom: box.bottom,
+        width: box.width,
+        height: box.height
+      }))
+    };
+  });
+
+  expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth);
+  expect(layout.noticeFits).toBe(true);
+  expect(layout.overlapsNotice).toBe(false);
+  for (const action of layout.actions) {
+    expect(action.left).toBeGreaterThanOrEqual(0);
+    expect(action.right).toBeLessThanOrEqual(layout.viewportWidth);
+    expect(action.top).toBeGreaterThanOrEqual(0);
+    expect(action.bottom).toBeLessThanOrEqual(layout.viewportHeight);
+    expect(action.width).toBeGreaterThanOrEqual(44);
+    expect(action.height).toBeGreaterThanOrEqual(44);
+  }
+
+  await page.locator("#json-input").scrollIntoViewIfNeeded();
+  const stickyBox = await banner.boundingBox();
+  expect(stickyBox).not.toBeNull();
+  expect(stickyBox!.y).toBe(0);
+  expect(stickyBox!.y + stickyBox!.height).toBeLessThanOrEqual(layout.viewportHeight);
+});
+
 test("landing keeps its action and all three required facts inside the first viewport", async ({ page }) => {
   await page.goto("/");
   const firstScreenItems = [
