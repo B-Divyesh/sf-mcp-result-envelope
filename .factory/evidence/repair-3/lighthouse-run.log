@@ -1,0 +1,211 @@
+2026-09-06T06:21:40.474Z LH:ChromeLauncher Waiting for browser.
+2026-09-06T06:21:40.474Z LH:ChromeLauncher Waiting for browser...
+2026-09-06T06:21:40.985Z LH:ChromeLauncher Waiting for browser.....
+2026-09-06T06:21:41.487Z LH:ChromeLauncher Waiting for browser.......
+2026-09-06T06:21:41.488Z LH:ChromeLauncher Waiting for browser.......[32m✓[0m
+2026-09-06T06:21:41.959Z LH:status Connecting to browser
+2026-09-06T06:21:41.968Z LH:status Navigating to about:blank
+2026-09-06T06:21:41.976Z LH:status Benchmarking machine
+2026-09-06T06:21:42.992Z LH:status Preparing target for navigation mode
+2026-09-06T06:21:43.014Z LH:status Cleaning origin data
+2026-09-06T06:21:43.026Z LH:status Cleaning browser cache
+2026-09-06T06:21:43.064Z LH:status Preparing network conditions
+2026-09-06T06:21:43.119Z LH:status Navigating to https://mcp-result-envelope.sociobot.in/
+2026-09-06T06:21:45.911Z LH:status Getting artifact: DevtoolsLog
+2026-09-06T06:21:45.911Z LH:status Getting artifact: Trace
+2026-09-06T06:21:45.911Z LH:status Getting artifact: RootCauses
+2026-09-06T06:21:46.022Z LH:RootCauses:error Cannot read properties of undefined (reading 'frame_sequence')
+2026-09-06T06:21:46.022Z LH:status Getting artifact: Accessibility
+2026-09-06T06:21:46.269Z LH:status Getting artifact: AnchorElements
+2026-09-06T06:21:46.293Z LH:status Getting artifact: ConsoleMessages
+2026-09-06T06:21:46.293Z LH:status Getting artifact: CSSUsage
+2026-09-06T06:21:46.324Z LH:status Getting artifact: Doctype
+2026-09-06T06:21:46.326Z LH:status Getting artifact: DOMStats
+2026-09-06T06:21:46.331Z LH:status Getting artifact: FontSize
+2026-09-06T06:21:46.378Z LH:status Getting artifact: Inputs
+2026-09-06T06:21:46.381Z LH:status Getting artifact: ImageElements
+2026-09-06T06:21:46.397Z LH:status Getting artifact: InspectorIssues
+2026-09-06T06:21:46.397Z LH:status Getting artifact: JsUsage
+2026-09-06T06:21:46.397Z LH:status Getting artifact: LinkElements
+2026-09-06T06:21:46.401Z LH:status Getting artifact: MainDocumentContent
+2026-09-06T06:21:46.403Z LH:status Getting artifact: MetaElements
+2026-09-06T06:21:46.407Z LH:status Getting artifact: NetworkUserAgent
+2026-09-06T06:21:46.407Z LH:status Getting artifact: OptimizedImages
+2026-09-06T06:21:46.408Z LH:status Getting artifact: ResponseCompression
+2026-09-06T06:21:46.408Z LH:status Getting artifact: RobotsTxt
+2026-09-06T06:21:46.426Z LH:status Getting artifact: Scripts
+2026-09-06T06:21:46.426Z LH:status Getting artifact: SourceMaps
+2026-09-06T06:21:46.445Z LH:status Getting artifact: Stacks
+2026-09-06T06:21:46.445Z LH:status Collect stacks
+2026-09-06T06:21:46.464Z LH:status Getting artifact: Stylesheets
+2026-09-06T06:21:46.471Z LH:TraceElements:error Dependency "RootCauses" failed with exception: Cannot read properties of undefined (reading 'frame_sequence')
+2026-09-06T06:21:46.471Z LH:status Getting artifact: ViewportDimensions
+2026-09-06T06:21:46.472Z LH:status Getting artifact: devtoolsLogs
+2026-09-06T06:21:46.472Z LH:status Getting artifact: traces
+2026-09-06T06:21:46.472Z LH:status Getting artifact: FullPageScreenshot
+2026-09-06T06:21:47.805Z LH:status Getting artifact: BFCacheFailures
+2026-09-06T06:21:48.102Z LH:status Analyzing and running audits...
+2026-09-06T06:21:48.103Z LH:status Auditing: Uses HTTPS
+2026-09-06T06:21:48.105Z LH:status Auditing: Redirects HTTP traffic to HTTPS
+2026-09-06T06:21:48.106Z LH:status Auditing: Has a `<meta name="viewport">` tag with `width` or `initial-scale`
+2026-09-06T06:21:48.108Z LH:status Auditing: First Contentful Paint
+2026-09-06T06:21:48.119Z LH:status Auditing: Largest Contentful Paint
+2026-09-06T06:21:48.122Z LH:status Auditing: First Meaningful Paint
+2026-09-06T06:21:48.123Z LH:status Auditing: Speed Index
+2026-09-06T06:21:48.317Z LH:status Auditing: Screenshot Thumbnails
+2026-09-06T06:21:48.317Z LH:status Auditing: Final Screenshot
+2026-09-06T06:21:48.318Z LH:status Auditing: Total Blocking Time
+2026-09-06T06:21:48.322Z LH:status Auditing: Max Potential First Input Delay
+2026-09-06T06:21:48.324Z LH:status Auditing: Cumulative Layout Shift
+2026-09-06T06:21:48.332Z LH:status Auditing: No browser errors logged to the console
+2026-09-06T06:21:48.339Z LH:status Auditing: Initial server response time was short
+2026-09-06T06:21:48.340Z LH:status Auditing: Time to Interactive
+2026-09-06T06:21:48.341Z LH:status Auditing: User Timing marks and measures
+2026-09-06T06:21:48.343Z LH:status Auditing: Avoid chaining critical requests
+2026-09-06T06:21:48.346Z LH:status Auditing: Avoid multiple page redirects
+2026-09-06T06:21:48.348Z LH:status Auditing: Displays images with correct aspect ratio
+2026-09-06T06:21:48.350Z LH:status Auditing: Serves images with appropriate resolution
+2026-09-06T06:21:48.351Z LH:status Auditing: Avoids deprecated APIs
+2026-09-06T06:21:48.352Z LH:status Auditing: Avoids third-party cookies
+2026-09-06T06:21:48.353Z LH:status Auditing: Minimizes main-thread work
+2026-09-06T06:21:48.358Z LH:status Auditing: JavaScript execution time
+2026-09-06T06:21:48.364Z LH:status Auditing: Preconnect to required origins
+2026-09-06T06:21:48.368Z LH:status Auditing: All text remains visible during webfont loads
+2026-09-06T06:21:48.370Z LH:status Auditing: Diagnostics
+2026-09-06T06:21:48.370Z LH:status Auditing: Network Requests
+2026-09-06T06:21:48.372Z LH:status Auditing: Network Round Trip Times
+2026-09-06T06:21:48.373Z LH:status Auditing: Server Backend Latencies
+2026-09-06T06:21:48.374Z LH:status Auditing: Tasks
+2026-09-06T06:21:48.375Z LH:status Auditing: Metrics
+2026-09-06T06:21:48.377Z LH:status Auditing: Resources Summary
+2026-09-06T06:21:48.378Z LH:status Auditing: Minimize third-party usage
+2026-09-06T06:21:48.380Z LH:status Auditing: Lazy load third-party resources with facades
+2026-09-06T06:21:48.381Z LH:status Auditing: Largest Contentful Paint element
+2026-09-06T06:21:48.381Z LH:Runner:warn TraceElements gatherer, required by audit largest-contentful-paint-element, encountered an error: Dependency "RootCauses" failed with exception: Cannot read properties of undefined (reading 'frame_sequence')
+2026-09-06T06:21:48.382Z LH:status Auditing: Largest Contentful Paint image was not lazily loaded
+2026-09-06T06:21:48.382Z LH:Runner:warn TraceElements gatherer, required by audit lcp-lazy-loaded, encountered an error: Dependency "RootCauses" failed with exception: Cannot read properties of undefined (reading 'frame_sequence')
+2026-09-06T06:21:48.383Z LH:status Auditing: Avoid large layout shifts
+2026-09-06T06:21:48.383Z LH:Runner:warn RootCauses gatherer, required by audit layout-shifts, encountered an error: Cannot read properties of undefined (reading 'frame_sequence')
+2026-09-06T06:21:48.384Z LH:status Auditing: Avoid long main-thread tasks
+2026-09-06T06:21:48.387Z LH:status Auditing: Avoid non-composited animations
+2026-09-06T06:21:48.387Z LH:Runner:warn TraceElements gatherer, required by audit non-composited-animations, encountered an error: Dependency "RootCauses" failed with exception: Cannot read properties of undefined (reading 'frame_sequence')
+2026-09-06T06:21:48.388Z LH:status Auditing: Image elements have explicit `width` and `height`
+2026-09-06T06:21:48.389Z LH:status Auditing: Page has valid source maps
+2026-09-06T06:21:48.391Z LH:status Auditing: Preload Largest Contentful Paint image
+2026-09-06T06:21:48.391Z LH:Runner:warn TraceElements gatherer, required by audit prioritize-lcp-image, encountered an error: Dependency "RootCauses" failed with exception: Cannot read properties of undefined (reading 'frame_sequence')
+2026-09-06T06:21:48.392Z LH:status Auditing: Ensure CSP is effective against XSS attacks
+2026-09-06T06:21:48.395Z LH:status Auditing: Script Treemap Data
+2026-09-06T06:21:48.399Z LH:status Auditing: `[accesskey]` values are unique
+2026-09-06T06:21:48.400Z LH:status Auditing: `[aria-*]` attributes match their roles
+2026-09-06T06:21:48.402Z LH:status Auditing: Uses ARIA roles only on compatible elements
+2026-09-06T06:21:48.403Z LH:status Auditing: `button`, `link`, and `menuitem` elements have accessible names
+2026-09-06T06:21:48.404Z LH:status Auditing: ARIA attributes are used as specified for the element's role
+2026-09-06T06:21:48.407Z LH:status Auditing: Deprecated ARIA roles were not used
+2026-09-06T06:21:48.408Z LH:status Auditing: Elements with `role="dialog"` or `role="alertdialog"` have accessible names.
+2026-09-06T06:21:48.408Z LH:status Auditing: `[aria-hidden="true"]` is not present on the document `<body>`
+2026-09-06T06:21:48.411Z LH:status Auditing: `[aria-hidden="true"]` elements do not contain focusable descendents
+2026-09-06T06:21:48.418Z LH:status Auditing: ARIA input fields have accessible names
+2026-09-06T06:21:48.419Z LH:status Auditing: ARIA `meter` elements have accessible names
+2026-09-06T06:21:48.420Z LH:status Auditing: ARIA `progressbar` elements have accessible names
+2026-09-06T06:21:48.421Z LH:status Auditing: Elements use only permitted ARIA attributes
+2026-09-06T06:21:48.423Z LH:status Auditing: `[role]`s have all required `[aria-*]` attributes
+2026-09-06T06:21:48.424Z LH:status Auditing: Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children.
+2026-09-06T06:21:48.426Z LH:status Auditing: `[role]`s are contained by their required parent element
+2026-09-06T06:21:48.428Z LH:status Auditing: `[role]` values are valid
+2026-09-06T06:21:48.430Z LH:status Auditing: Elements with the `role=text` attribute do not have focusable descendents.
+2026-09-06T06:21:48.432Z LH:status Auditing: ARIA toggle fields have accessible names
+2026-09-06T06:21:48.434Z LH:status Auditing: ARIA `tooltip` elements have accessible names
+2026-09-06T06:21:48.436Z LH:status Auditing: ARIA `treeitem` elements have accessible names
+2026-09-06T06:21:48.438Z LH:status Auditing: `[aria-*]` attributes have valid values
+2026-09-06T06:21:48.440Z LH:status Auditing: `[aria-*]` attributes are valid and not misspelled
+2026-09-06T06:21:48.443Z LH:status Auditing: Buttons have an accessible name
+2026-09-06T06:21:48.452Z LH:status Auditing: The page contains a heading, skip link, or landmark region
+2026-09-06T06:21:48.455Z LH:status Auditing: Background and foreground colors have a sufficient contrast ratio
+2026-09-06T06:21:48.457Z LH:status Auditing: `<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements.
+2026-09-06T06:21:48.458Z LH:status Auditing: Definition list items are wrapped in `<dl>` elements
+2026-09-06T06:21:48.460Z LH:status Auditing: Document has a `<title>` element
+2026-09-06T06:21:48.462Z LH:status Auditing: ARIA IDs are unique
+2026-09-06T06:21:48.464Z LH:status Auditing: All heading elements contain content.
+2026-09-06T06:21:48.467Z LH:status Auditing: No form fields have multiple labels
+2026-09-06T06:21:48.468Z LH:status Auditing: `<frame>` or `<iframe>` elements have a title
+2026-09-06T06:21:48.477Z LH:status Auditing: Heading elements appear in a sequentially-descending order
+2026-09-06T06:21:48.479Z LH:status Auditing: `<html>` element has a `[lang]` attribute
+2026-09-06T06:21:48.482Z LH:status Auditing: `<html>` element has a valid value for its `[lang]` attribute
+2026-09-06T06:21:48.484Z LH:status Auditing: `<html>` element has an `[xml:lang]` attribute with the same base language as the `[lang]` attribute.
+2026-09-06T06:21:48.486Z LH:status Auditing: Identical links have the same purpose.
+2026-09-06T06:21:48.488Z LH:status Auditing: Image elements have `[alt]` attributes
+2026-09-06T06:21:48.490Z LH:status Auditing: Image elements do not have `[alt]` attributes that are redundant text.
+2026-09-06T06:21:48.493Z LH:status Auditing: Input buttons have discernible text.
+2026-09-06T06:21:48.494Z LH:status Auditing: `<input type="image">` elements have `[alt]` text
+2026-09-06T06:21:48.502Z LH:status Auditing: Elements with visible text labels have matching accessible names.
+2026-09-06T06:21:48.505Z LH:status Auditing: Form elements have associated labels
+2026-09-06T06:21:48.506Z LH:status Auditing: Document has a main landmark.
+2026-09-06T06:21:48.509Z LH:status Auditing: Links have a discernible name
+2026-09-06T06:21:48.511Z LH:status Auditing: Links are distinguishable without relying on color.
+2026-09-06T06:21:48.513Z LH:status Auditing: Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`).
+2026-09-06T06:21:48.515Z LH:status Auditing: List items (`<li>`) are contained within `<ul>`, `<ol>` or `<menu>` parent elements
+2026-09-06T06:21:48.518Z LH:status Auditing: The document does not use `<meta http-equiv="refresh">`
+2026-09-06T06:21:48.519Z LH:status Auditing: `[user-scalable="no"]` is not used in the `<meta name="viewport">` element and the `[maximum-scale]` attribute is not less than 5.
+2026-09-06T06:21:48.529Z LH:status Auditing: `<object>` elements have alternate text
+2026-09-06T06:21:48.530Z LH:status Auditing: Select elements have associated label elements.
+2026-09-06T06:21:48.532Z LH:status Auditing: Skip links are focusable.
+2026-09-06T06:21:48.535Z LH:status Auditing: No element has a `[tabindex]` value greater than 0
+2026-09-06T06:21:48.537Z LH:status Auditing: Tables have different content in the summary attribute and `<caption>`.
+2026-09-06T06:21:48.539Z LH:status Auditing: Tables use `<caption>` instead of cells with the `[colspan]` attribute to indicate a caption.
+2026-09-06T06:21:48.541Z LH:status Auditing: Touch targets have sufficient size and spacing.
+2026-09-06T06:21:48.543Z LH:status Auditing: `<td>` elements in a large `<table>` have one or more table headers.
+2026-09-06T06:21:48.552Z LH:status Auditing: Cells in a `<table>` element that use the `[headers]` attribute refer to table cells within the same table.
+2026-09-06T06:21:48.554Z LH:status Auditing: `<th>` elements and elements with `[role="columnheader"/"rowheader"]` have data cells they describe.
+2026-09-06T06:21:48.556Z LH:status Auditing: `[lang]` attributes have a valid value
+2026-09-06T06:21:48.559Z LH:status Auditing: `<video>` elements contain a `<track>` element with `[kind="captions"]`
+2026-09-06T06:21:48.561Z LH:status Auditing: Custom controls have associated labels
+2026-09-06T06:21:48.561Z LH:status Auditing: Custom controls have ARIA roles
+2026-09-06T06:21:48.561Z LH:status Auditing: User focus is not accidentally trapped in a region
+2026-09-06T06:21:48.561Z LH:status Auditing: Interactive controls are keyboard focusable
+2026-09-06T06:21:48.561Z LH:status Auditing: Interactive elements indicate their purpose and state
+2026-09-06T06:21:48.561Z LH:status Auditing: The page has a logical tab order
+2026-09-06T06:21:48.561Z LH:status Auditing: The user's focus is directed to new content added to the page
+2026-09-06T06:21:48.561Z LH:status Auditing: Offscreen content is hidden from assistive technology
+2026-09-06T06:21:48.561Z LH:status Auditing: HTML5 landmark elements are used to improve navigation
+2026-09-06T06:21:48.561Z LH:status Auditing: Visual order on the page follows DOM order
+2026-09-06T06:21:48.561Z LH:status Auditing: Uses efficient cache policy on static assets
+2026-09-06T06:21:48.563Z LH:status Auditing: Avoids enormous network payloads
+2026-09-06T06:21:48.565Z LH:status Auditing: Defer offscreen images
+2026-09-06T06:21:48.567Z LH:status Auditing: Eliminate render-blocking resources
+2026-09-06T06:21:48.568Z LH:render-blocking-resources:warn Caught exception: Cannot read properties of undefined (reading 'frame_sequence')
+2026-09-06T06:21:48.569Z LH:status Auditing: Minify CSS
+2026-09-06T06:21:48.574Z LH:status Auditing: Minify JavaScript
+2026-09-06T06:21:48.580Z LH:status Auditing: Reduce unused CSS
+2026-09-06T06:21:48.581Z LH:status Auditing: Reduce unused JavaScript
+2026-09-06T06:21:48.583Z LH:status Auditing: Serve images in next-gen formats
+2026-09-06T06:21:48.591Z LH:status Auditing: Efficiently encode images
+2026-09-06T06:21:48.593Z LH:status Auditing: Enable text compression
+2026-09-06T06:21:48.595Z LH:status Auditing: Properly size images
+2026-09-06T06:21:48.597Z LH:status Auditing: Use video formats for animated content
+2026-09-06T06:21:48.599Z LH:status Auditing: Remove duplicate modules in JavaScript bundles
+2026-09-06T06:21:48.600Z LH:status Auditing: Avoid serving legacy JavaScript to modern browsers
+2026-09-06T06:21:48.606Z LH:status Auditing: Page has the HTML doctype
+2026-09-06T06:21:48.607Z LH:status Auditing: Properly defines charset
+2026-09-06T06:21:48.608Z LH:status Auditing: Avoids an excessive DOM size
+2026-09-06T06:21:48.610Z LH:status Auditing: Avoids requesting the geolocation permission on page load
+2026-09-06T06:21:48.611Z LH:status Auditing: No issues in the `Issues` panel in Chrome Devtools
+2026-09-06T06:21:48.612Z LH:status Auditing: Avoids `document.write()`
+2026-09-06T06:21:48.612Z LH:status Auditing: Detected JavaScript libraries
+2026-09-06T06:21:48.613Z LH:status Auditing: Avoids requesting the notification permission on page load
+2026-09-06T06:21:48.614Z LH:status Auditing: Allows users to paste into input fields
+2026-09-06T06:21:48.615Z LH:status Auditing: Use HTTP/2
+2026-09-06T06:21:48.617Z LH:status Auditing: Uses passive listeners to improve scrolling performance
+2026-09-06T06:21:48.618Z LH:status Auditing: Document has a meta description
+2026-09-06T06:21:48.619Z LH:status Auditing: Page has successful HTTP status code
+2026-09-06T06:21:48.619Z LH:status Auditing: Document uses legible font sizes
+2026-09-06T06:21:48.621Z LH:status Auditing: Links have descriptive text
+2026-09-06T06:21:48.622Z LH:status Auditing: Links are crawlable
+2026-09-06T06:21:48.623Z LH:status Auditing: Page isn’t blocked from indexing
+2026-09-06T06:21:48.625Z LH:status Auditing: robots.txt is valid
+2026-09-06T06:21:48.626Z LH:status Auditing: Document has a valid `hreflang`
+2026-09-06T06:21:48.627Z LH:status Auditing: Document has a valid `rel=canonical`
+2026-09-06T06:21:48.628Z LH:status Auditing: Structured data is valid
+2026-09-06T06:21:48.628Z LH:status Auditing: Page didn't prevent back/forward cache restoration
+2026-09-06T06:21:48.635Z LH:status Generating results...
+2026-09-06T06:21:48.658Z LH:Printer json output written to .factory/evidence/repair-3/lighthouse-live.json
+2026-09-06T06:21:48.658Z LH:ChromeLauncher Killing Chrome instance 18450

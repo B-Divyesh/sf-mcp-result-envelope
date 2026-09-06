@@ -1,6 +1,6 @@
 # Landing page copy audit
 
-Audited 2026-08-28. Counts treat hyphenated terms and contractions as one word. Code and numeric data previews are excluded. Navigation, labels, actions, image alternatives, headings, and prose are included.
+Audited 2026-09-06. Counts treat hyphenated terms and contractions as one word. Code and numeric data previews are excluded. Navigation, labels, actions, image alternatives, headings, and prose are included. Repair 3 changed layout and tests only; the extracted public copy is unchanged.
 
 | Copy | Words | Flag |
 | --- | ---: | --- |

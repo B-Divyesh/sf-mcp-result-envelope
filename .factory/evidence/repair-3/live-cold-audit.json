@@ -1,0 +1,161 @@
+{
+  "origin": "https://mcp-result-envelope.sociobot.in",
+  "desktop": {
+    "first": {
+      "title": "Result Envelope — Pack large tool results",
+      "scrollY": 0,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "documentWidth": 1440,
+      "headline": "Pack large tool results into stable pages",
+      "audience": "For MCP and CLI authors who need size-limited output that keeps types, order, and source details.",
+      "action": "Try it with sample data",
+      "facts": [
+        "01 Free and MIT licensed.",
+        "02 Runs in this tab. No uploads.",
+        "03 Works offline after your first visit."
+      ],
+      "boxes": {
+        "h1": {
+          "top": 162.828125,
+          "bottom": 482.703125,
+          "left": 130,
+          "right": 622.109375
+        },
+        ".hero-deck": {
+          "top": 502.703125,
+          "bottom": 560.234375,
+          "left": 130,
+          "right": 622.109375
+        },
+        ".hero-actions": {
+          "top": 584.234375,
+          "bottom": 632.234375,
+          "left": 130,
+          "right": 622.109375
+        },
+        ".fact-list": {
+          "top": 656.234375,
+          "bottom": 718.859375,
+          "left": 130,
+          "right": 622.109375
+        }
+      }
+    },
+    "populated": {
+      "label": "Demo — sample data, nothing is saved ONLINE Reset demo Start for real",
+      "rows": "12",
+      "pages": "3",
+      "preview": "{\n  \"id\": \"re_9989164a3bee94d7\",\n  \"version\": \"1\",\n  \"totalRows\": 12,\n  \"includedRows\": 12,\n  \"pageCount\": 3,\n  \"inputBytes\": 1421,\n  \"maxRows\": 50,\n  \"maxBytes\": 4096,\n  \"pageSize\": 5,\n  \"capped\": false,\n  \"provenance\":"
+    },
+    "enlarged": null,
+    "resetRestored": true,
+    "startForRealEmpty": true,
+    "storage": {
+      "local": 0,
+      "session": 0
+    },
+    "cookies": 0,
+    "requestIsolation": true
+  },
+  "phone": {
+    "first": {
+      "title": "Result Envelope — Pack large tool results",
+      "scrollY": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "headline": "Pack large tool results into stable pages",
+      "audience": "For MCP and CLI authors who need size-limited output that keeps types, order, and source details.",
+      "action": "Try it with sample data",
+      "facts": [
+        "01 Free and MIT licensed.",
+        "02 Runs in this tab. No uploads.",
+        "03 Works offline after your first visit."
+      ],
+      "boxes": {
+        "h1": {
+          "top": 159.828125,
+          "bottom": 302.984375,
+          "left": 14,
+          "right": 352.328125
+        },
+        ".hero-deck": {
+          "top": 318.984375,
+          "bottom": 368.578125,
+          "left": 14,
+          "right": 376
+        },
+        ".hero-actions": {
+          "top": 388.578125,
+          "bottom": 488.203125,
+          "left": 14,
+          "right": 376
+        },
+        ".fact-list": {
+          "top": 508.203125,
+          "bottom": 587.6875,
+          "left": 14,
+          "right": 376
+        }
+      }
+    },
+    "populated": {
+      "label": "Demo — sample data, nothing is saved ONLINE Reset demo Start for real",
+      "rows": "12",
+      "pages": "3",
+      "preview": "{\n  \"manifest\": {\n    \"includedRows\": 12,\n    \"pageCount\": 3,\n    \"id\": \"re_9989164a3bee94d7\"\n  },\n  \"summary\": \"12 rows · 6 fields · 3 pages\"\n}"
+    },
+    "enlarged": {
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "notice": {
+        "left": 14,
+        "top": 6,
+        "right": 376,
+        "bottom": 75.0625,
+        "width": 362,
+        "height": 69.0625
+      },
+      "actions": [
+        {
+          "left": 14,
+          "top": 83.0625,
+          "right": 192,
+          "bottom": 136.234375,
+          "width": 178,
+          "height": 53.171875
+        },
+        {
+          "left": 198,
+          "top": 83.0625,
+          "right": 376,
+          "bottom": 136.234375,
+          "width": 178,
+          "height": 53.171875
+        }
+      ],
+      "intersects": false,
+      "noticeFits": true,
+      "sticky": {
+        "top": 0,
+        "bottom": 142.234375,
+        "height": 142.234375,
+        "viewportHeight": 844
+      }
+    },
+    "resetRestored": true,
+    "startForRealEmpty": true,
+    "storage": {
+      "local": 0,
+      "session": 0
+    },
+    "cookies": 0,
+    "requestIsolation": true
+  },
+  "errors": []
+}

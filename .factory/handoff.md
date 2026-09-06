@@ -1,44 +1,52 @@
-# Review 8 handoff — FAIL
+# Repair 3 handoff — PASS
 
-Work order `mcp-result-envelope-review-8` independently reviewed the shipped product. Product code was not changed.
+Work order `mcp-result-envelope-repair-3` repaired and deployed the one finding in strict review 8.
 
 ## Result
 
-**FAIL.** There is one medium accessibility finding and zero untested claims.
+**PASS.** No known product finding remains.
 
-- Implementation reviewed: `cb80a3ae48518ea10fc399235ab551dbc3ce9167`
-- Documentation reviewed: `974bd5d0bdc3843adff87ebd57a600b0ab602e61`
-- Live URL: <https://mcp-result-envelope.sociobot.in>
-- Full report: `.factory/review-8.md`
+- Implementation SHA: `4dfcaaae551208e7b95046280aafebed68df471f`.
+- Live URL: <https://mcp-result-envelope.sociobot.in>.
+- Deployment id: `c262b750-4c3e-464d-9797-aa76689b8e56`.
+- Full repair record: `.factory/repair-3.md`.
 
-## Finding left to fix
+At 200% text on a 390 px phone, the complete demo warning now occupies its own row. Reset demo and Start for real sit below it without overlap, remain at least 44 px, and stay visible while scrolling. The header and document no longer overflow horizontally.
 
-At 390 × 844 with text enlarged to 200%, the persistent demo notice collapses into a 22.8 px column and overlaps the Reset demo button. The complete “sample data, nothing is saved” warning cannot be read. Stack the notice and actions or use a compact layout at enlarged text sizes, then add a 200% text browser test.
+The change is limited to responsive CSS and an outcome-based browser regression. Library, CLI, demo, privacy, offline, routing, and visual behavior were preserved.
 
-Evidence: `.factory/evidence/review-8/fresh-phone-demo-text-200.png`.
+## Verification
 
-## What passed
-
-- The standard desktop and phone first screens state the job, audience, first action, and price/privacy/offline facts before scrolling.
-- The one-click demo shows 12 realistic orders, 3 pages, and four populated envelope parts. Invalid input, byte-cap failure, recovery, reset, Start for real, request isolation, and storage isolation work.
-- The standard phone banner stays visible with 44 px controls while scrolling.
-- The first offline reload works after one online visit.
-- All 27 declared claim commands passed from a clean clone; no public claim is unlisted or untested.
-- `npm test` passed with 24 unit tests and 32 browser tests; 4 device-specific tests were expected skips.
-- The live package installed in a clean consumer project. ESM, CommonJS, Node.js 18, paging, streaming, CLI stdin, errors, and demo paths worked.
-- Live routes, links, legal pages, the designed HTTP 404, keyboard paths, route focus, reduced motion, privacy requests, and both color themes passed. Axe found no serious or critical issue.
-- Lighthouse scored 99 performance and 100 for accessibility, best practices, and SEO. LCP was 1.4 s and CLS was 0.
-- Live files match the implementation candidate's clean build byte for byte.
-
-## How to verify
+From a fresh clone of the implementation SHA:
 
 ```sh
 npm ci --no-audit --no-fund
 npm run test:claims
 npm test
 npm run pack:check
-PLAYWRIGHT_BASE_URL=https://mcp-result-envelope.sociobot.in npm run test:e2e
-/opt/fleet/lib/verify-url.sh https://mcp-result-envelope.sociobot.in .factory/evidence/review-8
 ```
 
-The product is static. Backend tenant, SQLite persistence, health, and 429 checks do not apply.
+Results:
+
+- 27/27 declared claims passed.
+- 24 unit/consumer tests passed.
+- 33 browser tests passed; 5 device-specific skips were expected.
+- The npm package has 10 files, is 9.9 kB packed, and is 47.6 kB unpacked.
+- A separate clean consumer passed ESM, CommonJS, paging, streaming, CLI stdin/errors/demo, and Node.js 18.
+
+Live checks:
+
+- Full Playwright suite: 33 passed, 5 expected skips.
+- URL verifier: no console or structural accessibility errors.
+- Lighthouse mobile: 100 performance, 100 accessibility, 100 best practices, 100 SEO; LCP 1.5 s; CLS 0.
+- Cold desktop and phone first screens show the job, audience, sample action, price, privacy, and offline facts before scrolling.
+- The demo shows 12 orders, 3 pages, manifest identity, and summary. Reset restores `ord_1041`; Start for real opens empty.
+- Cookies, local storage, and session storage remain empty. Requests are same-origin GETs with no entered data.
+- Invalid JSON, byte-cap failure, recovery, keyboard tabs, Space reset, focus movement, reduced motion, offline reload, legal routes, and the designed 404 passed.
+- Live HTML, JavaScript, CSS, service worker, artwork, and tarball match the local build byte for byte.
+
+Evidence is in `.factory/evidence/repair-3/`.
+
+## Known gaps
+
+None in product scope. The site is static and free; backend, tenant, database, health, payment, and rate-limit checks do not apply. Registry publishing remains a factory operation; the tested versioned tarball is the public install path.

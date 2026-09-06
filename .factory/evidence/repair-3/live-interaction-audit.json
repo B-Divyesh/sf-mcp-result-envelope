@@ -1,0 +1,23 @@
+{
+  "firstTab": {
+    "text": "Skip to main content",
+    "focusVisible": true,
+    "outline": "rgb(255, 138, 121) solid 3px",
+    "scrollBehavior": "auto",
+    "heroAnimation": "1e-05s"
+  },
+  "skipTarget": "main",
+  "routeFocus": {
+    "tag": "H1",
+    "text": "Inspect a sample result envelope",
+    "announcement": "Inspect a sample result envelope"
+  },
+  "invalid": "The input is not valid JSON. Fix the marked syntax and build the envelope again.",
+  "boundary": "Row 0 does not fit within maxBytes (256). Increase maxBytes or remove large fields.",
+  "recovery": {
+    "rows": "1",
+    "status": "Envelope ready"
+  },
+  "arrowTab": "Schema",
+  "spaceResetRows": "12"
+}

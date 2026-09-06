@@ -1,0 +1,146 @@
+
+added 1 package in 279ms
+ESM paging and streaming: PASS
+CommonJS import: PASS
+CLI stdin stream: PASS
+CLI invalid-input recovery guidance: PASS
+{
+  "manifest": {
+    "id": "re_9989164a3bee94d7",
+    "version": "1",
+    "totalRows": 12,
+    "includedRows": 12,
+    "pageCount": 3,
+    "inputBytes": 1421,
+    "maxRows": 50,
+    "maxBytes": 4096,
+    "pageSize": 5,
+    "capped": false,
+    "provenance": {
+      "source": "bundled order export"
+    }
+  },
+  "summary": {
+    "text": "12 rows · 6 fields · 3 pages",
+    "fields": 6,
+    "numeric": [
+      {
+        "path": "items",
+        "count": 12,
+        "min": 1,
+        "max": 8
+      },
+      {
+        "path": "total",
+        "count": 12,
+        "min": 28.8,
+        "max": 440
+      }
+    ]
+  },
+  "schema": {
+    "kind": "rows",
+    "fields": [
+      {
+        "path": "items",
+        "types": [
+          "number"
+        ],
+        "nullable": false,
+        "present": 12
+      },
+      {
+        "path": "order_id",
+        "types": [
+          "string"
+        ],
+        "nullable": false,
+        "present": 12
+      },
+      {
+        "path": "placed_at",
+        "types": [
+          "string"
+        ],
+        "nullable": false,
+        "present": 12
+      },
+      {
+        "path": "region",
+        "types": [
+          "string"
+        ],
+        "nullable": false,
+        "present": 12
+      },
+      {
+        "path": "status",
+        "types": [
+          "string"
+        ],
+        "nullable": false,
+        "present": 12
+      },
+      {
+        "path": "total",
+        "types": [
+          "number"
+        ],
+        "nullable": false,
+        "present": 12
+      }
+    ]
+  },
+  "page": {
+    "number": 1,
+    "rows": [
+      {
+        "order_id": "ord_1041",
+        "region": "north",
+        "status": "shipped",
+        "total": 184.5,
+        "items": 3,
+        "placed_at": "2026-08-21T09:14:00Z"
+      },
+      {
+        "order_id": "ord_1042",
+        "region": "west",
+        "status": "processing",
+        "total": 72,
+        "items": 1,
+        "placed_at": "2026-08-21T10:02:00Z"
+      },
+      {
+        "order_id": "ord_1043",
+        "region": "south",
+        "status": "shipped",
+        "total": 249.99,
+        "items": 4,
+        "placed_at": "2026-08-21T10:48:00Z"
+      },
+      {
+        "order_id": "ord_1044",
+        "region": "east",
+        "status": "held",
+        "total": 39.5,
+        "items": 1,
+        "placed_at": "2026-08-21T11:20:00Z"
+      },
+      {
+        "order_id": "ord_1045",
+        "region": "north",
+        "status": "shipped",
+        "total": 118.25,
+        "items": 2,
+        "placed_at": "2026-08-21T12:05:00Z"
+      }
+    ],
+    "rowStart": 0,
+    "rowEnd": 5,
+    "nextCursor": "eyJ2IjoxLCJpZCI6InJlXzk5ODkxNjRhM2JlZTk0ZDciLCJvZmZzZXQiOjV9",
+    "bytes": 724
+  }
+}
+
+Demo output: /tmp/result-envelope-demo-DSIrYp/envelope.json
+Node 18 ESM: PASS
